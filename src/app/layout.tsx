@@ -1,7 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import NavBar from "./components/navBars";
+import AuthProvider from "./context/authProvider";
 
 const space_gro = Space_Grotesk({ subsets: ["latin"] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={space_gro.className}>
-        <NavBar />
-        <div className=" min-h-[100vh] bg-black">{children}</div>
+        <AuthProvider>
+          <NavBar />
+          <div className=" min-h-[100vh] bg-black">{children}</div>
+        </AuthProvider>
       </body>
     </html>
   );

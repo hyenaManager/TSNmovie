@@ -1,4 +1,7 @@
+"use client";
+import { SessionProvider } from "next-auth/react";
 import Link from "next/link";
+import ProfileLink from "./profileSignIn";
 
 export default function NavBar() {
   return (
@@ -22,9 +25,9 @@ export default function NavBar() {
         <Link href={"/streamers"} className={" p-3 mainNavLink "}>
           Pages
         </Link>
-        <Link href={"/profile"} className={" p-3 mainNavLink "}>
-          Profile
-        </Link>
+        <SessionProvider>
+          <ProfileLink />
+        </SessionProvider>
       </nav>
     </>
   );
