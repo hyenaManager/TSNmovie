@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "name": "lingkee",
+      "password": "nextauth",
+      "email": "bruh@gmail.com"
+    },
+    {
+      "id": 1,
+      "name": "yami",
+      "password": "yamiAuth",
+      "email": "bruh@gmail.com"
+    },
+    {
+      "name": "MJ",
+      "password": "jlkjk",
+      "email": "jkjk@gmail.com",
+      "id": 2
+    },
+    {
+      "name": "black",
+      "password": "lkjkjl",
+      "email": "black@gmail.com",
+      "id": 3
+    }
+  ]
+}
