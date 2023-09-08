@@ -1,12 +1,21 @@
 import React from "react";
-import VideoPlayer from "./feedVideo";
+import { getFeedVideo } from "./feedApi";
+import VideoComponent from "./videoComponent";
+import FeedNotiSideBar from "./notification";
+
+type videoPageProp = {
+  title: string;
+  poster: { name: string };
+  video: string;
+  id: number;
+  like: number[];
+};
 
 export default function Feed() {
   return (
-    <main className=" p-10 pt-14">
-      <div className=" flex flex-col justify-center items-center overflow-auto">
-        <VideoPlayer videoSource={"/titoks/thai.mp4"} />
-      </div>
-    </main>
+    <div className=" p-10 pt-14 flex justify-evenly">
+      <VideoComponent />
+      <FeedNotiSideBar />
+    </div>
   );
 }

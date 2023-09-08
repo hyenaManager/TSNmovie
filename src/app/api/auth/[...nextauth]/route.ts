@@ -2,6 +2,16 @@ import axios from "axios";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import type { DefaultSession } from 'next-auth';
+
+declare module 'next-auth' {
+  interface Session {
+    user: DefaultSession['user'] & {
+      id: number;
+    };
+  }
+}
+
 type userProp = {
     name:string,
     id:number,
@@ -42,7 +52,27 @@ const handler = NextAuth({providers: [
   pages: {
     signIn : "signIn",
     signOut: "signIn"
-  }
+  },
+  callbacks: {
+    session: async ({ session, token }) => {
+      console.log("this is toke",token)
+      if (session?.user) {
+        session.user.id = token.uid as number;
+        console.log(session.user.id)
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id ;
+      }
+      return token;
+    },
+  },
+  session: {
+    strategy: 'jwt',
+  },
+
 })
 
 export { handler as GET, handler as POST }

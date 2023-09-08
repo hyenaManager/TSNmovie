@@ -15,10 +15,9 @@ export default function Pages({ params }: pageProps) {
   const episodeRef = useRef<Map<number, HTMLLIElement> | null>(null);
 
   function scrollIntoEpisode(episode: number) {
-    console.log("eppisode....num: ", episode);
     const map = getMap();
     const node = map.get(episode);
-    console.log("scrollintoView propertiy ", node);
+
     node?.scrollIntoView({
       behavior: "smooth",
       block: "start",

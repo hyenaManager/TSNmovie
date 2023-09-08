@@ -45,10 +45,8 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
       redirect: false,
     }).then((res) => {
       if (res?.error) {
-        console.log(res);
         setErrorLogin(true);
       } else {
-        console.log(res);
         router.push("/feed");
       }
     });
@@ -61,9 +59,16 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
         </p>
       )}
 
-      <div className=" shadow-[0_0_20px_purple] flex justify-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-3hundred font-mono ">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+        className=" shadow-[0_0_20px_purple] flex justify-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-3hundred font-mono "
+      >
         <label className=" p-2 text-fuchsia-600  text-2xl">Username </label>
         <input
+          required
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
@@ -71,18 +76,16 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
         />
         <label className=" p-2 text-fuchsia-600 text-2xl ">Password </label>
         <input
+          required
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
           type="password"
         />
-        <button
-          onClick={handleSubmit}
-          className=" text-white hover:bg-fuchsia-400 p-2 w-[90px] h-[50px] bg-fuchsia-600 rounded-md m-3"
-        >
+        <button className=" text-white hover:bg-fuchsia-400 p-2 w-[90px] h-[50px] bg-fuchsia-600 rounded-md m-3">
           Login
         </button>
-      </div>
+      </form>
       <div className=" flex items-center justify-between p-2 ">
         <p className=" drop-shadow-md text-white">Still haven't account? </p>
         <button
@@ -137,6 +140,7 @@ function RegisterForm() {
     >
       <label className=" p-2 text-fuchsia-600  text-2xl">Username </label>
       <input
+        required
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
@@ -144,6 +148,7 @@ function RegisterForm() {
       />
       <label className=" p-2 text-fuchsia-600  text-2xl">Email </label>
       <input
+        required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
@@ -151,6 +156,7 @@ function RegisterForm() {
       />
       <label className=" p-2 text-fuchsia-600 text-2xl ">Password </label>
       <input
+        required
         onChange={(e) => setPassword(e.target.value)}
         value={password}
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
@@ -160,6 +166,7 @@ function RegisterForm() {
         confirm password
       </label>
       <input
+        required
         onChange={(e) => setConfirmPassword(e.target.value)}
         value={confirmPassword}
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"

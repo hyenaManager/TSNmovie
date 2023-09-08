@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import NavBar from "./components/navBars";
 import AuthProvider from "./context/authProvider";
+import QueryProvider from "./context/reactQeueryProvider";
 
 const space_gro = Space_Grotesk({ subsets: ["latin"] });
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={space_gro.className}>
-        <AuthProvider>
-          <NavBar />
-          <div className=" min-h-[100vh] bg-black">{children}</div>
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider>
+            <NavBar />
+            <div className=" min-h-[100vh] bg-black">{children}</div>
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
