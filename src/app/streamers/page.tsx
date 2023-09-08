@@ -27,7 +27,10 @@ export default function Pages() {
         <PageSearchBar />
         <div className=" mt-3 w-full h-full  grid grid-cols-5 max-h-[86vh] overflow-auto">
           {data.map((page: pagesProps) => (
-            <Suspense fallback={<p className=" text-white">Loading....</p>}>
+            <Suspense
+              fallback={<p className=" text-white">Loading....</p>}
+              key={page.id}
+            >
               <UserPageProfile {...page} />
             </Suspense>
           ))}

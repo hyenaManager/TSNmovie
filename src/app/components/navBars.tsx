@@ -1,7 +1,7 @@
 "use client";
 import { SessionProvider, useSession } from "next-auth/react";
 import Link from "next/link";
-
+import Image from "next/image";
 export default function NavBar() {
   const { data: session } = useSession();
   return (
@@ -34,9 +34,12 @@ export default function NavBar() {
               <span className=" text-fuchsia-400 text-lg p-1">
                 {session?.user?.name}
               </span>
-              <img
+              <Image
+                width={20}
+                height={10}
+                alt="haih"
                 src="/bb.png"
-                className=" w-[40px] h-[40px] rounded-full object-cover"
+                className=" rounded-full "
               />
             </>
           ) : (

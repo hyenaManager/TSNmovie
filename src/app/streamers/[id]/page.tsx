@@ -1,8 +1,5 @@
-import Link from "next/link";
-import CatagoryNavbar from "./catagoryNav";
-import { MovieSearchBar } from "../../components/searchBar";
 import AdminPage from "./adminPage";
-import Image from "next/image";
+
 import VideoSection from "./videoSection";
 
 type routeParams = {
@@ -12,9 +9,8 @@ type routeParams = {
 export default function ProfilePage({ params }: { params: routeParams }) {
   const id: number = params.id;
   return (
-    <main className=" flex justify-center text-white relative">
+    <main className=" flex flex-col justify-center text-white ">
       <AdminPage />
-      {/* available movies */}
       <VideoSection />
     </main>
   );

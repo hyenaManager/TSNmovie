@@ -1,5 +1,4 @@
 import React from "react";
-import { getFeedVideo } from "./feedApi";
 import VideoComponent from "./videoComponent";
 import FeedNotiSideBar from "./notification";
 

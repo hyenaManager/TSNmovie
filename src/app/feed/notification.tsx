@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getNotification } from "./feedApi";
 import { useSession } from "next-auth/react";
+import { time } from "console";
 
 export default function FeedNotiSideBar() {
   const { data: session } = useSession();
@@ -19,8 +20,14 @@ export default function FeedNotiSideBar() {
       <hr className=" border-b-2 border-b-fuchsia-500" />
       <ul className=" w-full p-2 flex justify-center flex-col">
         {filteredNotis?.map(
-          (data: { status: string; time: string; watched: boolean }) => (
-            <li className=" w-[98%] text-sm hover:text-white hover:bg-fuchsia-700 text-fuchsia-700 p-1 m-1 flex justify-between relative cursor-pointer">
+          (
+            data: { status: string; time: string; watched: boolean },
+            index: number
+          ) => (
+            <li
+              key={index}
+              className=" w-[98%] text-sm hover:text-white hover:bg-fuchsia-700 text-fuchsia-700 p-1 m-1 flex justify-between relative cursor-pointer"
+            >
               <p className=" p-1">{data.status}</p>
               <small className=" p-1 text-end">{data.time}</small>
               {/* show red dot if the notification is not watched */}

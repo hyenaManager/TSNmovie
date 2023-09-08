@@ -59,7 +59,8 @@
       "like": [
         0,
         1,
-        3
+        3,
+        2
       ],
       "title": "But You",
       "author": {
@@ -80,8 +81,8 @@
       "id": 1,
       "like": [
         1,
-        2,
-        0
+        0,
+        2
       ],
       "title": "Aiyoo girl",
       "author": {
@@ -98,7 +99,8 @@
       "like": [
         1,
         3,
-        0
+        0,
+        2
       ],
       "title": "Bruh",
       "author": {
@@ -153,12 +155,33 @@
       "watched": false
     },
     {
-      "author":1,
+      "author": 1,
       "status": "someone like your clips",
       "notificationType": "clips",
       "user": 0,
       "time": "5:30 pm",
       "id": 4
+    },
+    {
+      "status": "someone like your clips",
+      "notificationType": "clips",
+      "user": 2,
+      "time": "5:30 pm",
+      "id": 5
+    },
+    {
+      "status": "someone like your clips",
+      "notificationType": "clips",
+      "user": 2,
+      "time": "5:30 pm",
+      "id": 6
+    },
+    {
+      "status": "someone like your clips",
+      "notificationType": "clips",
+      "user": 2,
+      "time": "5:30 pm",
+      "id": 7
     }
   ]
 }

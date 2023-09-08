@@ -12,7 +12,7 @@ export default function AuthenticationForm() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
 
   return (
-    <div
+    <main
       className=" min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
       style={{
         backgroundImage: "url(/bruh.png)",
@@ -26,7 +26,7 @@ export default function AuthenticationForm() {
       ) : (
         <RegisterForm />
       )}
-    </div>
+    </main>
   );
 }
 
@@ -87,7 +87,9 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
         </button>
       </form>
       <div className=" flex items-center justify-between p-2 ">
-        <p className=" drop-shadow-md text-white">Still haven't account? </p>
+        <p className=" drop-shadow-md text-white">
+          {`Still haven't account?`}{" "}
+        </p>
         <button
           disabled={isSubmiting}
           className="text-fuchsia-600 hover:text-white hover:bg-fuchsia-600 text-lg drop-shadow-md p-1  rounded-md bg-black m-1"

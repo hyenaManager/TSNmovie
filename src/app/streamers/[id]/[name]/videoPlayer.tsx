@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 type videoProps = {
   videoSource: string;
   title: string;
@@ -116,8 +117,11 @@ function PageVideoPlayer({ videoSource, title, episode }: videoProps) {
         <div className=" absolute top-0 left-0 w-full h-full z-20 rounded-xl flex flex-col justify-between ">
           {/* user profile and link blah blah */}
           <div className=" h-1hundred bg-fuchsia-600  rounded-t-lg flex justify-between items-center ">
-            <img
-              className=" w-[60px] h-[60px] rounded-full bg-gray-400 ml-3 mr-2 cursor-pointer "
+            <Image
+              width={60}
+              height={60}
+              alt="bruh"
+              className=" rounded-full bg-gray-400 ml-3 mr-2 cursor-pointer "
               src="/luffy.jpg"
             />
             <h4 className=" text-lg text-slate-900 font-bold ">
