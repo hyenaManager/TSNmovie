@@ -33,6 +33,7 @@ function VideoPlayer({ title, author, video, id, like }: videoProps) {
   const queryClient = useQueryClient();
 
   const { data: session, status } = useSession();
+  const isLiked = like.includes(session?.user.id as number); //check current video is already liked by current user?
 
   const mutation = useMutation(
     async () => {
@@ -86,6 +87,9 @@ function VideoPlayer({ title, author, video, id, like }: videoProps) {
       router.push("api/auth/signIn");
     }
   }
+  console.log("like givers ", like);
+  console.log("user id ", session?.user.id);
+  console.log("is like or not ", like.includes(session?.user.id as number));
 
   return (
     <article
@@ -165,8 +169,8 @@ function VideoPlayer({ title, author, video, id, like }: videoProps) {
                 }}
                 icon={faHeart}
                 className={
-                  " text-white text-2xl p-1 cursor-pointer " +
-                  (like.includes(session?.user.id as number) && "text-red-600")
+                  " text-2xl p-1 cursor-pointer " +
+                  (isLiked ? " text-red-600" : " text-white")
                 }
               />
               <span className=" text-white">{like.length}</span>

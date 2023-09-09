@@ -10,7 +10,7 @@ type pageProp = {
 export default function UserPageProfile({ id, name, image }: pageProp) {
   return (
     <>
-      <div
+      <article
         className=" flex flex-col items-center text-xl p-5"
         key={JSON.stringify(id)}
       >
@@ -22,9 +22,9 @@ export default function UserPageProfile({ id, name, image }: pageProp) {
           className=" rounded-full bg-gray-400 "
         />
         <Link href={`/streamers/${id}`}>
-          <span> {name} </span>
+          <h2> {name} </h2>
         </Link>
-      </div>
+      </article>
     </>
   );
 }

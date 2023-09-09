@@ -7,10 +7,7 @@ export default function CatagoryNavbar() {
             All
           </li>
           <li className=" text-center w-full h-full bg-black p-3 hover:bg-fuchsia-600 ">
-            Anime
-          </li>
-          <li className=" text-center w-full h-full bg-black p-3 hover:bg-fuchsia-600 ">
-            Drama
+            Series
           </li>
           <li className=" text-center w-full h-full bg-black p-3 hover:bg-fuchsia-600 ">
             Movie

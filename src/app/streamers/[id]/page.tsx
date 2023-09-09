@@ -9,9 +9,9 @@ type routeParams = {
 export default function ProfilePage({ params }: { params: routeParams }) {
   const id: number = params.id;
   return (
-    <main className=" flex flex-col justify-center text-white ">
+    <div className="pageWarper flex flex-col justify-center text-white ">
       <AdminPage />
       <VideoSection />
-    </main>
+    </div>
   );
 }
