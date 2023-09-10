@@ -6,3 +6,7 @@ export const getPages = async () => {
           image: string;} = response.data
     return response.data
     }
+export const getSeries = async (url:string) => {
+     const response = await axios.get(url)
+     return response.data
+}

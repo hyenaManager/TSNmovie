@@ -1,18 +1,50 @@
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function Like() {
+export function Like({ colorClass = "text-white" }: { colorClass: string }) {
   return (
     <div
-      className=" m-4 flex items-center"
+      className=" m-2 flex items-center "
       style={{ textShadow: "2px 2px 8px black" }}
     >
+      <span className=" text-white mr-1">0</span>
       <FontAwesomeIcon
         icon={faHeart}
-        className=" text-white text-2xl mr-1 cursor-pointer "
+        className={" text-2xl mr-1 cursor-auto " + colorClass}
         style={{ textShadow: "2px 2px 8px black" }}
       />
-      <span className=" text-white">0</span>
+    </div>
+  );
+}
+
+export function Eye({ colorClass = "text-white" }: { colorClass: string }) {
+  return (
+    <div
+      className=" m-2 flex items-center "
+      style={{ textShadow: "2px 2px 8px black" }}
+    >
+      <span className=" text-white mr-1">0</span>
+      <FontAwesomeIcon
+        icon={faEye}
+        className={" text-2xl mr-1 cursor-auto " + colorClass}
+        style={{ textShadow: "2px 2px 8px black" }}
+      />
+    </div>
+  );
+}
+
+export function Star({ colorClass = "text-white" }: { colorClass: string }) {
+  return (
+    <div
+      className=" m-2 flex items-center "
+      style={{ textShadow: "2px 2px 8px black" }}
+    >
+      <span className=" text-white mr-1">0</span>
+      <FontAwesomeIcon
+        icon={faStar}
+        className={" text-2xl mr-1 cursor-auto " + colorClass}
+        style={{ textShadow: "2px 2px 8px black" }}
+      />
     </div>
   );
 }

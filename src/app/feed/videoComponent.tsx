@@ -10,6 +10,7 @@ type videoPageProp = {
   video: string;
   id: number;
   like: number[];
+  link: string;
 };
 
 export default function VideoComponent() {

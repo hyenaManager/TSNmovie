@@ -20,10 +20,10 @@ export default function Pages() {
   if (status === "loading") return <p>Loading.....</p>;
   return (
     <div className="pageWarper flex justify-center text-white  ">
-      <aside className=" w-4hundred h-[100vh] bg-white pt-14 ">
+      <aside className=" w-4hundred h-[100vh] bg-slate-950 pt-14 p-2 ">
         <GetPageByItsUnique />
       </aside>
-      <main className=" flex flex-col items-center min-h-[100vh] pt-14 w-full bg-black relative">
+      <main className=" flex flex-col items-center min-h-[100vh] pt-14 w-full bg-black">
         <PageSearchBar />
         <section className=" mt-3 w-full h-full  grid grid-cols-5 max-h-[86vh] overflow-auto">
           {data?.map((page: pagesProps, index: number) => (

@@ -1,5 +1,5 @@
 "use client";
-import { SessionProvider, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 export default function NavBar() {
@@ -35,11 +35,11 @@ export default function NavBar() {
                 {session?.user?.name}
               </span>
               <Image
-                width={20}
-                height={10}
+                width={400}
+                height={400}
                 alt="haih"
                 src="/bb.png"
-                className=" rounded-full "
+                className=" rounded-full bg-cover w-[40px] h-[40px] "
               />
             </>
           ) : (

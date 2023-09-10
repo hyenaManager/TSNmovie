@@ -13,15 +13,17 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addLike, removeLike } from "./feedApi";
+import Link from "next/link";
 type videoProps = {
   title: string;
   author: { name: string };
   video: string;
   id: number;
   like: number[];
+  link: string;
 };
 
-function VideoPlayer({ title, author, video, id, like }: videoProps) {
+function VideoPlayer({ title, author, video, id, like, link }: videoProps) {
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const [currentTime, setCurrentTime] = useState<number>(0); //currentTime of video
@@ -63,7 +65,7 @@ function VideoPlayer({ title, author, video, id, like }: videoProps) {
 
   useEffect(() => {
     setDuration(timeSpliter(videoRef?.current?.duration));
-    console.log("useEffect here!!");
+    // console.log("useEffect here!!");
 
     const interval = setInterval(() => {
       const [minute, second] = timeSpliter(videoRef?.current?.currentTime);
@@ -87,9 +89,6 @@ function VideoPlayer({ title, author, video, id, like }: videoProps) {
       router.push("api/auth/signIn");
     }
   }
-  console.log("like givers ", like);
-  console.log("user id ", session?.user.id);
-  console.log("is like or not ", like.includes(session?.user.id as number));
 
   return (
     <article
@@ -154,6 +153,11 @@ function VideoPlayer({ title, author, video, id, like }: videoProps) {
             </div>
             <span className=" text-sm text-slate-100 text-start items-center p-2">
               {title}
+              {link !== "" && (
+                <Link href={link} className=" text-blue-600 font-bold p-1">
+                  Link
+                </Link>
+              )}
             </span>
           </div>
           <FontAwesomeIcon

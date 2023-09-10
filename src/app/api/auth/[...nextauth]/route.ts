@@ -35,7 +35,7 @@ const handler = NextAuth({providers: [
         const response = await axios.get("http://localhost:4000/users")
         const serverData = response.data        
         const filteredUser = serverData.find((user:userProp)=>credentials?.username === user.name)
-        console.log("this is Authentication and user is ",filteredUser);
+        // console.log("this is Authentication and user is ",filteredUser);
   
         if ( filteredUser && (credentials?.password === filteredUser.password)) {
           // Any object returned will be saved in `user` property of the JWT
@@ -55,10 +55,10 @@ const handler = NextAuth({providers: [
   },
   callbacks: {
     session: async ({ session, token }) => {
-      console.log("this is toke",token)
+      // console.log("this is toke",token)
       if (session?.user) {
         session.user.id = token.uid as number;
-        console.log(session.user.id)
+        // console.log(session.user.id)
       }
       return session;
     },
