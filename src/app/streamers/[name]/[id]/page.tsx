@@ -7,7 +7,7 @@ import { getSeries } from "../../pageApi";
 import DefaultVideoPlayer from "./videoPlayer";
 
 type pageProps = {
-  params: { id: number; author: string };
+  params: { id: number };
 };
 
 export default function Pages({ params }: pageProps) {
@@ -66,7 +66,8 @@ export default function Pages({ params }: pageProps) {
           title={episode.title}
           image={data?.image}
           like={episode?.like}
-          author={params.author}
+          author={data?.author}
+          videoLink={`localhost:3000/streamers/${data?.author}/${params.id}`}
         />
       </main>
       <aside

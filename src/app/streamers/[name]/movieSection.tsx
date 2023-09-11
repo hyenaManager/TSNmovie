@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import { Eye, Like, Star } from "@/app/components/reactions";
 import Link from "next/link";

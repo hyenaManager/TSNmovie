@@ -16,11 +16,11 @@ export default function NavBar() {
           </Link>
         </div>
 
-        <Link href={"/feed"} className={" p-3 mainNavLink "}>
-          Feed
+        <Link href={"/clips"} className={" p-3 mainNavLink "}>
+          clips
         </Link>
-        <Link href={"/blink"} className={" p-3 mainNavLink "}>
-          blink
+        <Link href={"/notifications"} className={" p-3 mainNavLink "}>
+          Notification
         </Link>
         <Link href={"/streamers"} className={" p-3 mainNavLink "}>
           Pages

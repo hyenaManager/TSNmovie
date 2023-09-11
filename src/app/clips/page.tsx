@@ -1,6 +1,5 @@
 import React from "react";
 import VideoComponent from "./videoComponent";
-import FeedNotiSideBar from "./notification";
 
 type videoPageProp = {
   title: string;
@@ -12,9 +11,8 @@ type videoPageProp = {
 
 export default function Feed() {
   return (
-    <div className=" p-10 pt-14 flex justify-evenly">
+    <div className=" p-1 pt-14 flex justify-center">
       <VideoComponent />
-      <FeedNotiSideBar />
     </div>
   );
 }

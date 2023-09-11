@@ -3,13 +3,13 @@ import {
   faBookmark,
   faEllipsisVertical,
   faHeart,
-  faSave,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import ReportSomething from "@/app/components/reportComponent";
 type videoProps = {
   videoSource: string;
   episode: number;
@@ -17,6 +17,7 @@ type videoProps = {
   image: string;
   like: number[];
   author: string;
+  videoLink: string;
 };
 
 export default function DefaultVideoPlayer({
@@ -26,9 +27,16 @@ export default function DefaultVideoPlayer({
   image,
   like,
   author,
+  videoLink,
 }: videoProps) {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [moreOption, setMoreOption] = useState<boolean>(false);
+  const [hide, setHide] = useState<boolean>(true); //hide report or not boolean
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(videoLink);
+  };
 
   return (
     <>
@@ -63,22 +71,40 @@ export default function DefaultVideoPlayer({
                 </Link>
                 <h2 className=" m-2 text-xl">{title}</h2>
               </div>
+              {/* more options button */}
               <div className=" moreOption flex flex-col">
                 <FontAwesomeIcon
+                  onClick={() => setMoreOption(!moreOption)}
                   icon={faEllipsisVertical}
                   className=" m-1 text-2xl cursor-pointer"
                 />
-                <ul className=" absolute origin-top-right right-1 top-[50px] rounded-md flex flex-col bg-white divide-y divide-fuchsia-600">
-                  <li className="text-black text-sm min-w-[100px] rounded-t-md text-center hover:bg-fuchsia-300 cursor-pointer p-2">
-                    copy link
-                  </li>
-                  <li className="text-black text-sm min-w-[100px] rounded-b-md text-center hover:bg-fuchsia-300 cursor-pointer p-2">
-                    report
-                  </li>
-                </ul>
+                {moreOption && (
+                  <ul className=" absolute origin-top-right right-1 top-[50px] rounded-md flex flex-col bg-white divide-y divide-fuchsia-600">
+                    <li
+                      onClick={(e) => {
+                        copyLink();
+                        setMoreOption(!moreOption);
+                        e.stopPropagation;
+                      }} //copy link of video
+                      className="text-black text-sm min-w-[100px] rounded-t-md text-center hover:bg-fuchsia-300 cursor-pointer p-2"
+                    >
+                      copy link
+                    </li>
+                    <li
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMoreOption(!moreOption);
+                        setHide(false);
+                      }}
+                      className="text-black text-sm min-w-[100px] rounded-b-md text-center hover:bg-fuchsia-300 cursor-pointer p-2"
+                    >
+                      report
+                    </li>
+                  </ul>
+                )}
               </div>
             </div>
-            {/* more options button */}
+            {/* more options button end*/}
 
             {/* reactions buttons */}
             <div className="absolute top-[120px] right-0 flex justify-end items-end flex-col min-w-[150px] max-w-[300px] ">
@@ -110,6 +136,9 @@ export default function DefaultVideoPlayer({
           </>
         )}
       </div>
+      <AnimatePresence>
+        {!hide && <ReportSomething handleVisibillity={() => setHide(true)} />}
+      </AnimatePresence>
     </>
   );
 }

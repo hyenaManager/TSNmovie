@@ -113,5 +113,39 @@
                 }
             ]
         }
+    ],
+    "seriesVideo":[
+        {   
+            "id":0,
+            "episode":1,
+            "mainSeries":0,
+            "name":"beautiful girl",
+            "source":"/mood.mp4",
+            "like":[0,3]
+        },
+        {   
+            "id":2,
+            "episode":1,
+            "mainSeries":0,
+            "name":"beautiful girl",
+            "source":"/mood.mp4",
+            "like":[0,3]
+        },
+        {   
+            "id":3,
+            "episode":1,
+            "mainSeries":0,
+            "name":"beautiful girl",
+            "source":"/mood.mp4",
+            "like":[0,3]
+        },
+        {   
+            "id":4,
+            "episode":1,
+            "mainSeries":0,
+            "name":"beautiful girl",
+            "source":"/mood.mp4",
+            "like":[0,3]
+        }
     ]
 }

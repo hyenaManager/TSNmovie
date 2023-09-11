@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getCurrentTime } from "../myFuntions"
 
 export const getFeedVideo = async ()=> {
     const response = await axios.get("http://localhost:4000/clips")
@@ -8,19 +9,28 @@ export const addLike = async (postId:number,newLikeGiverId:number,likes:number[]
     const response = await axios.patch(`http://localhost:4000/clips/${postId}`,{
         like:[...likes,newLikeGiverId]
     })
-    const notiResponse = await axios.post(`http://localhost:4000/notifications`,{
-        status:"someone like your clips",
-        notificationType:"clips",
-        user:newLikeGiverId,
-        time:"5:30 pm"
-    })
 }
 export const removeLike = async (postId:number,likeRemoverId:number,likes:number[])=>{
     const response = await axios.patch(`http://localhost:4000/clips/${postId}`,{
         like:likes.filter((like)=>like !== likeRemoverId)
     })
 }
-export const getNotification = async ()=> {
-    const response = await axios.get("http://localhost:4000/notifications")
-    return response.data 
+
+export const newNotification = async (
+    author:string,
+    postType:string,
+    notificationType:string,
+    postId:number,
+    user:string
+    )=> {
+        const notiResponse = await axios.post(`http://localhost:4000/notifications`,{
+            author: author,
+            postType:postType,
+            postId:postId,
+            notificationType: notificationType,
+            user: user,
+            message:`${author} ${notificationType} your ${postType}`,
+            time: getCurrentTime(),
+            watched: false
+    })
 }

@@ -47,7 +47,7 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
       if (res?.error) {
         setErrorLogin(true);
       } else {
-        router.push("/feed");
+        router.push("/clips");
       }
     });
   }
@@ -128,7 +128,7 @@ function RegisterForm() {
         username: userName,
         password: password,
         redirect: true,
-        callbackUrl: "/feed",
+        callbackUrl: "/clips",
       });
     }
   }
