@@ -8,7 +8,6 @@ import DefaultVideoPlayer from "./videoPlayer";
 
 type pageProps = {
   params: { id: number; author: string };
-  name: string;
 };
 
 export default function Pages({ params }: pageProps) {

@@ -17,7 +17,7 @@ export default function PageMovie({ author }: { author: string }) {
   return (
     <div className=" w-full grid grid-cols-5 gap-5 overflow-auto p-3 bg-black min-h-[50vh]">
       {data?.map((data: videoProp) => (
-        <Movie {...data} author={author} />
+        <Movie {...data} author={author} key={data?.id} />
       ))}
     </div>
   );
