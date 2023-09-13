@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 type timeProps = { timeZone: string; hour12: boolean; hour: string; minute: string; }
 export const getCurrentTime = ()=>{
     const now = new Date();
@@ -22,4 +23,7 @@ export const timeSpliter = (duration:number)=>{
     const minutes:number = Math.floor(duration/60);
     const seconds:number = Math.floor(duration % 60);
     return [minutes,seconds]
+}
+export const uniqueString = ()=>{
+    return uuidv4
 }

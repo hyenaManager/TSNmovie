@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String          @unique @default(uuid())
+  firstName     String
+  lastName      String
+  createAt      DateTime        @default(now())
+  updateAt      DateTime
+  image         String
+  Page          Page[]          @relation("pageOwner")
+  Notifiactions Notifications[]
+  //other
+}
+
+model Page {
+  id       String   @unique @default(uuid())
+  name     String
+  admin    User     @relation("pageOwner", fields: [adminId], references: [id])
+  adminId  String
+  createAt DateTime @default(now())
+  updateAt DateTime
+  image    String
+  //clips
+  //series
+  movies   Movies[]
+  clips    Clips[]
+  series   Series[]
+}
+
+model Movies {
+  id          String   @unique @default(uuid())
+  name        String
+  overview    String?
+  video       String
+  //comment
+  likes       String[] //list of user's id who like
+  createAt    DateTime @default(now())
+  updateAt    DateTime
+  image       String
+  createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
+  pageOwnerId String
+}
+
+model Clips {
+  id          String   @unique @default(uuid())
+  name        String
+  content     String?
+  video       String
+  //comment
+  likes       String[] //list of user's id who like
+  createAt    DateTime @default(now())
+  updateAt    DateTime
+  image       String
+  createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
+  pageOwnerId String
+}
+
+model Series {
+  id          String     @unique @default(uuid())
+  name        String
+  content     String?
+  video       String?
+  //comment
+  likes       String[] //list of user's id who like
+  createAt    DateTime   @default(now())
+  updateAt    DateTime
+  image       String
+  createdBy   Page       @relation(fields: [pageOwnerId], references: [id])
+  pageOwnerId String
+  episodes    Episodes[]
+}
+
+model Episodes {
+  id        String   @unique @default(uuid())
+  name      String
+  content   String?
+  video     String
+  //comment
+  likes     String[] //list of user's id who like
+  createAt  DateTime @default(now())
+  updateAt  DateTime
+  image     String
+  createdBy Series   @relation(fields: [seriesId], references: [id])
+  seriesId  String
+}
+
+model Notifications {
+  id        String   @unique @default(uuid())
+  type      String
+  content   String
+  watched   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  link      String?
+  notiTo    User     @relation(fields: [userId], references: [id])
+  userId    String
+}

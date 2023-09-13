@@ -19,7 +19,7 @@ export default function UserPageProfile({ id, name, image }: pageProp) {
           height={240}
           alt={name}
           src={image}
-          className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
+          className=" w-[240px] h-[240px] rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
         />
         <Link href={`/streamers/${name}`}>
           <h2> {name} </h2>

@@ -13,7 +13,7 @@ export default function PageSearchBar() {
         />
         <FontAwesomeIcon
           icon={faSearch}
-          className=" p-2  text-white m-1 rounded-md fixed"
+          className=" p-2 w-[20px] h-[20px] text-white m-1 rounded-md fixed"
         />
       </div>
     </>
