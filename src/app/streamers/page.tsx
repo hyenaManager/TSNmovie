@@ -21,7 +21,9 @@ export default function Pages() {
     queryFn: getPages,
   });
 
-  const fakeData = data?.map(() => <SkeletonStreamer />);
+  const fakeData = data?.map((index: number) => (
+    <SkeletonStreamer key={index} />
+  ));
   useEffect(() => {
     const timerId = setTimeout(() => {
       setTimeUp(true);
