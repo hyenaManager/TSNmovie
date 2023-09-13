@@ -3,12 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 
 import { useSession } from "next-auth/react";
 import { getNotification } from "./notiApis";
+import { getAllPages } from "../streamers/pageApi";
 
 export default function NotiFications() {
   const { data: session } = useSession();
   const { data, status } = useQuery({
     queryKey: ["notification"],
     queryFn: getNotification,
+  });
+  const data1 = useQuery({
+    queryKey: ["userPages"],
+    queryFn: getAllPages,
   });
   //filt notifications for current user
   const filteredNotis = data?.filter(

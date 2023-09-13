@@ -61,7 +61,7 @@ function VideoPlayer({ title, author, video, id, like, link }: videoProps) {
       setIsPlaying(true);
     }
   };
-  console.log("re-renders..");
+  // console.log("re-renders..");
 
   // const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
   //   if (videoRef.current) {

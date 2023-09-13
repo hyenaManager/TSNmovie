@@ -1,8 +1,9 @@
 import axios from "axios";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import {PrismaAdapter} from "@next-auth/prisma-adapter"
 import type { DefaultSession } from 'next-auth';
+import prisma from "../../../../../prisma/client";
 
 declare module 'next-auth' {
   interface Session {
@@ -13,9 +14,13 @@ declare module 'next-auth' {
 }
 
 type userProp = {
-    name:string,
-    id:number,
-    password:string,
+  id: string;
+  name: string | null;
+  email: string | null;
+  emailVerified: Date | null;
+  image: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const handler = NextAuth({providers: [
@@ -32,9 +37,8 @@ const handler = NextAuth({providers: [
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const response = await axios.get("http://localhost:4000/users")
-        const serverData = response.data        
-        const filteredUser = serverData.find((user:userProp)=>credentials?.username === user.name)
+        const allUsers = await prisma.user.findMany()      
+        const filteredUser = allUsers.find((user:userProp)=>credentials?.username === user.name)
         // console.log("this is Authentication and user is ",filteredUser);
   
         if ( filteredUser && (credentials?.password === filteredUser.password)) {
@@ -72,6 +76,7 @@ const handler = NextAuth({providers: [
   session: {
     strategy: 'jwt',
   },
+  adapter: PrismaAdapter(prisma)
 
 })
 
