@@ -3,6 +3,8 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import Loading from "@/app/components/loading";
 
 type AuthenticateProp = {
   handleIsLogin: () => void;
@@ -31,7 +33,7 @@ export default function AuthenticationForm() {
 }
 
 function LoginForm({ handleIsLogin }: AuthenticateProp) {
-  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const [errorLogin, setErrorLogin] = useState<boolean>(false);
@@ -39,17 +41,33 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
   let loginStatus: string = "username or password is wrong 🤔";
   async function handleSubmit() {
     setIsSubmiting(true);
-    const result = await signIn("credentials", {
-      username: userName,
+    await signIn("credentials", {
+      email: email,
       password: password,
       redirect: false,
     }).then((res) => {
       if (res?.error) {
         setErrorLogin(true);
+        console.log(res.error);
       } else {
         router.push("/clips");
       }
     });
+  }
+  async function handleLoginWithGoogle() {
+    setIsSubmiting(true);
+    try {
+      console.log("starting......");
+
+      const response = await signIn("google", {
+        redirect: true,
+        callbackUrl: "/clips",
+      });
+      return console.log(response?.status);
+    } catch (error) {
+      console.log("here error.......");
+      console.log(error);
+    }
   }
   return (
     <>
@@ -64,17 +82,30 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
           e.preventDefault();
           handleSubmit();
         }}
-        className=" shadow-[0_0_20px_purple] flex justify-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-3hundred font-mono "
+        className=" shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
       >
-        <label className=" p-2 text-fuchsia-600  text-2xl">Username </label>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            handleLoginWithGoogle();
+          }}
+          className=" text-center w-4hundred rounded-lg bg-blue-600 text-white font-mono m-2 mt-4 p-3"
+        >
+          SignIn with google
+        </button>
+        <label className=" p-2 text-fuchsia-600  text-2xl  w-4hundred text-start ">
+          Email
+        </label>
         <input
           required
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
-          type="text"
+          type="email"
         />
-        <label className=" p-2 text-fuchsia-600 text-2xl ">Password </label>
+        <label className=" p-2 text-fuchsia-600 text-2xl w-4hundred text-start ">
+          Password{" "}
+        </label>
         <input
           required
           onChange={(e) => setPassword(e.target.value)}
@@ -103,51 +134,58 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
 }
 
 function RegisterForm() {
-  const [userName, setUserName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
 
   async function handleSubmit() {
-    const response = await axios.post(
-      "http://localhost:4000/users",
-      {
-        name: userName,
+    const response = await axios.post("http://localhost:3000/api/users", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    });
+  }
+  const mutation = useMutation(handleSubmit, {
+    onSuccess: async () =>
+      await signIn("credentials", {
+        firstName: firstName,
+        lastName: lastName,
         password: password,
         email: email,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.status === 201) {
-      const result = await signIn("credentials", {
-        username: userName,
-        password: password,
         redirect: true,
         callbackUrl: "/clips",
-      });
-    }
-  }
+      }),
+  });
   return (
     <form
       onSubmit={(e) => {
-        handleSubmit();
         e.preventDefault();
+        mutation.mutate();
       }}
-      className=" shadow-[0_0_20px_purple] flex justify-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-5hundred font-mono "
+      className=" shadow-[0_0_20px_purple] flex justify-center relative flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-5hundred font-mono "
     >
-      <label className=" p-2 text-fuchsia-600  text-2xl">Username </label>
-      <input
-        required
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
-        type="text"
-      />
+      <div className=" flex">
+        <label className=" p-2 text-fuchsia-600  text-2xl">first name </label>
+        <input
+          required
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className=" flex flex-start w-2hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+          type="text"
+        />
+        <label className=" p-2 text-fuchsia-600  text-2xl">last name </label>
+        <input
+          required
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className=" flex flex-start w-2hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+          type="text"
+        />
+      </div>
       <label className=" p-2 text-fuchsia-600  text-2xl">Email </label>
       <input
         required
@@ -174,6 +212,7 @@ function RegisterForm() {
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="password"
       />
+
       <button
         disabled={isSubmiting}
         type="submit"
@@ -181,6 +220,7 @@ function RegisterForm() {
       >
         Register
       </button>
+      {isSubmiting && <Loading />}
     </form>
   );
 }

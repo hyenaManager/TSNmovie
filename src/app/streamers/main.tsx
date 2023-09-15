@@ -7,7 +7,6 @@ import axios from "axios";
 import Loading from "../components/loading";
 import Link from "next/link";
 import Image from "next/image";
-import { getPages } from "./pageApi";
 
 type pagesProps = {
   id: string;
@@ -20,7 +19,7 @@ type pagesProps = {
 export default function Main() {
   const getPagess = async () => {
     try {
-      const res = await axios.get("/api/pages");
+      const res = await axios.get("http://localhost:3000/api/pages");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -30,6 +29,8 @@ export default function Main() {
     queryKey: ["userPages"],
     queryFn: getPagess,
   });
+  console.log("this is data.... ", data);
+
   return (
     <>
       <main className=" flex flex-col items-center min-h-[100vh] pt-14 w-full bg-black relative">

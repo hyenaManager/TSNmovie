@@ -39,10 +39,12 @@ model Session {
 
 model User {
   id            String          @id @default(uuid())
-  name          String?
+  firstName     String
+  lastName      String
   email         String?         @unique
+  password      String?
   emailVerified DateTime?
-  image         String?
+  image         String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2FdefaultProfile.jpeg?alt=media&token=df272966-58f1-4a2f-bfa4-224d2a08b675")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   accounts      Account[]
@@ -78,7 +80,7 @@ model Page {
   admin    User     @relation("pageOwner", fields: [adminId], references: [id])
   adminId  String
   createAt DateTime @default(now())
-  updateAt DateTime
+  updateAt DateTime @updatedAt
   image    String
   //clips
   //series
@@ -95,7 +97,7 @@ model Movies {
   //comment
   likes       String[] //list of user's id who like
   createAt    DateTime @default(now())
-  updateAt    DateTime
+  updateAt    DateTime @updatedAt
   image       String
   createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
@@ -109,7 +111,7 @@ model Clips {
   //comment
   likes       String[] //list of user's id who like
   createAt    DateTime @default(now())
-  updateAt    DateTime
+  updateAt    DateTime @updatedAt
   image       String
   createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
@@ -123,7 +125,7 @@ model Series {
   //comment
   likes       String[] //list of user's id who like
   createAt    DateTime   @default(now())
-  updateAt    DateTime
+  updateAt    DateTime   @updatedAt
   image       String
   createdBy   Page       @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
@@ -138,7 +140,7 @@ model Episodes {
   //comment
   likes     String[] //list of user's id who like
   createAt  DateTime @default(now())
-  updateAt  DateTime
+  updateAt  DateTime @updatedAt
   image     String
   createdBy Series   @relation(fields: [seriesId], references: [id])
   seriesId  String
@@ -149,7 +151,7 @@ model Notifications {
   type      String
   content   String
   watched   Boolean  @default(false)
-  createdAt DateTime @default(now())
+  createdAt DateTime @updatedAt
   link      String?
   notiTo    User     @relation(fields: [userId], references: [id])
   userId    String
