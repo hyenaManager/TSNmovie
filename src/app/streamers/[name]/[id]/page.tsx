@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
-import { getSeries } from "../../pageApi";
 import DefaultVideoPlayer from "./videoPlayer";
+import axios from "axios";
 
 type pageProps = {
   params: { id: number };
@@ -20,10 +20,19 @@ export default function Pages({ params }: pageProps) {
   const [inputEpisode, setInputEpisode] = useState<number>(1); //for finding episode
   const [sectionIsHidden, setSectionIsHidden] = useState<boolean>(false); //section hidden and or show (section toggling)
   const episodeRef = useRef<Map<number, HTMLLIElement> | null>(null);
-  const url = `http://localhost:5000/series/${params.id}`;
   const { data, status } = useQuery({
     queryKey: ["series", params.id],
-    queryFn: () => getSeries(url),
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/series/${params.id}`
+        );
+        const data = response.data;
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
   });
   const episodes = data?.episodes;
   // console.log("episodes from api", episodes);
