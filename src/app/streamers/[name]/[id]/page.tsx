@@ -79,6 +79,7 @@ export default function Pages({ params }: pageProps) {
           videoLink={`localhost:3000/streamers/${data?.author}/${params.id}`}
         />
       </main>
+
       <aside
         className={
           " w-[25vw] max-h-[100vh] bg-black text-black pt-16 rounded-md flex-col  " +
