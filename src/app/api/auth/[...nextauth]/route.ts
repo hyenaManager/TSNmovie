@@ -1,24 +1,59 @@
-import axios from "axios";
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials";
 
-import type { DefaultSession } from 'next-auth';
+import NextAuth, { Account, DefaultSession, Profile, User } from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials";
+import {PrismaAdapter} from "@auth/prisma-adapter"
+import GoogleProvider from "next-auth/providers/google";
+import { AdapterUser } from "next-auth/adapters";
+
+import prisma from "../../../../../prisma/client";
 
 declare module 'next-auth' {
   interface Session {
-    user: DefaultSession['user'] & {
-      id: number;
-    };
+    user: {
+      id:number
+    } & DefaultSession["user"]
   }
 }
 
 type userProp = {
-    name:string,
-    id:number,
-    password:string,
+    id: string;
+    firstName: string | null;
+    lastName: string | null;
+    email: string | null;
+    password: string;
+    emailVerified: Date | null;
+    image: string | null;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-const handler = NextAuth({providers: [
+const handler = NextAuth(
+  
+  {adapter: PrismaAdapter(prisma),
+    providers: [
+ 
+  // GoogleProvider({
+  //   clientId: process.env.GOOGLE_CLIENT_ID ,
+  //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //   authorization: {
+  //     params: {
+  //         prompt: "consent",
+  //         access_type: "offline",
+  //         response_type: "code"
+  //     }
+  // },
+  // async profile(profile) {
+
+  //     return {
+  //         id: profile.sub,
+  //         name: profile.name,
+  //         firstname: profile.given_name,
+  //         lastname: profile.family_name,
+  //         email: profile.email,
+  //         image: profile.picture,
+  //     }
+  // },
+  // }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
@@ -27,19 +62,21 @@ const handler = NextAuth({providers: [
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "your-username" },
+        email: { label: "Email", type: "email", placeholder: "email" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const response = await axios.get("http://localhost:4000/users")
-        const serverData = response.data        
-        const filteredUser = serverData.find((user:userProp)=>credentials?.username === user.name)
+        const fetchUser = await prisma.user.findUnique({
+          where:{
+            email:credentials?.email
+          }
+        })      
         // console.log("this is Authentication and user is ",filteredUser);
-  
-        if ( filteredUser && (credentials?.password === filteredUser.password)) {
+        if ( fetchUser && (credentials?.password === fetchUser.password)) {
           // Any object returned will be saved in `user` property of the JWT
-          return filteredUser
+          console.log("fetch userIs::::",fetchUser)
+          return fetchUser
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null
@@ -49,6 +86,7 @@ const handler = NextAuth({providers: [
       }
     })
   ],
+  secret:process.env.NEXTAUTH_SECRET,
   pages: {
     signIn : "signIn",
     signOut: "signIn"
@@ -57,7 +95,13 @@ const handler = NextAuth({providers: [
     session: async ({ session, token }) => {
       // console.log("this is toke",token)
       if (session?.user) {
+        const getUser = await prisma.user.findUnique({
+          where:{
+            id:token.uid as any
+          }
+        })
         session.user.id = token.uid as number;
+        session.user.name = getUser?.lastName
         // console.log(session.user.id)
       }
       return session;

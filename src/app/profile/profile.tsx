@@ -10,18 +10,15 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-type AdminPageProp = {
-  // isHidden: boolean;
-  userName: string;
-};
-export default function AdminPage({ pageName }: { pageName: string }) {
+
+export default function Profile() {
   const { data: session } = useSession();
   const { data, status, error } = useQuery({
-    queryKey: ["page", pageName],
+    queryKey: ["page", session?.user.email],
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageName}`
+          `http://localhost:3000/api/users/${session?.user.email}`
         );
         const data = response.data;
         return data;
@@ -30,7 +27,8 @@ export default function AdminPage({ pageName }: { pageName: string }) {
       }
     },
   });
-  const pageData = data?.[0];
+
+  const pageData = data?.Page?.[0];
   return (
     <>
       <article

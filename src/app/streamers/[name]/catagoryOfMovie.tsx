@@ -1,4 +1,4 @@
-export default function CatagoryNavbar() {
+export default function CatagoryNavbar({ pageName }: { pageName: string }) {
   return (
     <>
       <nav className="w-full mt-2 flex justify-between ">

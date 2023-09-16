@@ -1,5 +1,6 @@
 import React from "react";
 import VideoComponent from "./videoComponent";
+import CreateButton from "./floatingCreateBtn";
 
 type videoPageProp = {
   title: string;

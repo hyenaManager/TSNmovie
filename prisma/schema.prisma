@@ -10,25 +10,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String          @unique @default(uuid())
-  firstName     String
-  lastName      String
-  createAt      DateTime        @default(now())
-  updateAt      DateTime
-  image         String
-  Page          Page[]          @relation("pageOwner")
-  Notifiactions Notifications[]
-  //other
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
 }
 
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id            String          @id @default(uuid())
+  firstName     String
+  lastName      String
+  email         String?         @unique
+  password      String?
+  emailVerified DateTime?
+  image         String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2FdefaultProfile.jpeg?alt=media&token=df272966-58f1-4a2f-bfa4-224d2a08b675")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  Page          Page[]          @relation("pageOwner")
+  Notifiactions Notifications[]
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+// model User {
+//   id            String          @unique @default(uuid())
+//   firstName     String
+//   lastName      String
+//   createAt      DateTime        @default(now())
+//   updateAt      DateTime
+//   image         String
+//   //other
+// }
+
 model Page {
-  id       String   @unique @default(uuid())
+  id       String   @id @unique @default(uuid())
   name     String
   admin    User     @relation("pageOwner", fields: [adminId], references: [id])
   adminId  String
   createAt DateTime @default(now())
-  updateAt DateTime
+  updateAt DateTime @updatedAt
   image    String
   //clips
   //series
@@ -38,42 +90,41 @@ model Page {
 }
 
 model Movies {
-  id          String   @unique @default(uuid())
+  id          String   @id @unique @default(uuid())
   name        String
   overview    String?
   video       String
   //comment
   likes       String[] //list of user's id who like
   createAt    DateTime @default(now())
-  updateAt    DateTime
-  image       String
+  updateAt    DateTime @updatedAt
+  image       String?
   createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
 }
 
 model Clips {
-  id          String   @unique @default(uuid())
-  name        String
-  content     String?
+  id          String   @id @unique @default(uuid())
+  title       String?
   video       String
   //comment
   likes       String[] //list of user's id who like
+  link        String?
   createAt    DateTime @default(now())
-  updateAt    DateTime
-  image       String
+  updateAt    DateTime @updatedAt
   createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
 }
 
 model Series {
-  id          String     @unique @default(uuid())
+  id          String     @id @unique @default(uuid())
   name        String
   content     String?
   video       String?
   //comment
   likes       String[] //list of user's id who like
   createAt    DateTime   @default(now())
-  updateAt    DateTime
+  updateAt    DateTime   @updatedAt
   image       String
   createdBy   Page       @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
@@ -88,18 +139,18 @@ model Episodes {
   //comment
   likes     String[] //list of user's id who like
   createAt  DateTime @default(now())
-  updateAt  DateTime
+  updateAt  DateTime @updatedAt
   image     String
   createdBy Series   @relation(fields: [seriesId], references: [id])
   seriesId  String
 }
 
 model Notifications {
-  id        String   @unique @default(uuid())
+  id        String   @id @unique @default(uuid())
   type      String
   content   String
   watched   Boolean  @default(false)
-  createdAt DateTime @default(now())
+  createdAt DateTime @updatedAt
   link      String?
   notiTo    User     @relation(fields: [userId], references: [id])
   userId    String

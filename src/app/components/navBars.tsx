@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 export default function NavBar() {
   const { data: session } = useSession();
+
   return (
     <>
       <nav className=" text-white z-50 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
@@ -38,7 +39,7 @@ export default function NavBar() {
                 width={400}
                 height={400}
                 alt="haih"
-                src="/bb.png"
+                src={`${session?.user?.image as string}`}
                 className=" rounded-full bg-cover w-[40px] h-[40px] "
               />
             </>

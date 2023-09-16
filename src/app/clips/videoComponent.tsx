@@ -1,28 +1,41 @@
 "use client";
 import React from "react";
-import VideoPlayer from "./clipsVideo";
+import VideoPlayer from "./clipsVideoPlayer";
 import { getFeedVideo } from "./clipsApi";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
-import Loading from "../components/loading";
+
+import SpinLoading from "../components/spinLoading";
+import axios from "axios";
 
 type videoPageProp = {
-  title: string; //video tile
-  author: { name: string }; //video creator blah blah..
-  video: string; //video source for now its string for local src link
-  id: number; //video id
-  like: number[]; //video's total like in list
-  link: string; // other related video link can be null,exist only when the user add link
+  id: string;
+  title: string | null;
+  video: string;
+  likes: string[];
+  link: string | null;
+  createAt: Date;
+  updateAt: Date;
+  pageOwnerId: string;
+  createdBy: any;
 };
 
 export default function VideoComponent() {
   const { data, status, isFetching } = useQuery({
     queryKey: ["clips"],
-    queryFn: getFeedVideo,
+    queryFn: async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/clips");
+        const data = response.data;
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
   });
   return (
     <main className=" flex flex-col justify-center items-center overflow-auto ">
-      {status === "loading" && <Loading />}
+      {status === "loading" && <SkeletonClip />}
       {status === "error" && (
         <div className=" min-w-fit min-h-fit flex justify-center items-center xsm:h-[300px] sm:w-[600px] sm:h-[400px]  ">
           <h1 className=" text-4xl text-red-400 min-w-fit min-h-fit text-center ">
