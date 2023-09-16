@@ -40,7 +40,6 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
   const router = useRouter();
   let loginStatus: string = "username or password is wrong 🤔";
   async function handleSubmit() {
-    setIsSubmiting(true);
     await signIn("credentials", {
       email: email,
       password: password,
@@ -54,21 +53,7 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
       }
     });
   }
-  async function handleLoginWithGoogle() {
-    setIsSubmiting(true);
-    try {
-      console.log("starting......");
 
-      const response = await signIn("google", {
-        redirect: true,
-        callbackUrl: "/clips",
-      });
-      return console.log(response?.status);
-    } catch (error) {
-      console.log("here error.......");
-      console.log(error);
-    }
-  }
   return (
     <>
       {errorLogin && (
@@ -80,19 +65,11 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          setIsSubmiting(true);
           handleSubmit();
         }}
-        className=" shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
+        className=" relative shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
       >
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleLoginWithGoogle();
-          }}
-          className=" text-center w-4hundred rounded-lg bg-blue-600 text-white font-mono m-2 mt-4 p-3"
-        >
-          SignIn with google
-        </button>
         <label className=" p-2 text-fuchsia-600  text-2xl  w-4hundred text-start ">
           Email
         </label>
@@ -128,6 +105,7 @@ function LoginForm({ handleIsLogin }: AuthenticateProp) {
         >
           register now
         </button>
+        {isSubmiting && <Loading />}
       </div>
     </>
   );

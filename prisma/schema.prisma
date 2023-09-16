@@ -98,21 +98,20 @@ model Movies {
   likes       String[] //list of user's id who like
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
-  image       String
+  image       String?
   createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
 }
 
 model Clips {
   id          String   @id @unique @default(uuid())
-  name        String
-  content     String?
+  title       String?
   video       String
   //comment
   likes       String[] //list of user's id who like
+  link        String?
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
-  image       String
   createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
 }

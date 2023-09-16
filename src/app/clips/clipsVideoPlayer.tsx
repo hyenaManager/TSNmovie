@@ -12,45 +12,58 @@ import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addLike, newNotification, removeLike } from "./clipsApi";
 import Link from "next/link";
+import CreateButton from "./floatingCreateBtn";
+import CreateMovie from "./createClips";
 type videoProps = {
-  title: string;
-  author: { name: string };
+  id: string;
+  title: string | null;
   video: string;
-  id: number;
-  like: number[];
-  link: string;
+  likes: string[];
+  link: string | null;
+  createAt: Date;
+  updateAt: Date;
+  pageOwnerId: string;
+  createdBy: any;
 };
 
-function VideoPlayer({ title, author, video, id, like, link }: videoProps) {
+function VideoPlayer({
+  title,
+  video,
+  pageOwnerId,
+  likes,
+  id,
+  createdBy,
+}: videoProps) {
+  const [isCreating, setIsCreating] = useState(false); //user is creating clips or not toggling the creation page
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
   const queryClient = useQueryClient();
 
   const { data: session, status } = useSession();
-  const isLiked = like.includes(session?.user.id as number); //check current video is already liked by current user?
+  const isLiked = likes.includes(session?.user?.id as any); //check current video is already liked by current user?
 
-  const mutation = useMutation(
-    async () => {
-      if (like.includes(session?.user.id as number)) {
-        await removeLike(id, session?.user.id as number, like);
-        await newNotification(
-          session?.user.name as string,
-          "clips",
-          "like",
-          id,
-          author.name
-        );
-      } else {
-        await addLike(id, session?.user.id as number, like);
-      }
-    },
-    {
-      onSuccess: () => {
-        // Invalidate and refetch
-        queryClient.invalidateQueries({ queryKey: ["clips"] });
-      },
-    }
-  );
+  // const mutation = useMutation(
+  //   async () => {
+  //     if (like.includes(session?.user.id as number)) {
+  //       await removeLike(id, session?.user.id as number, like);
+  //       await newNotification(
+  //         session?.user.name as string,
+  //         "clips",
+  //         "like",
+  //         id,
+  //         author.name
+  //       );
+  //     } else {
+  //       await addLike(id, session?.user.id as number, like);
+  //     }
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       // Invalidate and refetch
+  //       queryClient.invalidateQueries({ queryKey: ["clips"] });
+  //     },
+  //   }
+  // );
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -86,16 +99,16 @@ function VideoPlayer({ title, author, video, id, like, link }: videoProps) {
             <div className=" flex justify-start items-center p-2">
               <div className=" w-[50px] h-[50px] rounded-full bg-gray-400 mr-2 cursor-pointer"></div>
               <h4 className=" text-lg text-slate-400 cursor-pointer">
-                {author.name}
+                {createdBy?.name}
               </h4>
             </div>
             <span className=" text-sm text-slate-100 text-start items-center p-2">
               {title}
-              {link !== "" && (
+              {/* {link !== "" && (
                 <Link href={link} className=" text-blue-600 font-bold p-1">
                   Link
                 </Link>
-              )}
+              )} */}
             </span>
           </div>
           <FontAwesomeIcon
@@ -106,16 +119,16 @@ function VideoPlayer({ title, author, video, id, like, link }: videoProps) {
           <div className=" h-1hundred bg-fuchsia-600 rounded-b-lg flex justify-between items-center">
             <div className=" m-4 flex justify-center items-center">
               <FontAwesomeIcon
-                onClick={() => {
-                  mutation.mutate();
-                }}
+                // onClick={() => {
+                //   mutation.mutate();
+                // }}
                 icon={faHeart}
                 className={
                   " text-2xl p-1 cursor-pointer " +
                   (isLiked ? " text-red-600" : " text-white")
                 }
               />
-              <span className=" text-white">{like.length}</span>
+              <span className=" text-white">{likes.length}</span>
             </div>
             <FontAwesomeIcon
               icon={faComment}
@@ -129,6 +142,10 @@ function VideoPlayer({ title, author, video, id, like, link }: videoProps) {
           onClick={handlePlayPause}
           className=" absolute top-6 right-6 text-4xl text-fuchsia-600 cursor-pointer"
         />
+      )}
+      <CreateButton isCreating={() => setIsCreating(!isCreating)} />
+      {isCreating && (
+        <CreateMovie isCreating={() => setIsCreating(!isCreating)} />
       )}
     </article>
   );

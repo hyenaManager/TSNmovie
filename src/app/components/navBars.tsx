@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 export default function NavBar() {
   const { data: session } = useSession();
-  console.log("this is session.....", session);
+
   return (
     <>
       <nav className=" text-white z-50 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">

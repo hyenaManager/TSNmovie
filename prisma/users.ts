@@ -12,12 +12,20 @@ export async function getAllUsers(){
     return users
 }
 
-export async function getUser(email:string){
-    const user = await prisma.user.findUnique({
-        where:{
-            email:email
-        }
-    })
+export async function getUserByMail(email:string){
+    try {
+        const user = await prisma.user.findUnique({
+            where:{
+                email:email
+            },
+            include:{
+                Page:true
+            }
+        })
+        return user
+    } catch (error) {
+        return error
+    }
 }
 
 export async function createUser(newUser:userType){
