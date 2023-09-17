@@ -5,7 +5,7 @@ export async function GET(request:Request,{params}:{params:{id:string}}){
     try {
        //get pageId from body. 
         const movies  = await getMovieByPageOwnerId(id) // and use that pageId to fetch all movies that match id
-        console.log("the movie return is ...",movies);
+        // console.log("the movie return is ...",movies);
         const data = JSON.stringify(movies)
         return new Response(data,{
             status:200

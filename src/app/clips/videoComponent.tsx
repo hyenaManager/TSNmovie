@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import VideoPlayer from "./clipsVideoPlayer";
 import { getFeedVideo } from "./clipsApi";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import SpinLoading from "../components/spinLoading";
@@ -21,6 +21,9 @@ type videoPageProp = {
 };
 
 export default function VideoComponent() {
+  const queryClient = useQueryClient();
+
+  queryClient.invalidateQueries({ queryKey: ["clips"] });
   const { data, status, isFetching } = useQuery({
     queryKey: ["clips"],
     queryFn: async () => {
@@ -43,13 +46,16 @@ export default function VideoComponent() {
           </h1>
         </div>
       )}
-      {data?.map((video: videoPageProp, index: number) =>
-        status === "loading" && !data ? (
-          <SkeletonClip key={index} />
-        ) : (
-          <VideoPlayer {...video} key={video.id} />
-        )
-      )}
+      {data &&
+        data?.map((video: videoPageProp, index: number) =>
+          status === "loading" && !data ? (
+            <SkeletonClip key={index} />
+          ) : (
+            <Suspense fallback={<SkeletonClip key={index} />}>
+              <VideoPlayer {...video} key={video.id} />
+            </Suspense>
+          )
+        )}
     </main>
   );
 }

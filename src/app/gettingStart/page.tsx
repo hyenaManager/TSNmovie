@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
@@ -8,6 +8,7 @@ import Loading from "../components/loading";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 export default function GettingStart() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function GettingStart() {
   const [pageImage, setPageImage] = useState<File | undefined>(undefined);
   const [isSubmiting, setIsSubmiting] = useState(false);
 
+  //create new page
   async function postPage(url: string) {
     const response = await axios.post("http://localhost:3000/api/pages", {
       name: pageName,
@@ -23,7 +25,7 @@ export default function GettingStart() {
       image: url,
     });
     if (response.status === 200) {
-      router.push("/clips");
+      router.push("/profile");
     } else {
       setIsSubmiting(false);
       alert(`error - ${response.data}`);
@@ -33,7 +35,7 @@ export default function GettingStart() {
     if (pageImage == null) return setIsSubmiting(false);
     const fileName = `pages/${pageImage?.name + v4()}`;
     const imageRef = ref(storage, fileName);
-    console.log(fileName, " is file name....");
+    // console.log(fileName, " is file name....");
     try {
       uploadBytes(imageRef, pageImage as any).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {

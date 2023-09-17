@@ -10,6 +10,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Link from "next/link";
+import AdminSkeleton from "../skeletons/adminPageSkeleton";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -28,7 +30,8 @@ export default function Profile() {
     },
   });
 
-  const pageData = data?.Page?.[0];
+  const pageData = data?.Page;
+  if (status === "loading") return <AdminSkeleton />;
   return (
     <>
       <article
@@ -49,12 +52,13 @@ export default function Profile() {
             className=" w-[130px] h-[130px] rounded-full bg-gray-400 "
           />
 
-          <h1
+          <Link
+            href={"/testing"}
             className=" text-4xl font-bold font-mono text-white rounded-md"
             style={{ textShadow: "2px 2px 8px black" }}
           >
             {pageData?.name}
-          </h1>
+          </Link>
         </section>
         {/* user trophy section */}
         <section className=" w-[50%] h-full flex flex-col ">

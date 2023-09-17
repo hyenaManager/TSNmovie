@@ -29,11 +29,11 @@ export default function Main() {
     queryKey: ["userPages"],
     queryFn: getPagess,
   });
-  console.log("this is data.... ", data);
+  // console.log("this is data.... ", data);
 
   return (
     <>
-      <main className=" flex flex-col items-center min-h-[100vh] pt-14 w-full bg-black relative">
+      <main className=" flex flex-col items-center min-h-[100vh] xsm:pt-2 sm:pt-14 w-full bg-black ">
         <PageSearchBar />
         {status === "error" && (
           <div className=" w-full h-full flex justify-center items-center ">
@@ -50,7 +50,7 @@ export default function Main() {
             </h1>
           </div>
         )}
-        <section className=" mt-3 w-full h-full  grid grid-cols-5 max-h-[86vh] overflow-auto">
+        <section className=" mt-3 w-full h-full  grid xsm:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
           {data?.map((page: pagesProps, index: number) => (
             <Suspense fallback={<SkeletonStreamer />} key={index}>
               <UserPageProfile {...page} />

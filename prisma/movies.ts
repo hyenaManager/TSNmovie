@@ -18,7 +18,7 @@ export async function getMovieByPageOwnerId(pageOwnerId:any){
                 pageOwnerId:pageOwnerId
             }
         })
-        console.log("its prisma here and moveis is ",movies);
+        // console.log("its prisma here and moveis is ",movies);
         
         return movies
     } catch (error) {
@@ -28,7 +28,7 @@ export async function getMovieByPageOwnerId(pageOwnerId:any){
 export async function getAllMovies(){
     try {
         const movies = await prisma.movies.findMany()
-        console.log("its prisma here and moveis is ",movies);
+        // console.log("its prisma here and moveis is ",movies);
         
         return movies
     } catch (error) {

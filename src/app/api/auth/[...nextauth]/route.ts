@@ -75,7 +75,7 @@ const handler = NextAuth(
         // console.log("this is Authentication and user is ",filteredUser);
         if ( fetchUser && (credentials?.password === fetchUser.password)) {
           // Any object returned will be saved in `user` property of the JWT
-          console.log("fetch userIs::::",fetchUser)
+          // console.log("fetch userIs::::",fetchUser)
           return fetchUser
         } else {
           // If you return null then an error will be displayed advising the user to check their details.

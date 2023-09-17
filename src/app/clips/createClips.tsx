@@ -16,12 +16,13 @@ export default function CreateMovie({
   isCreating: () => void;
 }) {
   const router = useRouter();
-  const { data: session } = useSession();
-  const [clipName, setclipName] = useState("");
-  const [isSubmiting, setIsSubmiting] = useState(false);
-  const [movieVideo, setMovieVideo] = useState<File | undefined>(undefined);
+  const { data: session } = useSession(); //get user data from session avaiable - {name,image,email,id...}
+  const [clipName, setclipName] = useState(""); //name of the clip that a user give
+  const [isSubmiting, setIsSubmiting] = useState(false); //is user is start creating a clip or not
+  const [movieVideo, setMovieVideo] = useState<File | undefined>(undefined); //choose a video from user
   const queryClient = useQueryClient();
   const { data, status } = useQuery({
+    //first get user data with related page from database
     queryKey: ["user", session?.user.email],
     queryFn: async () => {
       try {
@@ -29,7 +30,7 @@ export default function CreateMovie({
           `http://localhost:3000/api/users/${session?.user.email}`
         );
         const data = response.data;
-        console.log("user data in clips.", data);
+        // console.log("user data in clips.", data);
 
         return data;
       } catch (error) {
@@ -40,35 +41,35 @@ export default function CreateMovie({
 
   async function postMovie(url: string) {
     const response = await axios.post("http://localhost:3000/api/clips", {
-      title: clipName,
-      pageOwnerId: data?.Page?.[0].id,
-      video: url,
+      title: clipName, //title of clip name
+      pageOwnerId: data?.Page?.id, //user's page id , get from fetching user's data with realated page check above code
+      video: url, //url is link from firebase video that has been uploaded
     });
     if (response.status === 200) {
-      setIsSubmiting(false);
-      isCreating();
+      setIsSubmiting(false); //when creating clips in database is over remove loading mode
+      isCreating(); // and disabled creating mode, this function come from prop
     } else {
-      setIsSubmiting(false);
-      alert(`error - ${response.data}`);
+      setIsSubmiting(false); //when error remove loading mode
+      alert(`error - ${response.data}`); // alert error dev mode
     }
   }
 
   const mutation = useMutation(
     async () => {
       if (movieVideo == null) return setIsSubmiting(false);
-      const fileName = `pages/${movieVideo?.name + v4()}`;
+      const fileName = `pages/${movieVideo?.name + v4()}`; //making a file path name for video ,v4 is random string generator something like (11lj-l4lj-23;j-faaf)
       const imageRef = ref(storage, fileName);
-      console.log(fileName, " is file name....");
+      // console.log(fileName, " is file name....");
       try {
         uploadBytes(imageRef, movieVideo as any).then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url) => {
-            postMovie(url);
+            postMovie(url); //url is the actual path for a video that anyone can access in browser
           });
         });
       } catch (error) {
         alert(error);
         console.log(" errorr here :(");
-        setIsSubmiting(false);
+        setIsSubmiting(false); // disabled loading mode
       }
     },
     {

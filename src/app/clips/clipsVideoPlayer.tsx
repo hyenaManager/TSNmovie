@@ -1,6 +1,7 @@
 "use client";
 import {
   faComment,
+  faEllipsisVertical,
   faHeart,
   faPause,
   faPlay,
@@ -14,6 +15,8 @@ import { addLike, newNotification, removeLike } from "./clipsApi";
 import Link from "next/link";
 import CreateButton from "./floatingCreateBtn";
 import CreateMovie from "./createClips";
+import Image from "next/image";
+import ReportSomething from "../components/reportComponent";
 type videoProps = {
   id: string;
   title: string | null;
@@ -37,6 +40,7 @@ function VideoPlayer({
   const [isCreating, setIsCreating] = useState(false); //user is creating clips or not toggling the creation page
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
+  const [hide, setHide] = useState(true); //is report widget or page is hide or not
   const queryClient = useQueryClient();
 
   const { data: session, status } = useSession();
@@ -74,6 +78,7 @@ function VideoPlayer({
       setIsPlaying(true);
     }
   };
+
   // console.log("re-renders..");
 
   // const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
@@ -93,24 +98,32 @@ function VideoPlayer({
       />
       {/* cover video with purble bars, disabled only when the use play the video */}
       {!isPlaying ? (
-        <div className=" absolute top-0 left-0 w-full h-full z-20 rounded-xl flex flex-col justify-between ">
-          {/* user profile and link blah blah */}
-          <div className=" h-1hundred bg-fuchsia-600 rounded-t-lg flex flex-col ">
-            <div className=" flex justify-start items-center p-2">
-              <div className=" w-[50px] h-[50px] rounded-full bg-gray-400 mr-2 cursor-pointer"></div>
-              <h4 className=" text-lg text-slate-400 cursor-pointer">
-                {createdBy?.name}
-              </h4>
+        <div className=" absolute top-0 left-0 w-full h-full z-10 rounded-xl flex flex-col justify-between ">
+          {/* user profile and more option button and  blah blah */}
+          <section className=" h-1hundred bg-fuchsia-600 rounded-t-lg flex flex-col ">
+            <div className="profileDiv flex justify-between items-center">
+              <Link
+                href={`/streamers/${createdBy?.name}`}
+                className=" flex justify-start items-center p-2"
+              >
+                <Image
+                  src={createdBy?.image}
+                  width={100}
+                  height={100}
+                  alt="bruh"
+                  className=" w-[50px] h-[50px] rounded-full bg-gray-400 mr-2 cursor-pointer"
+                />
+                <h4 className=" text-lg text-slate-400 cursor-pointer">
+                  {createdBy?.name}
+                </h4>
+              </Link>
+              {/* this is moreOption  */}
+              <MoreOption setHide={() => setHide(false)} clipId={id} />
             </div>
-            <span className=" text-sm text-slate-100 text-start items-center p-2">
+            <p className=" text-sm text-slate-100 text-start items-center p-2 line-clamp-1">
               {title}
-              {/* {link !== "" && (
-                <Link href={link} className=" text-blue-600 font-bold p-1">
-                  Link
-                </Link>
-              )} */}
-            </span>
-          </div>
+            </p>
+          </section>
           <FontAwesomeIcon
             icon={faPlay}
             onClick={handlePlayPause}
@@ -147,7 +160,52 @@ function VideoPlayer({
       {isCreating && (
         <CreateMovie isCreating={() => setIsCreating(!isCreating)} />
       )}
+      {!hide && <ReportSomething handleVisibillity={() => setHide(!hide)} />}
     </article>
   );
 }
+
+function MoreOption({
+  setHide,
+  clipId,
+}: {
+  setHide: () => void;
+  clipId: string;
+}) {
+  const [moreOption, setMoreOption] = useState<boolean>(false); //is user click moreoption or not, for toggling more option
+
+  return (
+    <div className=" moreOption flex flex-col">
+      <FontAwesomeIcon
+        onClick={() => setMoreOption(!moreOption)}
+        icon={faEllipsisVertical}
+        className=" m-1 text-2xl cursor-pointer"
+      />
+      {moreOption && (
+        <ul className=" absolute origin-top-right right-1 top-[50px] rounded-md flex flex-col bg-white divide-y divide-fuchsia-600">
+          <li
+            onClick={(e) => {
+              setMoreOption(!moreOption);
+              e.stopPropagation;
+            }} //copy link of video
+            className="text-black text-sm min-w-[100px] rounded-t-md text-center hover:bg-fuchsia-300 cursor-pointer p-2"
+          >
+            copy link
+          </li>
+          <li
+            onClick={(e) => {
+              e.stopPropagation();
+              setMoreOption(!moreOption);
+              setHide();
+            }}
+            className="text-black text-sm min-w-[100px] rounded-b-md text-center hover:bg-fuchsia-300 cursor-pointer p-2"
+          >
+            report
+          </li>
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default VideoPlayer;

@@ -12,7 +12,7 @@ import React from "react";
 export default function GetPageByItsUnique() {
   return (
     <>
-      <ul className=" w-full flex flex-col justify-center text-2xl text-white mt-3">
+      <ul className=" w-full flex xsm:flex-row sm:flex-col justify-center xsm:text-sm sm:text-2xl text-white mt-3 ">
         <li className=" w-full m-1 p-3 text-center cursor-pointer hover:bg-fuchsia-500 rounded-t-xl rounded-br-xl border-2 border-fuchsia-500 items-center flex justify-between">
           <span>Most viewed</span>
           <FontAwesomeIcon

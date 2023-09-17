@@ -1,28 +1,13 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function Bruh() {
-  const { data: session, status } = useSession();
-
-  if (status === "authenticated") {
-    return (
-      <>
-        <p className=" mt-16 bg-black text-white">
-          Signed in as {session?.user?.name}
-        </p>
-        <button
-          onClick={() => signOut()}
-          className=" bg-black text-white mt-16"
-        >
-          Sign out
-        </button>
-      </>
-    );
-  }
-
+export default function LogInOut() {
   return (
-    <button onClick={() => signIn()} className=" bg-black text-white mt-16">
-      Sign in
+    <button
+      onClick={() => signOut()}
+      className=" bg-black text-white border rounded-lg w-[80px] h-[40px] hover:bg-red-400 fixed bottom-6 right-7"
+    >
+      Logout
     </button>
   );
 }

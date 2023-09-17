@@ -24,7 +24,7 @@ export default function MovieList() {
       }
     },
   });
-  console.log("this is data...", data);
+  // console.log("this is data...", data);
   if (data?.length === 0) return <h2>No data right now :0</h2>;
   if (!data) return <h2>Oh no there is a problem in fetching {data}</h2>;
   return (

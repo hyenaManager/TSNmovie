@@ -22,7 +22,7 @@ export default function PageSearchBar() {
 export function MovieSearchBar() {
   return (
     <>
-      <div className=" flex justify-end items-center absolute top-[100px] text-fuchsia-500 opacity-80  right-4">
+      <div className=" flex justify-end items-center fixed top-[100px] text-fuchsia-500 opacity-80  right-4">
         <input
           type="text"
           className=" p-1 border-b-2 border-slate-500 bg-none m-2 outline-none"

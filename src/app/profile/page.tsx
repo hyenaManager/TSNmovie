@@ -1,6 +1,7 @@
 import CatagoryNav from "./catagoryNav";
 import MovieList from "./movieList";
 import Profile from "./profile";
+import LogInOut from "./testLogin";
 
 type routeParams = {
   name: string;
@@ -15,6 +16,7 @@ export default function ProfilePage() {
         <MovieList />
         {/* <MovieSearchBar /> */}
       </main>
+      <LogInOut />
     </div>
   );
 }

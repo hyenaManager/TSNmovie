@@ -10,7 +10,7 @@ export default function Home() {
       <hr className="border-t-2 border-fuchsia-500" />
       <HomeArticles />
       <button className=" hover:text-white ease-in-out transition text-xl max-w-fit rounded-md text-fuchsia-600 p-3 flex justify-end  m-3">
-        <Link href={"/api/auth/signIn"}>Login Now</Link>
+        <Link href={"/api/auth/register"}>Getting Start </Link>
       </button>
     </div>
   );

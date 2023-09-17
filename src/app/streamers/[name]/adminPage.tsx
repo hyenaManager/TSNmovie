@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 type AdminPageProp = {
   // isHidden: boolean;
   userName: string;
@@ -31,6 +32,7 @@ export default function AdminPage({ pageName }: { pageName: string }) {
     },
   });
   const pageData = data?.[0];
+  if (status === "loading") return <AdminSkeleton />;
   return (
     <>
       <article

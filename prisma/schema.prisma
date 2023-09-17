@@ -49,7 +49,7 @@ model User {
   updatedAt     DateTime        @updatedAt
   accounts      Account[]
   sessions      Session[]
-  Page          Page[]          @relation("pageOwner")
+  Page          Page?
   Notifiactions Notifications[]
 }
 
@@ -77,8 +77,8 @@ model VerificationRequest {
 model Page {
   id       String   @id @unique @default(uuid())
   name     String
-  admin    User     @relation("pageOwner", fields: [adminId], references: [id])
-  adminId  String
+  admin    User     @relation(fields: [adminId], references: [id])
+  adminId  String   @unique
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
   image    String

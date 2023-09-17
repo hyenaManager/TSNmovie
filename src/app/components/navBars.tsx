@@ -2,12 +2,32 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 export default function NavBar() {
   const { data: session } = useSession();
+  const router = useRouter();
+  const { data, status } = useQuery({
+    queryKey: ["user", session?.user?.email],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/users/${session?.user.email}`
+        );
+        const data = response.data;
+        return data;
+      } catch (error) {
+        return error;
+      }
+    },
+  });
+  //checking if the user has page ,if exist push to profile path
 
   return (
     <>
-      <nav className=" text-white z-50 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
+      <nav className="pageWarper text-white z-50 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
         <div>
           <Link
             href={"/"}
@@ -27,7 +47,7 @@ export default function NavBar() {
           Pages
         </Link>
         <Link
-          href={"/profile"}
+          href={data?.Page?.name ? "/profile" : "/gettingStart"}
           className=" flex justify-center p-3 mainNavLink items-center"
         >
           {session ? (
@@ -44,7 +64,7 @@ export default function NavBar() {
               />
             </>
           ) : (
-            <span className=" text-lg text-white">Login</span>
+            <span className=" text-lg text-white">Profile</span>
           )}
         </Link>
       </nav>
