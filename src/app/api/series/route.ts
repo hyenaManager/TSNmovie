@@ -1,4 +1,4 @@
-import { getAllSeries } from "../../../../prisma/series";
+import { createSeries, getAllSeries } from "../../../../prisma/series";
 
 export async function GET(request:Request){
     try {
@@ -7,6 +7,20 @@ export async function GET(request:Request){
             status:200
         })
     } catch (error) {
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
+    }
+}
+
+export async function POST(request:Request){
+    const data = await request.json()
+    try{
+        const createdData = await createSeries(data);
+        return new Response(JSON.stringify(createdData),{
+            status:200
+        })
+    }catch(error){
         return new Response(JSON.stringify(error),{
             status:500
         })

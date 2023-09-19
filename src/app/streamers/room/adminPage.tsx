@@ -18,14 +18,14 @@ type AdminPageProp = {
 };
 export default function AdminPage() {
   const searchParams = useSearchParams();
-  const pageName = searchParams.get("pageName");
+  const pageId = searchParams.get("pageId");
   const { data: session } = useSession();
   const { data, status, error } = useQuery({
-    queryKey: ["page", pageName],
+    queryKey: ["page", pageId],
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/page?pageName=${pageName}`
+          `http://localhost:3000/api/pages/${pageId}/false/false/false`
         );
         const data = response.data;
         return data;
@@ -34,7 +34,6 @@ export default function AdminPage() {
       }
     },
   });
-  const pageData = data?.[0];
   if (status === "loading") return <AdminSkeleton />;
   return (
     <>
@@ -52,7 +51,7 @@ export default function AdminPage() {
             width={130}
             height={130}
             alt="luffy"
-            src={pageData?.image}
+            src={data?.image}
             className=" w-[130px] h-[130px] rounded-full bg-gray-400 border-8 border-white"
           />
 
@@ -60,7 +59,7 @@ export default function AdminPage() {
             className=" text-4xl font-bold font-mono text-white rounded-md"
             style={{ textShadow: "2px 2px 8px black" }}
           >
-            {pageData?.name}
+            {data?.name}
           </h1>
         </section>
         {/* user trophy section */}

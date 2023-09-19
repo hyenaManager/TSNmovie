@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 export default function NavBar() {
   const { data: session } = useSession();
   const router = useRouter();
+  console.log("id ", session?.user.id);
   const { data, status } = useQuery({
     queryKey: ["user", session?.user?.email],
     queryFn: async () => {

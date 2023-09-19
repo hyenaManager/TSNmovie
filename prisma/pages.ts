@@ -15,12 +15,12 @@ export async function createPage(data:any){
     }
 }
 
-export async function getSinglePageByName(pageName:string,series:boolean,clips:boolean,movies:boolean){
-    console.log("logging from bra series and movies",series,movies)
+export async function getSinglePageByName(pageId:string,clips:boolean,movies:boolean,series:boolean){
+    // console.log("logging from bruh series and clips",clips)
    try {
-    const page = await prisma.page.findMany({
+    const page = await prisma.page.findUnique({
         where:{
-            name:pageName
+            id:pageId
         },
         include:{
             series:series,
@@ -30,6 +30,8 @@ export async function getSinglePageByName(pageName:string,series:boolean,clips:b
     })
     return page
    } catch (error) {
+    console.log("yes prisma get page error");
+    
     return error
    }
 }

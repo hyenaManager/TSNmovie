@@ -24,3 +24,12 @@ export async function getAllSeries(){
         return error
     }
 }
+export async function createSeries(data:any){
+    try {
+        const series = await prisma.series.create({
+            data:data
+        })
+    } catch (error) {
+        
+    }
+}
