@@ -15,11 +15,17 @@ export async function createPage(data:any){
     }
 }
 
-export async function getSinglePageByName(pageName:string){
+export async function getSinglePageByName(pageName:string,series:boolean,clips:boolean,movies:boolean){
+    console.log("logging from bra series and movies",series,movies)
    try {
     const page = await prisma.page.findMany({
         where:{
             name:pageName
+        },
+        include:{
+            series:series,
+            clips:clips,
+            movies:movies,
         }
     })
     return page

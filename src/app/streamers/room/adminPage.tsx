@@ -11,18 +11,21 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
+import { useSearchParams } from "next/navigation";
 type AdminPageProp = {
   // isHidden: boolean;
   userName: string;
 };
-export default function AdminPage({ pageName }: { pageName: string }) {
+export default function AdminPage() {
+  const searchParams = useSearchParams();
+  const pageName = searchParams.get("pageName");
   const { data: session } = useSession();
   const { data, status, error } = useQuery({
     queryKey: ["page", pageName],
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageName}`
+          `http://localhost:3000/api/pages/page?pageName=${pageName}`
         );
         const data = response.data;
         return data;
@@ -46,11 +49,11 @@ export default function AdminPage({ pageName }: { pageName: string }) {
           style={{ backgroundImage: "url(/bb.png)" }}
         >
           <Image
-            width={200}
-            height={200}
+            width={130}
+            height={130}
             alt="luffy"
             src={pageData?.image}
-            className=" w-[130px] h-[130px] rounded-full bg-gray-400 "
+            className=" w-[130px] h-[130px] rounded-full bg-gray-400 border-8 border-white"
           />
 
           <h1

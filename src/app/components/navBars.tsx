@@ -37,18 +37,54 @@ export default function NavBar() {
           </Link>
         </div>
 
-        <Link href={"/clips"} className={" p-3 mainNavLink "}>
-          clips
+        <Link
+          href={"/clips"}
+          className={
+            " p-2 mainNavLink flex sm:flex-row xsm:flex-col justify-center items-center"
+          }
+        >
+          <Image
+            src={"/svgs/clips.svg"}
+            width={100}
+            height={100}
+            alt="clips"
+            className="w-[30px] h-[30px]"
+          />
+          <h4 className=" xsm:hidden sm:flex">clips</h4>
         </Link>
-        <Link href={"/notifications"} className={" p-3 mainNavLink "}>
-          Notification
+        <Link
+          href={"/notifications"}
+          className={
+            " p-2 mainNavLink flex sm:flex-row xsm:flex-col items-center "
+          }
+        >
+          <Image
+            src={"/svgs/noti.svg"}
+            width={100}
+            height={100}
+            alt="clips"
+            className="w-[30px] h-[30px] "
+          />
+          <h4 className=" xsm:hidden sm:flex">notifications</h4>
         </Link>
-        <Link href={"/streamers"} className={" p-3 mainNavLink "}>
-          Pages
+        <Link
+          href={"/streamers"}
+          className={
+            " p-2 mainNavLink flex sm:flex-row xsm:flex-col items-center "
+          }
+        >
+          <Image
+            src={"/svgs/streamers.svg"}
+            width={100}
+            height={100}
+            alt="clips"
+            className="w-[30px] h-[30px] "
+          />
+          <h4 className=" xsm:hidden sm:flex">streamers</h4>
         </Link>
         <Link
           href={data?.Page?.name ? "/profile" : "/gettingStart"}
-          className=" flex justify-center p-3 mainNavLink items-center"
+          className=" flex justify-center p-2 mainNavLink item sm:flex-row xsm:flex-cols-center"
         >
           {session ? (
             <>

@@ -39,6 +39,7 @@ const config: Config = {
       'xsm':"340px",
       'sm': '640px',
       // => @media (min-width: 640px) { ... }
+      'sml': '700px',
 
       'md': '768px',
       // => @media (min-width: 768px) { ... }

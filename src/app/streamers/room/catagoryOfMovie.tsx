@@ -1,5 +1,9 @@
+// "use client"
 import Image from "next/image";
-export default function CatagoryNavbar({ pageName }: { pageName: string }) {
+import { useSearchParams } from "next/navigation";
+export default function CatagoryNavbar() {
+  // const searchParams = useSearchParams();
+  // const pageName = searchParams.get("pageName");
   return (
     <>
       <nav className="w-full mt-2 flex justify-between ">

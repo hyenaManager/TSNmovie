@@ -1,18 +1,27 @@
 import Image from "next/image";
-export default function SkeletonStreamer() {
+export function NormalSkeleton() {
   return (
     <article
-      className=" animate-pulse flex flex-col items-center text-xl p-5 ml-7"
+      className="  animate-pulse flex flex-col items-center text-xl relative xsm:min-h-[200px] sm:max-h-[200px]  lg:max-h-[260px]"
       key={"hruh"}
     >
-      <Image
-        src={"/imgPlaceholder.jng"}
-        alt="...."
-        width={240}
-        height={240}
-        className=" w-[240px] h-[240px] rounded-full bg-cover bg-gray-400 shadow-[0_0_20px_purple] "
-      />
-      <h2 className=" w-[80px] h-[20px] bg-gray-500 mt-2"> </h2>
+      <div className=" w-full h-full rounded-full bg-cover bg-gradient-to-r from-fuchsia-400 to-black/70  "></div>
+      <h2 className=" w-[60%] xsm:h-[10px] sm:h-[30px]  bg-fuchsia-700  rounded-md bottom-0 absolute  ">
+        {" "}
+      </h2>
     </article>
   );
 }
+export function HalfSkeleton() {
+  return (
+    <article
+      className=" animate-pulse flex flex-col items-center text-xl relative xsm:min-h-[200px] sm:max-h-[200px]  lg:max-h-[260px]"
+      key={"hruh"}
+    >
+      <div className=" w-full h-full rounded-full bg-cover bg-gradient-to-r from-fuchsia-400 to-black/60  "></div>
+      <h2 className=" w-[60%] xsm:h-[10px] sm:h-[30px]  bg-gradient-to-r from-fuchsia-700 to-black rounded-md bottom-0 absolute "></h2>
+    </article>
+  );
+}
+
+// export default function SkeletonStreamer

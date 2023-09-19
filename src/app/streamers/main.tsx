@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense } from "react";
 import PageSearchBar from "../components/searchBar";
-import SkeletonStreamer from "../skeletons/skeletonStreamer";
+import { NormalSkeleton, HalfSkeleton } from "../skeletons/skeletonStreamer";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../components/loading";
@@ -42,7 +42,7 @@ export default function Main() {
             </h1>
           </div>
         )}
-        {status === "loading" && <Loading />}
+        {/* {status === "loading" && <Loading />} */}
         {data?.length === 0 && (
           <div className=" w-full h-full flex justify-center items-center ">
             <h1 className=" text-4xl text-red-400 ">
@@ -50,12 +50,19 @@ export default function Main() {
             </h1>
           </div>
         )}
-        <section className=" mt-3 w-full h-full  grid xsm:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
-          {data?.map((page: pagesProps, index: number) => (
-            <Suspense fallback={<SkeletonStreamer />} key={index}>
-              <UserPageProfile {...page} />
-            </Suspense>
-          ))}
+        <section className=" mt-3 w-full h-full  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
+          {status === "loading" ? (
+            <>
+              <NormalSkeleton />
+              <HalfSkeleton />
+            </>
+          ) : (
+            data?.map((page: pagesProps, index: number) => (
+              <Suspense fallback={<HalfSkeleton />} key={index}>
+                <UserPageProfile {...page} />
+              </Suspense>
+            ))
+          )}
         </section>
       </main>
     </>
@@ -66,18 +73,34 @@ export function UserPageProfile({ id, name, image }: pagesProps) {
   return (
     <>
       <article
-        className=" flex flex-col items-center text-xl p-5"
+        className=" flex flex-col items-center text-xl relative xsm:min-h-[200px] sm:max-h-[200px]  lg:max-h-[260px]"
         key={JSON.stringify(id)}
       >
         <Image
-          width={240}
-          height={240}
+          // width={200}
+          // height={200}
+          fill
           alt={name}
           src={image}
-          className=" w-[240px] h-[240px] rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
+          className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
         />
-        <Link href={`/streamers/${name}`}>
-          <h2> {name} </h2>
+        <Link
+          href={{
+            pathname: "/streamers/room",
+            query: {
+              pageId: id,
+              pageName: name,
+              pageImage: image,
+            },
+          }}
+          className="absolute bottom-0 flex justify-center items-end w-[50%] bg-fuchsia-700 rounded-md"
+        >
+          <h2
+            className="  xsm:text-sm sm:text-lg rounded-md align-bottom  text-white"
+            style={{ textShadow: "2px 2px 8px black" }}
+          >
+            {name}
+          </h2>
         </Link>
       </article>
     </>

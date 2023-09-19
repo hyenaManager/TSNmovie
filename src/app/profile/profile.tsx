@@ -49,7 +49,7 @@ export default function Profile() {
             height={200}
             alt="luffy"
             src={pageData?.image}
-            className=" w-[130px] h-[130px] rounded-full bg-gray-400 "
+            className=" w-[130px] h-[130px] rounded-full bg-gray-400 border-8 border-white"
           />
 
           <Link

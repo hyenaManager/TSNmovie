@@ -17,7 +17,7 @@ export default function AdminSkeleton() {
       <section className=" animate-pulse w-[50%] h-full flex flex-col ">
         {/* user's bounty or followers */}
         <div className=" m-2 text-2xl flex items-center p-2 bg-black w-full justify-start ">
-          <span className=" bg-gray-700  w-[34px] h-[34px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full">
+          <span className=" bg-gray-700  w-[50px] h-[50px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full">
             {/* coin icon */}
           </span>
           <span className=" mr-2 font-mono w-[60px] h-[20px] bg-gray-800 rounded-lg text-white">
@@ -26,7 +26,7 @@ export default function AdminSkeleton() {
         </div>
         {/* user's rating */}
         <div className=" m-2 text-2xl flex items-center p-2 bg-black w-full justify-start ">
-          <span className=" bg-gray-700  w-[34px] h-[34px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full">
+          <span className=" bg-gray-700  w-[50px] h-[50px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full">
             {/* icon */}
           </span>
           <span className=" mr-2 font-mono w-[60px] h-[20px] bg-gray-800 rounded-lg text-white">
@@ -35,7 +35,7 @@ export default function AdminSkeleton() {
         </div>
         {/* user trophy */}
         <div className=" m-2 text-2xl flex items-center p-2 bg-black w-full justify-start ">
-          <span className="  bg-gray-700  w-[34px] h-[34px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full">
+          <span className="  bg-gray-700  w-[50px] h-[50px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full">
             {/* icon */}
           </span>
           <span className=" mr-2 font-mono w-[60px] h-[20px] bg-gray-800 rounded-lg text-white">
@@ -44,7 +44,7 @@ export default function AdminSkeleton() {
         </div>
         {/* user trophy */}
         <div className=" m-2 text-2xl flex items-center p-2 bg-black w-full justify-start ">
-          <span className="shadow-[0_0_20px_red]  w-[34px] h-[34px] mr-3 text-red-600 p-4 border-2 border-white rounded-full">
+          <span className="shadow-[0_0_20px_red]  w-[50px] h-[50px] mr-3 text-red-600 p-4 border-2 border-white rounded-full">
             {/* icon */}
           </span>
           <span className=" mr-2 font-mono w-[60px] h-[20px] bg-gray-800 rounded-lg text-white">

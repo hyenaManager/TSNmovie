@@ -8,40 +8,11 @@ import { useSession } from "next-auth/react";
 
 type videoProp = { name: string; image: string; id: string; author: string };
 
-export default function PageMovie({ pageName }: { pageName: string }) {
-  const { data: session } = useSession();
-  const { data, status, error } = useQuery({
-    queryKey: ["movies"],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/movies/5f78ed6f-1a8a-4c17-a9ae-8d105bfa3bb5"
-        );
-        return response.data;
-      } catch (error) {
-        alert(error);
-        return error;
-      }
-    },
-  });
-  console.log("this is data...", data);
-  if (data?.length === 0) return <h2>No data right now :0</h2>;
-  if (!data) return <h2>Oh no there is a problem in fetching {data}</h2>;
-  return (
-    <div className=" w-full grid grid-cols-5 gap-5 overflow-auto p-3 bg-black min-h-[50vh]">
-      {data.length !== 0 &&
-        data?.map((data: videoProp) => (
-          <Movie
-            {...data}
-            author={session?.user.name as string}
-            key={data?.id}
-          />
-        ))}
-    </div>
-  );
+export default function MovieList({ pageName }: { pageName: string }) {
+  return <section>bruh</section>;
 }
 
-function Movie({ name, image, id, author }: videoProp) {
+function Movies({ name, image, id, author }: videoProp) {
   // const [isHover, setIsHover] = useState<boolean>(false);
   return (
     <article
