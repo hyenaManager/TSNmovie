@@ -15,7 +15,7 @@ export async function createPage(data:any){
     }
 }
 
-export async function getSinglePageByName(pageId:string,clips:boolean,movies:boolean,series:boolean){
+export async function getSinglePageByName(pageId:string){
     // console.log("logging from bruh series and clips",clips)
    try {
     const page = await prisma.page.findUnique({
@@ -23,9 +23,9 @@ export async function getSinglePageByName(pageId:string,clips:boolean,movies:boo
             id:pageId
         },
         include:{
-            series:series,
-            clips:clips,
-            movies:movies,
+            series:true,
+            clips:true,
+            movies:true,
         }
     })
     return page

@@ -28,7 +28,10 @@ export default function ClipList() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageId}/true/false/false`
+          `http://localhost:3000/api/pages/${pageId}`,
+          {
+            timeout: 10000,
+          }
         );
 
         return response.data;
@@ -38,6 +41,18 @@ export default function ClipList() {
       }
     },
   });
+  if (error)
+    return (
+      <div className=" w-full h-3hundred flex justify-center items-center">
+        <h3 className=" text-4xl text-red-400 m-2 uppercase">
+          Opps something went wrong
+        </h3>
+        <FontAwesomeIcon
+          icon={faArrowRotateRight}
+          className=" w-[40px] cursor-pointer h-[40px] text-red-200"
+        />
+      </div>
+    );
   const clips = data?.clips; //destruturing clips from data
   if (error)
     return (
@@ -58,7 +73,7 @@ export default function ClipList() {
           {status === "loading" &&
             [1, 2, 3, 4].map((number) => <SkeletonSmClip key={number} />)}
           {clips?.map((clip: videoProps) => (
-            <Suspense fallback={<SkeletonSmClip />}>
+            <Suspense fallback={<SkeletonSmClip />} key={clip?.id}>
               <VideoPlayer {...clip} key={clip.id} pageImage={data?.image} />
             </Suspense>
           ))}

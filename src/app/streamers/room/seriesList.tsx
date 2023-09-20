@@ -9,6 +9,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Eye, Like, Star } from "@/app/components/reactions";
 import Link from "next/link";
+import SeriesImgSkeleton from "@/app/skeletons/seriesSkeleton";
 
 type seriesProps = {
   id: string;
@@ -30,7 +31,10 @@ export default function SeriesList() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageId}/false/false/true`
+          `http://localhost:3000/api/pages/${pageId}`,
+          {
+            timeout: 3000,
+          }
         );
 
         return response.data;
@@ -39,12 +43,13 @@ export default function SeriesList() {
         return error;
       }
     },
+    retryDelay: 2000,
+    retry: 3,
   });
   const series = data?.series; //destruturing clips from data
-  console.log("this is series :", series);
-  console.log("this is series :", data);
+  console.log("status:", status);
 
-  if (error)
+  if (error || status === "error")
     return (
       <div className=" w-full h-3hundred flex justify-center items-center">
         <h3 className=" text-4xl text-red-400 m-2 uppercase">
@@ -61,9 +66,9 @@ export default function SeriesList() {
       <section>
         <div className=" pageWarper grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 ">
           {status === "loading" &&
-            [1, 2, 3, 4].map((number) => <SkeletonSmClip key={number} />)}
+            [1, 2, 3, 4].map((number) => <SeriesImgSkeleton key={number} />)}
           {series?.map((clip: seriesProps) => (
-            <Suspense fallback={<SkeletonSmClip />}>
+            <Suspense fallback={<SeriesImgSkeleton />} key={clip?.id}>
               <SeriesImage {...clip} />
             </Suspense>
           ))}

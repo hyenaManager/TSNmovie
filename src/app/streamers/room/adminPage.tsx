@@ -25,7 +25,7 @@ export default function AdminPage() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageId}/false/false/false`
+          `http://localhost:3000/api/pages/${pageId}`
         );
         const data = response.data;
         return data;
