@@ -1,5 +1,5 @@
 "use client";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { SkeletonSmClip } from "@/app/skeletons/skeletonClip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
@@ -10,9 +10,12 @@ import Image from "next/image";
 import { Eye, Like, Star } from "@/app/components/reactions";
 import Link from "next/link";
 import SeriesImgSkeleton from "@/app/skeletons/seriesSkeleton";
+import SeriesImage from "./seriesComponent";
+import { SeriesOverview } from "./seriesComponent";
 
 type seriesProps = {
   id: string;
+  title: string;
   name: string;
   content: string | null;
   video: string | null;
@@ -21,11 +24,14 @@ type seriesProps = {
   updateAt: Date;
   image: string;
   pageOwnerId: string;
+  pageImage: string;
   page: { id: string; name: string; adminId: string };
+  createdBy: any;
 };
-export default function SeriesList() {
-  const searchParams = useSearchParams();
-  const pageId = searchParams.get("pageId");
+export default function SeriesList({ pageId }: { pageId: string }) {
+  const [isCheckingSeries, setIsCheckingSeries] = useState(false); //if true show the serieOverview component else hide
+  const [selectedSeries, setSelectedSeries] = useState<any>(null); //object of series that user selected to view, data is set from series image componetn
+
   const { data, status, error } = useQuery({
     queryKey: ["page", pageId],
     queryFn: async () => {
@@ -46,8 +52,11 @@ export default function SeriesList() {
     retryDelay: 2000,
     retry: 3,
   });
+  const handleSelectedSeries = (series: any) => {
+    setSelectedSeries(series); //set series , this is set from seriesImage
+  };
   const series = data?.series; //destruturing clips from data
-  console.log("status:", status);
+  console.log("this is episodes from series list: ", data?.episodes);
 
   if (error || status === "error")
     return (
@@ -67,45 +76,24 @@ export default function SeriesList() {
         <div className=" pageWarper grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 ">
           {status === "loading" &&
             [1, 2, 3, 4].map((number) => <SeriesImgSkeleton key={number} />)}
-          {series?.map((clip: seriesProps) => (
-            <Suspense fallback={<SeriesImgSkeleton />} key={clip?.id}>
-              <SeriesImage {...clip} />
+          {series?.map((serie: seriesProps) => (
+            <Suspense fallback={<SeriesImgSkeleton />} key={serie.id}>
+              <SeriesImage
+                {...serie}
+                chosenSeries={handleSelectedSeries}
+                isChecking={() => setIsCheckingSeries(!isCheckingSeries)}
+              />
             </Suspense>
           ))}
         </div>
+        {isCheckingSeries && (
+          <SeriesOverview
+            {...selectedSeries}
+            pageOwnerId={pageId}
+            handleVisibility={() => setIsCheckingSeries(!isCheckingSeries)}
+          />
+        )}
       </section>
     </>
-  );
-}
-
-function SeriesImage({ name, id, image, content, page }: seriesProps) {
-  // const [isHover, setIsHover] = useState<boolean>(false);
-  return (
-    <article
-      // onMouseEnter={() => setIsHover(true)}
-      // onMouseLeave={() => setIsHover(false)}
-      className=" border rounded-t-2xl rounded-r-2xl border-fuchsia-500 flex flex-col justify-center items-center text-xl p-1 text-fuchsia-600 font-bold relative "
-      key={name}
-    >
-      {image && (
-        <Image
-          width={140}
-          height={140}
-          src={image}
-          alt={image}
-          className=" rounded-t-xl rounded-r-xl  bg-gray-400 bg-cover h-[80%] w-[90%] "
-        />
-      )}
-
-      <div className=" flex absolute top-0 right-0 items-center flex-col justify-center backdrop-brightness-75 rounded-sm ">
-        <Like colorClass={"text-red-400"} />
-        <Eye colorClass="text-blue-400" />
-        <Star colorClass="text-yellow-500" />
-      </div>
-
-      <Link href={`/streamers/`} className=" flex justify-center items-center">
-        <h3 className=" text-center">{name} </h3>
-      </Link>
-    </article>
   );
 }

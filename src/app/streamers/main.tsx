@@ -85,14 +85,7 @@ export function UserPageProfile({ id, name, image }: pagesProps) {
           className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
         />
         <Link
-          href={{
-            pathname: "/streamers/room",
-            query: {
-              pageId: id,
-              pageName: name,
-              pageImage: image,
-            },
-          }}
+          href={`/streamers/${id}`}
           className="absolute bottom-0 flex justify-center items-end w-[50%] bg-fuchsia-700 rounded-md"
         >
           <h2

@@ -1,10 +1,10 @@
 import prisma from "./client";
 
-export async function getSeriesByPageId(pageOwnerId:string){
+export async function getSeriesByPageId(pageId:string){
     try {
-        const series = await prisma.series.findMany({
+        const series = await prisma.series.findUnique({
             where:{
-                pageOwnerId:pageOwnerId
+                id:pageId
             },
             include:{
                 episodes:true
@@ -29,6 +29,7 @@ export async function createSeries(data:any){
         const series = await prisma.series.create({
             data:data
         })
+        return series
     } catch (error) {
         
     }

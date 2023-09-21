@@ -1,13 +1,12 @@
 "use client";
 
 import { Suspense } from "react";
-import VideoPlayer from "./clipVideo";
+import VideoPlayer from "./clipComponent";
 import { SkeletonSmClip } from "@/app/skeletons/skeletonClip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 
 type videoProps = {
   id: string;
@@ -20,9 +19,7 @@ type videoProps = {
   pageOwnerId: string;
   createdBy: any;
 };
-export default function ClipList() {
-  const searchParams = useSearchParams();
-  const pageId = searchParams.get("pageId");
+export default function ClipList({ pageId }: { pageId: string }) {
   const { data, status, error } = useQuery({
     queryKey: ["page", pageId],
     queryFn: async () => {

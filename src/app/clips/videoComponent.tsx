@@ -1,12 +1,12 @@
 "use client";
 import React, { Suspense } from "react";
 import VideoPlayer from "./clipsVideoPlayer";
-import { getFeedVideo } from "./clipsApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import SpinLoading from "../components/spinLoading";
 import axios from "axios";
+import Uploading from "../components/uploading";
 
 type videoPageProp = {
   id: string;
@@ -37,25 +37,28 @@ export default function VideoComponent() {
     },
   });
   return (
-    <main className=" flex flex-col justify-center items-center overflow-auto ">
-      {status === "loading" && <SkeletonClip />}
-      {status === "error" && (
-        <div className=" min-w-fit min-h-fit flex justify-center items-center xsm:h-[300px] sm:w-[600px] sm:h-[400px]  ">
-          <h1 className=" text-4xl text-red-400 min-w-fit min-h-fit text-center ">
-            Opps there is an error:(
-          </h1>
-        </div>
-      )}
-      {data &&
-        data?.map((video: videoPageProp, index: number) =>
-          status === "loading" && !data ? (
-            <SkeletonClip key={index} />
-          ) : (
-            <Suspense fallback={<SkeletonClip key={index} />}>
-              <VideoPlayer {...video} key={video.id} />
-            </Suspense>
-          )
+    <>
+      <Uploading />
+      <main className=" flex flex-col justify-center items-center overflow-auto ">
+        {status === "loading" && <SkeletonClip />}
+        {status === "error" && (
+          <div className=" min-w-fit min-h-fit flex justify-center items-center xsm:h-[300px] sm:w-[600px] sm:h-[400px]  ">
+            <h1 className=" text-4xl text-red-400 min-w-fit min-h-fit text-center ">
+              Opps there is an error:(
+            </h1>
+          </div>
         )}
-    </main>
+        {data &&
+          data?.map((video: videoPageProp, index: number) =>
+            status === "loading" && !data ? (
+              <SkeletonClip key={index} />
+            ) : (
+              <Suspense fallback={<SkeletonClip key={index} />} key={video.id}>
+                <VideoPlayer {...video} key={video.id} />
+              </Suspense>
+            )
+          )}
+      </main>
+    </>
   );
 }

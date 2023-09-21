@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addLike, newNotification, removeLike } from "./clipsApi";
 import Link from "next/link";
 import CreateButton from "./floatingCreateBtn";
 import CreateMovie from "./createClips";

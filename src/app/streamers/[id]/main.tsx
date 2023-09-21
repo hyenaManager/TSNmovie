@@ -5,7 +5,7 @@ import { Suspense, lazy, useState } from "react";
 const ClipList = lazy(() => import("./clipList"));
 const SeriesList = lazy(() => import("./seriesList"));
 
-export default function MainList() {
+export default function MainList({ pageId }: { pageId: string }) {
   const [currentCatagory, setCurrentCatagory] = useState("clips");
   const handleCurrentCatagory = (catagory: string) => {
     setCurrentCatagory(catagory);
@@ -14,14 +14,14 @@ export default function MainList() {
     if (currentCatagory === "clips") {
       return (
         <Suspense>
-          <ClipList />
+          <ClipList pageId={pageId} />
         </Suspense>
       );
     }
     if (currentCatagory === "series") {
       return (
         <Suspense>
-          <SeriesList />
+          <SeriesList pageId={pageId} />
         </Suspense>
       );
     } else {
@@ -29,7 +29,7 @@ export default function MainList() {
     }
   };
   return (
-    <div className=" pageWarper relative ">
+    <div className=" pageWarper relative min-h-[70vh]">
       <CatagoryNavbar setCurrentCatagory={handleCurrentCatagory} />
       {currentContent()}
     </div>

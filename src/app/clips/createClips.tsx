@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { storage } from "../firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { v4 } from "uuid";
 import Loading from "../components/loading";
 import axios from "axios";
@@ -60,17 +65,27 @@ export default function CreateMovie({
       const fileName = `pages/${movieVideo?.name + v4()}`; //making a file path name for video ,v4 is random string generator something like (11lj-l4lj-23;j-faaf)
       const imageRef = ref(storage, fileName);
       // console.log(fileName, " is file name....");
-      try {
-        uploadBytes(imageRef, movieVideo as any).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((url) => {
+
+      // Create an upload task and set up progress tracking
+      const uploadTask = uploadBytesResumable(imageRef, movieVideo as any);
+      // set up an event listener to track upload progress
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          var percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(percent + "% done");
+        },
+        (error) => {
+          console.log(error);
+          setIsSubmiting(false);
+          return error;
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             postMovie(url); //url is the actual path for a video that anyone can access in browser
           });
-        });
-      } catch (error) {
-        alert(error);
-        console.log(" errorr here :(");
-        setIsSubmiting(false); // disabled loading mode
-      }
+        }
+      );
     },
     {
       onSuccess: () => {
@@ -81,7 +96,7 @@ export default function CreateMovie({
   );
   return (
     <>
-      <main
+      <div
         onSubmit={(e) => {
           e.preventDefault();
           setIsSubmiting(true);
@@ -119,7 +134,7 @@ export default function CreateMovie({
           </button>
         </form>
         {isSubmiting && <Loading />}
-      </main>
+      </div>
     </>
   );
 }

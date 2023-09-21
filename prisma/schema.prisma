@@ -132,17 +132,18 @@ model Series {
 }
 
 model Episodes {
-  id        String   @unique @default(uuid())
-  name      String
-  content   String?
-  video     String
+  id            String   @unique @default(uuid())
+  name          String
+  content       String?
+  video         String
   //comment
-  likes     String[] //list of user's id who like
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
-  image     String
-  createdBy Series   @relation(fields: [seriesId], references: [id])
-  seriesId  String
+  episodeNumber Int
+  likes         String[] //list of user's id who like
+  createAt      DateTime @default(now())
+  updateAt      DateTime @updatedAt
+  image         String?
+  createdBy     Series   @relation(fields: [seriesId], references: [id])
+  seriesId      String
 }
 
 model Notifications {

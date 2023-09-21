@@ -11,14 +11,8 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
-import { useSearchParams } from "next/navigation";
-type AdminPageProp = {
-  // isHidden: boolean;
-  userName: string;
-};
-export default function AdminPage() {
-  const searchParams = useSearchParams();
-  const pageId = searchParams.get("pageId");
+
+export default function AdminPage({ pageId }: { pageId: string }) {
   const { data: session } = useSession();
   const { data, status, error } = useQuery({
     queryKey: ["page", pageId],
