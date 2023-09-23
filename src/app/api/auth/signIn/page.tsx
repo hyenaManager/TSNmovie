@@ -44,8 +44,9 @@ function LoginForm() {
       if (res?.error) {
         setErrorLogin(true);
         console.log(res.error);
+        setIsSubmiting(false);
       } else {
-        router.push("/clips");
+        return router.push("/clips");
       }
     });
   }
