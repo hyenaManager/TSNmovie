@@ -12,6 +12,8 @@ export async function GET(request:Request,{params}:{params:{email:string}}) {
         })
     } catch (error) {
         console.log(error,"error in user.......")
-        return error
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
     }
 }

@@ -33,12 +33,12 @@ export default function AdminPage({ pageId }: { pageId: string }) {
     <>
       <article
         className={
-          "streamer-adminPage w-full h-4hundred bg-black flex items-center mt-16 "
+          "streamer-adminPage w-full xsm:h-full flex xsm:flex-col sm:flex-row sm:h-4hundred bg-black items-center mt-16 "
         }
       >
         {/* user profile section */}
         <section
-          className=" rounded-md h-full w-5hundred flex flex-col bg-no-repeat bg-cover justify-end items-center text-xl p-7 bg-slate-600 "
+          className=" rounded-md xsm:h-3hundred sm:h-full xsm:w-full sm:w-5hundred flex flex-col bg-no-repeat bg-cover justify-end items-center text-xl p-7 bg-slate-600 "
           style={{ backgroundImage: "url(/bb.png)" }}
         >
           <Image
@@ -57,7 +57,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
           </h1>
         </section>
         {/* user trophy section */}
-        <section className=" w-[50%] h-full flex flex-col ">
+        <section className=" xsm:w-full xsm:h-2hundred xsm:overflow-auto sm:w-[50%] sm:h-full flex flex-col ">
           {/* user's bounty or followers */}
           <div className=" m-2 text-2xl flex items-center p-2 bg-black w-full justify-start ">
             <FontAwesomeIcon
@@ -102,7 +102,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
           </div>
         </section>
         {/* contact and social section  */}
-        <section className=" flex flex-col w-[200px] text-xl p-3 bg-slate-900 h-full rounded-lg">
+        <section className=" flex flex-col xsm:w-full sm:w-[200px] text-xl p-3 bg-slate-900 xsm:h-2hundred sm:h-full rounded-lg">
           <span className=" text-start p-2 font-mono text-2xl text-white">
             Contact
           </span>

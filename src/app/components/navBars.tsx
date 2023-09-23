@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 export default function NavBar() {
   const { data: session } = useSession();
   const router = useRouter();
-  console.log("id ", session?.user.id);
+  // console.log("id ", session?.user.id);
   const { data, status } = useQuery({
     queryKey: ["user", session?.user?.email],
     queryFn: async () => {
@@ -32,7 +32,7 @@ export default function NavBar() {
         <div>
           <Link
             href={"/"}
-            className=" text-2xl font-mono text-fuchsia-600 p-2 space-x-2"
+            className=" xsm:text-sm sm:text-2xl font-mono text-fuchsia-600 p-2 space-x-2"
           >
             YokePlay
           </Link>
@@ -41,7 +41,7 @@ export default function NavBar() {
         <Link
           href={"/clips"}
           className={
-            " p-2 mainNavLink flex sm:flex-row xsm:flex-col justify-center items-center"
+            " p-1 mainNavLink flex sm:flex-row xsm:flex-col justify-center items-center"
           }
         >
           <Image
@@ -56,7 +56,7 @@ export default function NavBar() {
         <Link
           href={"/notifications"}
           className={
-            " p-2 mainNavLink flex sm:flex-row xsm:flex-col items-center "
+            " p-1 mainNavLink flex sm:flex-row xsm:flex-col items-center "
           }
         >
           <Image
@@ -71,7 +71,7 @@ export default function NavBar() {
         <Link
           href={"/streamers"}
           className={
-            " p-2 mainNavLink flex sm:flex-row xsm:flex-col items-center "
+            " p-1 mainNavLink flex sm:flex-row xsm:flex-col items-center "
           }
         >
           <Image
@@ -85,11 +85,11 @@ export default function NavBar() {
         </Link>
         <Link
           href={data?.Page?.name ? "/profile" : "/gettingStart"}
-          className=" flex justify-center p-2 mainNavLink item sm:flex-row xsm:flex-cols-center"
+          className=" flex justify-center p-1 mainNavLink item sm:flex-row xsm:flex-cols-center"
         >
           {session ? (
             <>
-              <span className=" text-fuchsia-400 text-lg p-1">
+              <span className=" text-fuchsia-400 xsm:hidden sm:block text-lg p-1">
                 {session?.user?.name}
               </span>
               <Image

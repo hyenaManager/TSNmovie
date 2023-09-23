@@ -14,8 +14,9 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Uploading from "../components/uploading";
 
-export default function CreateMovie({
+export default function CreateClips({
   isCreating,
 }: {
   isCreating: () => void;
@@ -62,7 +63,7 @@ export default function CreateMovie({
   const mutation = useMutation(
     async () => {
       if (movieVideo == null) return setIsSubmiting(false);
-      const fileName = `pages/${movieVideo?.name + v4()}`; //making a file path name for video ,v4 is random string generator something like (11lj-l4lj-23;j-faaf)
+      const fileName = `clips/${movieVideo?.name + v4()}`; //making a file path name for video ,v4 is random string generator something like (11lj-l4lj-23;j-faaf)
       const imageRef = ref(storage, fileName);
       // console.log(fileName, " is file name....");
 
@@ -90,10 +91,13 @@ export default function CreateMovie({
     {
       onSuccess: () => {
         // Invalidate and refetch
-        queryClient.invalidateQueries({ queryKey: ["clips"] });
+        queryClient.invalidateQueries(["clips"]);
       },
     }
   );
+  //if the clips is created, show the uploading progressing bar
+  if (isSubmiting) return <Uploading />;
+
   return (
     <>
       <div
@@ -133,7 +137,7 @@ export default function CreateMovie({
             create
           </button>
         </form>
-        {isSubmiting && <Loading />}
+        {/* {isSubmiting && <Loading />} */}
       </div>
     </>
   );

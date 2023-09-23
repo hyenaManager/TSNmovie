@@ -24,7 +24,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             <NavBar />
-            <div className=" min-h-[100vh] bg-black">{children}</div>
+            <div className="pageWarper min-h-[100vh] bg-black">{children}</div>
           </AuthProvider>
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryProvider>

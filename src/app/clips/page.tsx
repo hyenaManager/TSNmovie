@@ -10,9 +10,9 @@ type videoPageProp = {
   like: number[];
 };
 
-export default function Feed() {
+export default function ClipPage() {
   return (
-    <div className=" p-1 pt-14 flex justify-center">
+    <div className="pageWarper p-1 pt-14 flex justify-center">
       <VideoComponent />
     </div>
   );

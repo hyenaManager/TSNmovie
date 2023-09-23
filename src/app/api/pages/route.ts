@@ -11,7 +11,9 @@ export async function GET(request:Request) {//called from streamers / main.tsx
         })
     } catch (error) {
         console.log(error,"errrrrrrrorrrr.......")
-        return error
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
     }
 }
 
@@ -25,6 +27,8 @@ export async function POST(request:Request){//called and post from getting and s
             status:200
         })
     }catch(error){
-        return error
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
     }
 }

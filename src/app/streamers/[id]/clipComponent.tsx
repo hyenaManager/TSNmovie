@@ -78,7 +78,7 @@ function VideoPlayer({
         src={video}
         className={
           " flex justify-center " +
-          (isPlaying ? "h-[90%]" : " sm:h-3hundred xsm:h-full")
+          (isPlaying ? "h-[90%]" : " sm:h-3hundred xsm:h-2hundred")
         }
         onPlay={() => {
           setIsPlaying(true);
@@ -123,7 +123,7 @@ function VideoPlayer({
             className=" text-4xl text-fuchsia-600 cursor-pointer"
           />
           <div className=" xsm:h-[20px] sm:h-[60px]  rounded-b-lg flex justify-between items-center">
-            <div className=" m-4 flex justify-center items-center">
+            {/* <div className=" m-4 flex justify-center items-center">
               <FontAwesomeIcon
                 // onClick={() => {
                 //   mutation.mutate();
@@ -139,7 +139,7 @@ function VideoPlayer({
             <FontAwesomeIcon
               icon={faComment}
               className=" text-white text-2xl m-4 cursor-pointer  "
-            />
+            /> */}
           </div>
         </div>
       )}

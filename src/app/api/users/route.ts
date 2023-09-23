@@ -11,7 +11,9 @@ export async function GET(request:Request) {
         })
     } catch (error) {
         console.log(error,"errrrrrrrorrrr.......")
-        return error
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
     }
 }
 
@@ -30,7 +32,7 @@ export async function POST(request:Request) {
         // console.log("body: 000000::  ",JSON.stringify(data));
         
         console.log(error,"error in user creation.......")
-        return new Response(error as string,{
+        return new Response(JSON.stringify(error),{
             status:500
         })
     }

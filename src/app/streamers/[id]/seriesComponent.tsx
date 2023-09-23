@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 type seriesImage = {
   id: string;
   name: string;
@@ -81,8 +82,14 @@ export function SeriesOverview({
   pageOwnerId,
 }: seriesOverview) {
   return (
-    <div className=" pageWarper fixed flex justify-center items-center top-0 left-0 w-full h-full backdrop-brightness-50">
-      <article className=" flex max-w-fit max-h-fit bg-black shadow-[0px_0px_20px_purple] ">
+    <motion.div
+      initial={{ opacity: 1, scale: 0.2 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.5 }}
+      exit={{ scale: 0 }}
+      className=" pageWarper fixed flex justify-center items-center top-0 left-0 w-full h-full backdrop-brightness-50"
+    >
+      <article className="xsm:flex-col sm:flex-row flex max-w-fit max-h-fit bg-black shadow-[0px_0px_20px_purple] ">
         <Image
           src={image}
           alt="luffy"
@@ -92,7 +99,9 @@ export function SeriesOverview({
         />
         <section className=" flex flex-col bg-black justify-start">
           <h2 className=" text-2xl text-fuchsia-500 p-2 text-start">{name}</h2>
-          <p className=" w-5hundred h-[200px] m-2 ">{content}......</p>
+          <p className=" xsm:w-[310px] sm:w-5hundred h-[200px] m-2 ">
+            {content}......
+          </p>
           <h3 className=" p-2 text-fuchsia-600"> Total episodes : unknown</h3>
           <div className=" flex justify-between items-center">
             <FontAwesomeIcon
@@ -115,6 +124,6 @@ export function SeriesOverview({
           </div>
         </section>
       </article>
-    </div>
+    </motion.div>
   );
 }

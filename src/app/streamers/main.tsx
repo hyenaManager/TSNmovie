@@ -50,7 +50,7 @@ export default function Main() {
             </h1>
           </div>
         )}
-        <section className=" mt-3 w-full h-full  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
+        <section className="pageWarper mt-3 w-full h-full  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
           {status === "loading" ? (
             <>
               <NormalSkeleton />
@@ -82,11 +82,12 @@ export function UserPageProfile({ id, name, image }: pagesProps) {
           fill
           alt={name}
           src={image}
+          sizes="(max-width:480px):50vw,(max-width:1020px):100vw"
           className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
         />
         <Link
           href={`/streamers/${id}`}
-          className="absolute bottom-0 flex justify-center items-end w-[50%] bg-fuchsia-700 rounded-md"
+          className="absolute bottom-0 w-full flex justify-center items-end  bg-fuchsia-700 rounded-md"
         >
           <h2
             className="  xsm:text-sm sm:text-lg rounded-md align-bottom  text-white"

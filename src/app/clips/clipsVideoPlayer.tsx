@@ -8,14 +8,14 @@ import {
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import CreateButton from "./floatingCreateBtn";
-import CreateMovie from "./createClips";
 import Image from "next/image";
 import ReportSomething from "../components/reportComponent";
+import { useInView } from "react-hook-inview";
 type videoProps = {
   id: string;
   title: string | null;
@@ -41,7 +41,7 @@ function VideoPlayer({
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
   const [hide, setHide] = useState(true); //is report widget or page is hide or not
   const queryClient = useQueryClient();
-
+  const [ref, inView] = useInView({ threshold: 0.3 });
   const { data: session, status } = useSession();
   const isLiked = likes.includes(session?.user?.id as any); //check current video is already liked by current user?
 
@@ -77,8 +77,11 @@ function VideoPlayer({
       setIsPlaying(true);
     }
   };
-
-  // console.log("re-renders..");
+  useEffect(() => {
+    if (!inView) {
+      videoRef.current?.pause();
+    }
+  }, [inView]);
 
   // const handleSeek = (event: ChangeEvent<HTMLInputElement>) => {
   //   if (videoRef.current) {
@@ -87,16 +90,20 @@ function VideoPlayer({
   // };
 
   return (
-    <article className=" video-player flex flex-col justify-center items-center xsm:w-[99%] sm:w-[600px] p-2 relative rounded-lg mt-5">
+    <article
+      ref={ref}
+      className=" video-player flex flex-col justify-center items-center xsm:w-[99%] sm:w-[600px] p-2 relative rounded-lg mt-5"
+    >
       <video
         ref={videoRef}
         src={video}
         className=" h-5hundred flex justify-center "
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onClick={handlePlayPause}
       />
       {/* cover video with purble bars, disabled only when the use play the video */}
-      {!isPlaying ? (
+      {!isPlaying && (
         <div className=" absolute top-0 left-0 w-full h-full z-10 rounded-xl flex flex-col justify-between ">
           {/* user profile and more option button and  blah blah */}
           <section className=" h-1hundred bg-fuchsia-600 rounded-t-lg flex flex-col ">
@@ -148,16 +155,6 @@ function VideoPlayer({
             />
           </div>
         </div>
-      ) : (
-        <FontAwesomeIcon
-          icon={faPause}
-          onClick={handlePlayPause}
-          className=" absolute top-6 right-6 text-4xl text-fuchsia-600 cursor-pointer"
-        />
-      )}
-      <CreateButton isCreating={() => setIsCreating(!isCreating)} />
-      {isCreating && (
-        <CreateMovie isCreating={() => setIsCreating(!isCreating)} />
       )}
       {!hide && <ReportSomething handleVisibillity={() => setHide(!hide)} />}
     </article>

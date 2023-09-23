@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function CatagoryNavbar({ pageName }: { pageName: string }) {
+export default function CatagoryNavbar() {
   return (
     <>
       <nav className="w-full mt-2 flex justify-between ">

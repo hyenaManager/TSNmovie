@@ -5,13 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { Eye, Like, Star } from "@/app/components/reactions";
-import Link from "next/link";
 import SeriesImgSkeleton from "@/app/skeletons/seriesSkeleton";
 import SeriesImage from "./seriesComponent";
 import { SeriesOverview } from "./seriesComponent";
+import { AnimatePresence } from "framer-motion";
 
 type seriesProps = {
   id: string;
@@ -37,10 +34,7 @@ export default function SeriesList({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageId}`,
-          {
-            timeout: 3000,
-          }
+          `http://localhost:3000/api/pages/${pageId}`
         );
 
         return response.data;
@@ -86,13 +80,15 @@ export default function SeriesList({ pageId }: { pageId: string }) {
             </Suspense>
           ))}
         </div>
-        {isCheckingSeries && (
-          <SeriesOverview
-            {...selectedSeries}
-            pageOwnerId={pageId}
-            handleVisibility={() => setIsCheckingSeries(!isCheckingSeries)}
-          />
-        )}
+        <AnimatePresence>
+          {isCheckingSeries && (
+            <SeriesOverview
+              {...selectedSeries}
+              pageOwnerId={pageId}
+              handleVisibility={() => setIsCheckingSeries(!isCheckingSeries)}
+            />
+          )}
+        </AnimatePresence>
       </section>
     </>
   );

@@ -25,10 +25,7 @@ export default function ClipList({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageId}`,
-          {
-            timeout: 10000,
-          }
+          `http://localhost:3000/api/pages/${pageId}`
         );
 
         return response.data;

@@ -1,12 +1,20 @@
 "use client";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import VideoPlayer from "./clipsVideoPlayer";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import SpinLoading from "../components/spinLoading";
 import axios from "axios";
 import Uploading from "../components/uploading";
+import CreateClips from "./createClips";
+import CreateButton from "./floatingCreateBtn";
+import { ClipLoading } from "../components/loading";
+import { useInView } from "react-hook-inview";
 
 type videoPageProp = {
   id: string;
@@ -22,24 +30,41 @@ type videoPageProp = {
 
 export default function VideoComponent() {
   const queryClient = useQueryClient();
+  const [ref, inView] = useInView();
+  const [isCreating, setIsCreating] = useState(false);
 
-  queryClient.invalidateQueries({ queryKey: ["clips"] });
-  const { data, status, isFetching } = useQuery({
+  // queryClient.invalidateQueries({ queryKey: ["clips"] });
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ["clips"],
-    queryFn: async () => {
+    queryFn: async ({ pageParam = 0 }) => {
       try {
-        const response = await axios.get("http://localhost:3000/api/clips");
+        const response = await axios.get(
+          `http://localhost:3000/api/clips/cursor?cursor=${pageParam}`
+        );
         const data = response.data;
         return data;
       } catch (error) {
         return error;
       }
     },
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
   return (
     <>
-      <Uploading />
-      <main className=" flex flex-col justify-center items-center overflow-auto ">
+      <main className="pageWarper flex flex-col justify-center items-center overflow-auto ">
         {status === "loading" && <SkeletonClip />}
         {status === "error" && (
           <div className=" min-w-fit min-h-fit flex justify-center items-center xsm:h-[300px] sm:w-[600px] sm:h-[400px]  ">
@@ -48,16 +73,26 @@ export default function VideoComponent() {
             </h1>
           </div>
         )}
-        {data &&
-          data?.map((video: videoPageProp, index: number) =>
-            status === "loading" && !data ? (
-              <SkeletonClip key={index} />
-            ) : (
+        {data?.pages?.map((page) => (
+          <React.Fragment key={page.nextCursor}>
+            {page.clips.map((video: videoPageProp, index: number) => (
               <Suspense fallback={<SkeletonClip key={index} />} key={video.id}>
                 <VideoPlayer {...video} key={video.id} />
               </Suspense>
-            )
-          )}
+            ))}
+          </React.Fragment>
+        ))}
+        {/* button for creating clips */}
+        <CreateButton isCreating={() => setIsCreating(!isCreating)} />
+        {/* creating widget for clips */}
+        {isCreating && (
+          <CreateClips isCreating={() => setIsCreating(!isCreating)} />
+        )}
+        {hasNextPage && (
+          <div ref={ref}>
+            <ClipLoading />
+          </div>
+        )}
       </main>
     </>
   );
