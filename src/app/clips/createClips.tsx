@@ -33,7 +33,7 @@ export default function CreateClips({
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://yokeplay.vercel.app/api/users/${session?.user.email}`
+          `https://yokeplay.vercel.app/api/users/${session?.user.email}`
         );
         const data = response.data;
         // console.log("user data in clips.", data);
@@ -46,7 +46,7 @@ export default function CreateClips({
   });
 
   async function postMovie(url: string) {
-    const response = await axios.post("http://yokeplay.vercel.app/api/clips", {
+    const response = await axios.post("https://yokeplay.vercel.app/api/clips", {
       title: clipName, //title of clip name
       pageOwnerId: data?.Page?.id, //user's page id , get from fetching user's data with realated page check above code
       video: url, //url is link from firebase video that has been uploaded

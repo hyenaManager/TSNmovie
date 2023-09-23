@@ -11,7 +11,7 @@ export default function NotiFications() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          "http://yokeplay.vercel.app/api/notifications"
+          "https://yokeplay.vercel.app/api/notifications"
         );
         return response.data;
       } catch (error) {

@@ -34,7 +34,7 @@ export default function SeriesList({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://yokeplay.vercel.app/api/pages/${pageId}`
+          `https://yokeplay.vercel.app/api/pages/${pageId}`
         );
 
         return response.data;

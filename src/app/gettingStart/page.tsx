@@ -19,7 +19,7 @@ export default function GettingStart() {
 
   //create new page
   async function postPage(url: string) {
-    const response = await axios.post("http://yokeplay.vercel.app/api/pages", {
+    const response = await axios.post("https://yokeplay.vercel.app/api/pages", {
       name: pageName,
       adminId: session?.user.id,
       image: url,

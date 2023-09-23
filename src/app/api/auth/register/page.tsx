@@ -31,7 +31,7 @@ function RegisterForm() {
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
 
   async function handleSubmit() {
-    const response = await axios.post("http://yokeplay.vercel.app/api/users", {
+    const response = await axios.post("https://yokeplay.vercel.app/api/users", {
       firstName: firstName,
       lastName: lastName,
       email: email,

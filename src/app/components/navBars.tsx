@@ -15,7 +15,7 @@ export default function NavBar() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://yokeplay.vercel.app/api/users/${session?.user.email}`
+          `https://yokeplay.vercel.app/api/users/${session?.user.email}`
         );
         const data = response.data;
         return data;
