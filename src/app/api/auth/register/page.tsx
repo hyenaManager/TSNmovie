@@ -33,12 +33,27 @@ function RegisterForm() {
   const router = useRouter();
 
   async function handleSubmit() {
-    const response = await axios.post("https://yokeplay.vercel.app/api/users", {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-    });
+    const response = await axios.post(
+      "https://yokeplay.vercel.app/api/users",
+      {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 200) {
+      setIsSubmiting(false);
+      alert("success");
+    } else {
+      setIsSubmiting(false);
+      alert(" there is some error....");
+    }
   }
   const mutation = useMutation(handleSubmit, {
     onSuccess: async () => {
