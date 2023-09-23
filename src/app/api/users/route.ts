@@ -28,7 +28,6 @@ export async function POST(request:Request) {
             status:200
         })
     } catch (error) {
-        const data = await request.json()
         // console.log("body: 000000::  ",JSON.stringify(data));
         
         console.log(error,"error in user creation.......")
