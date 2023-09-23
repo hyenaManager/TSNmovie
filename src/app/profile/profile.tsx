@@ -20,7 +20,7 @@ export default function Profile() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/users/${session?.user.email}`
+          `http://yokeplay.vercel.app/api/users/${session?.user.email}`
         );
         const data = response.data;
         return data;

@@ -19,7 +19,7 @@ type pagesProps = {
 export default function Main() {
   const getPagess = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/pages");
+      const res = await axios.get("http://yokeplay.vercel.app/api/pages");
       return res.data;
     } catch (error) {
       console.log(error);

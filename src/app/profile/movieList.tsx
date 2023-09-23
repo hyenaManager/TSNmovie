@@ -15,7 +15,7 @@ export default function MovieList() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/movies/5f78ed6f-1a8a-4c17-a9ae-8d105bfa3bb5"
+          "http://yokeplay.vercel.app/api/movies/5f78ed6f-1a8a-4c17-a9ae-8d105bfa3bb5"
         );
         return response.data;
       } catch (error) {

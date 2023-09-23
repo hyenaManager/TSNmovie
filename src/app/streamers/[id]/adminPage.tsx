@@ -19,7 +19,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/pages/${pageId}`
+          `http://yokeplay.vercel.app/api/pages/${pageId}`
         );
         const data = response.data;
         return data;
