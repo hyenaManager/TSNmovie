@@ -3,6 +3,7 @@ import Loading from "@/app/components/loading";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AuthenticationForm() {
@@ -29,6 +30,7 @@ function RegisterForm() {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+  const router = useRouter();
 
   async function handleSubmit() {
     const response = await axios.post("https://yokeplay.vercel.app/api/users", {
@@ -39,15 +41,27 @@ function RegisterForm() {
     });
   }
   const mutation = useMutation(handleSubmit, {
-    onSuccess: async () =>
-      await signIn("credentials", {
-        firstName: firstName,
-        lastName: lastName,
-        password: password,
-        email: email,
-        redirect: true,
-        callbackUrl: "/clips",
-      }),
+    onSuccess: async () => {
+      try {
+        const response = await signIn("credentials", {
+          firstName: firstName,
+          lastName: lastName,
+          password: password,
+          email: email,
+          redirect: true,
+          callbackUrl: "/clips",
+        });
+        setIsSubmiting(false);
+        if (response?.ok) {
+          alert("success");
+          router.push("/clips");
+        }
+      } catch (error) {
+        alert(error);
+        setIsSubmiting(false);
+        return error;
+      }
+    },
   });
   return (
     <form
