@@ -92,7 +92,7 @@ function VideoPlayer({
   return (
     <article
       ref={ref}
-      className=" video-player flex flex-col justify-center items-center xsm:w-[99%] sm:w-[600px] p-2 relative rounded-lg mt-5"
+      className=" video-player flex flex-col justify-center items-center xsm:w-[90vw] sm:w-[600px] p-2 relative rounded-lg mt-5"
     >
       <video
         ref={videoRef}

@@ -75,7 +75,7 @@ export default function VideoComponent() {
         )}
         {data?.pages?.map((page) => (
           <React.Fragment key={page.nextCursor}>
-            {page.clips.map((video: videoPageProp, index: number) => (
+            {page?.clips?.map((video: videoPageProp, index: number) => (
               <Suspense fallback={<SkeletonClip key={index} />} key={video.id}>
                 <VideoPlayer {...video} key={video.id} />
               </Suspense>
