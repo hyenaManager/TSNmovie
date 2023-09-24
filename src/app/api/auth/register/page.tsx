@@ -72,7 +72,7 @@ function RegisterForm() {
           router.push("/clips");
         }
       } catch (error) {
-        alert(error);
+        console.log(error);
         setIsSubmiting(false);
         return error;
       }
