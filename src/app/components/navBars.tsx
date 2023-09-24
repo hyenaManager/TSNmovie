@@ -97,7 +97,7 @@ export default function NavBar() {
                 height={400}
                 alt="haih"
                 src={`${session?.user?.image as string}`}
-                className=" rounded-full bg-cover w-[40px] h-[40px] "
+                className=" rounded-full bg-cover xsm:w-[24px] xsm:h-[24px] sm:w-[40px] sm:h-[40px] "
               />
             </>
           ) : (
