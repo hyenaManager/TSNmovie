@@ -104,7 +104,7 @@ function VideoPlayer({
       />
       {/* cover video with purble bars, disabled only when the use play the video */}
       {!isPlaying && (
-        <div className=" absolute top-0 left-0 xsm:w-[95vw] sm:w-full h-full z-10 rounded-xl flex flex-col justify-between items-center ">
+        <div className=" absolute top-0 left-0 xsm:w-[99vw] m-1 sm:w-full h-full z-10 rounded-xl flex flex-col justify-between items-center ">
           {/* user profile and more option button and  blah blah */}
           <section className=" h-1hundred w-full bg-fuchsia-600 rounded-t-lg flex flex-col ">
             <div className="profileDiv flex justify-between items-center">
