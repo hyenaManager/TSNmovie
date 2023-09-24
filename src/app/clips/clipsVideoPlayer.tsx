@@ -106,7 +106,7 @@ function VideoPlayer({
       {!isPlaying && (
         <div className=" absolute top-0 left-0 xsm:w-[95vw] sm:w-full h-full z-10 rounded-xl flex flex-col justify-between items-center ">
           {/* user profile and more option button and  blah blah */}
-          <section className=" h-1hundred bg-fuchsia-600 rounded-t-lg flex flex-col ">
+          <section className=" h-1hundred w-full bg-fuchsia-600 rounded-t-lg flex flex-col ">
             <div className="profileDiv flex justify-between items-center">
               <Link
                 href={`/streamers/${createdBy?.name}`}
@@ -135,7 +135,7 @@ function VideoPlayer({
             onClick={handlePlayPause}
             className=" text-4xl text-fuchsia-600 cursor-pointer"
           />
-          <div className=" h-1hundred bg-fuchsia-600 rounded-b-lg flex justify-between items-center">
+          <div className=" h-1hundred w-full bg-fuchsia-600 rounded-b-lg flex justify-between items-center">
             <div className=" m-4 flex justify-center items-center">
               <FontAwesomeIcon
                 // onClick={() => {
