@@ -151,7 +151,7 @@ function VideoPlayer({
             </div>
             <FontAwesomeIcon
               icon={faComment}
-              className=" text-white text-2xl m-4 cursor-pointer  "
+              className=" text-white text-2xl p-1 cursor-pointer  "
             />
           </div>
         </div>
