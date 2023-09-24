@@ -33,7 +33,7 @@ export default function ReportSomething({ handleVisibillity }: reportProps) {
             placeholder="title your report"
           />
           <textarea
-            className=" p-1 m-1 rounded-md w-[300px] h-[120px] outline-fuchsia-500 "
+            className=" p-1 m-1 rounded-md xsm:w-[80%] sm:w-[300px] h-[120px] outline-fuchsia-500 "
             placeholder="enter your report here"
           />
           <div className=" buttons flex justify-between p-3 m-2 text-xl">

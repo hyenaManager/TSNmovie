@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function SkeletonClip() {
   return (
     <article className=" video-player flex flex-col justify-center items-center border-2 border-fuchsia-500 xsm:w-[99%] sm:w-[600px] p-2 relative rounded-xl mt-5 ">
-      <div className=" h-5hundred w-[310px] video"></div>
+      <div className=" h-5hundred xsm:w-[100vw] sm:w-[310px] video"></div>
       <section className=" absolute animate-pulse top-0 border-b-2 border-fuchsia-400 w-full rounded-t-xl flex flex-col bg-black">
         {/* header */}
         <div className=" flex justify-start items-center p-2">
