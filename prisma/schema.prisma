@@ -6,9 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -48,6 +47,7 @@ model User {
   image         String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2FdefaultProfile.jpeg?alt=media&token=df272966-58f1-4a2f-bfa4-224d2a08b675")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  following     Page[]          @relation("follow")
   accounts      Account[]
   sessions      Session[]
   Page          Page?
@@ -76,18 +76,19 @@ model VerificationRequest {
 // }
 
 model Page {
-  id       String   @id @unique @default(uuid())
-  name     String
-  admin    User     @relation(fields: [adminId], references: [id])
-  adminId  String   @unique
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
-  image    String
+  id        String   @id @unique @default(uuid())
+  name      String
+  admin     User     @relation(fields: [adminId], references: [id])
+  followers User[]   @relation("follow")
+  adminId   String   @unique
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  image     String
   //clips
   //series
-  movies   Movies[]
-  clips    Clips[]
-  series   Series[]
+  movies    Movies[]
+  clips     Clips[]
+  series    Series[]
 }
 
 model Movies {

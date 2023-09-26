@@ -7,6 +7,7 @@ import axios from "axios";
 import Loading from "../components/loading";
 import Link from "next/link";
 import Image from "next/image";
+import { UserPageProfile } from "../components/image";
 
 type pagesProps = {
   id: string;
@@ -19,7 +20,7 @@ type pagesProps = {
 export default function Main() {
   const getPagess = async () => {
     try {
-      const res = await axios.get("https://yokeplay.vercel.app/api/pages");
+      const res = await axios.get("http://localhost:3000/api/pages");
       return res.data;
     } catch (error) {
       console.log(error);
@@ -50,7 +51,7 @@ export default function Main() {
             </h1>
           </div>
         )}
-        <section className="pageWarper mt-3 w-full h-full  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
+        <section className="pageWarper mt-3 w-full h-full p-2  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
           {status === "loading" ? (
             <>
               <NormalSkeleton />
@@ -65,38 +66,6 @@ export default function Main() {
           )}
         </section>
       </main>
-    </>
-  );
-}
-
-export function UserPageProfile({ id, name, image }: pagesProps) {
-  return (
-    <>
-      <article
-        className=" flex flex-col items-center text-xl relative xsm:min-h-[200px] sm:max-h-[200px]  lg:max-h-[260px]"
-        key={JSON.stringify(id)}
-      >
-        <Image
-          // width={200}
-          // height={200}
-          fill
-          alt={name}
-          src={image}
-          sizes="(max-width:480px):50vw,(max-width:1020px):100vw"
-          className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
-        />
-        <Link
-          href={`/streamers/${id}`}
-          className="absolute bottom-0 w-full flex justify-center items-end  bg-fuchsia-700 rounded-md"
-        >
-          <h2
-            className="  xsm:text-sm sm:text-lg rounded-md align-bottom  text-white"
-            style={{ textShadow: "2px 2px 8px black" }}
-          >
-            {name}
-          </h2>
-        </Link>
-      </article>
     </>
   );
 }

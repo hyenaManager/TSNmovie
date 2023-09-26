@@ -34,7 +34,7 @@ function RegisterForm() {
 
   async function handleSubmit() {
     const response = await axios.post(
-      "https://yokeplay.vercel.app/api/users",
+      "http://localhost:3000/api/users",
       {
         firstName: firstName,
         lastName: lastName,
@@ -87,25 +87,24 @@ function RegisterForm() {
       }}
       className=" shadow-[0_0_20px_purple] flex justify-center relative flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-5hundred font-mono "
     >
-      <div className=" flex">
-        <label className=" p-2 text-fuchsia-600  text-2xl">first name </label>
-        <input
-          required
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          className=" flex flex-start w-2hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
-          type="text"
-        />
-        <label className=" p-2 text-fuchsia-600  text-2xl">last name </label>
-        <input
-          required
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          className=" flex flex-start w-2hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
-          type="text"
-        />
-      </div>
-      <label className=" p-2 text-fuchsia-600  text-2xl">Email </label>
+      <label className=" p-1 text-fuchsia-600  text-lg">first name </label>
+      <input
+        required
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        type="text"
+      />
+      <label className=" p-1 text-fuchsia-600  text-lg">last name </label>
+      <input
+        required
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        type="text"
+      />
+
+      <label className=" p-2 text-fuchsia-600  text-lg">Email </label>
       <input
         required
         value={email}
@@ -113,7 +112,7 @@ function RegisterForm() {
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="email"
       />
-      <label className=" p-2 text-fuchsia-600 text-2xl ">Password </label>
+      <label className=" p-2 text-fuchsia-600 text-lg ">Password </label>
       <input
         required
         onChange={(e) => setPassword(e.target.value)}
@@ -121,9 +120,7 @@ function RegisterForm() {
         className=" flex flex-start w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="password"
       />
-      <label className=" p-2 text-fuchsia-600 text-2xl ">
-        confirm password
-      </label>
+      <label className=" p-2 text-fuchsia-600 text-lg ">confirm password</label>
       <input
         required
         onChange={(e) => setConfirmPassword(e.target.value)}

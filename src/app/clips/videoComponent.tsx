@@ -8,11 +8,10 @@ import {
 } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
-import SpinLoading from "../components/spinLoading";
 import axios from "axios";
-import Uploading from "../components/uploading";
-import CreateClips from "./createClips";
-import CreateButton from "./floatingCreateBtn";
+
+import CreateClips from "../components/clips/createClips";
+import CreateButton from "../components/clips/floatingCreateBtn";
 import { ClipLoading } from "../components/loading";
 import { useInView } from "react-hook-inview";
 
@@ -46,7 +45,7 @@ export default function VideoComponent() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/clips/cursor?cursor=${pageParam}`
+          `http://localhost:3000/api/clips/cursor?cursor=${pageParam}`
         );
         const data = response.data;
         return data;
@@ -56,6 +55,7 @@ export default function VideoComponent() {
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
+  console.log("this is clips", data?.pages);
 
   useEffect(() => {
     if (inView && hasNextPage) {

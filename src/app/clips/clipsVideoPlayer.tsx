@@ -12,7 +12,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import CreateButton from "./floatingCreateBtn";
+import CreateButton from "../components/clips/floatingCreateBtn";
 import Image from "next/image";
 import ReportSomething from "../components/reportComponent";
 import { useInView } from "react-hook-inview";

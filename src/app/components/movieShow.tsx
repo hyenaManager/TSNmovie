@@ -3,9 +3,7 @@ import HomeImage from "./image";
 export default function HomeArticles() {
   return (
     <main className="pageWarper flex flex-col justify-start rounded p-8 ">
-      <article className=" flex justify-start rounded p-8 homeComponent">
-        <HomeImage imageSource={"/aot.jpg"} />
-        <HomeImage imageSource={"/bb.png"} />
+      <article className="pageWarper flex xsm:justify-center justify-start rounded xsm:p-1 sm:p-8">
         <HomeImage imageSource={"/luffy.jpg"} />
         <div className=" flex flex-col text-white text-center p-3">
           <h2 className=" text-4xl  p-2 text-fuchsia-600 font-mono">
@@ -18,7 +16,7 @@ export default function HomeArticles() {
           </p>
         </div>
       </article>
-      <article className=" flex justify-start rounded p-8 homeComponent ">
+      <article className="pageWarper flex xsm:justify-center justify-start rounded xsm:p-1 sm:p-8">
         <div className=" flex flex-col text-white text-center p-3">
           <h2 className=" text-4xl  p-2 text-fuchsia-600 font-mono">
             Kdrama collections
@@ -29,13 +27,10 @@ export default function HomeArticles() {
             dklsajfklasjfas sajfkasj alk
           </p>
         </div>
-        <HomeImage imageSource={"/AOfAD.jpg"} />
-        <HomeImage imageSource={"/TrueB.jpg"} />
+
         <HomeImage imageSource={"/her.png"} />
       </article>
-      <article className=" flex justify-start rounded p-8 homeComponent">
-        <HomeImage imageSource={"/Titanic.jpg"} />
-        <HomeImage imageSource={"/WWZ.jpg"} />
+      <article className="pageWarper flex xsm:justify-center justify-start rounded xsm:p-1 sm:p-8">
         <HomeImage imageSource={"/Maleficent.jpg"} />
 
         <div className=" flex flex-col text-white text-center p-3">

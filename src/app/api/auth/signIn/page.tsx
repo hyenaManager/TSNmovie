@@ -43,10 +43,11 @@ function LoginForm() {
     }).then((res) => {
       if (res?.error) {
         setErrorLogin(true);
-        console.log(res.error);
+        console.log(res.error, "is current error");
         setIsSubmiting(false);
       } else {
-        return router.push("/clips");
+        setIsSubmiting(false);
+        router.push("/clips");
       }
     });
   }
