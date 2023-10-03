@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { storage } from "../../firebase";
 import ReactPlayer from "react-player";
 import {
@@ -19,7 +19,8 @@ import Uploading from "../uploading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import ClipVideoLengthReminder from "../reminders";
+import toast from "react-hot-toast";
+import { userProvider } from "@/app/context/userContext";
 
 export default function CreateClips({
   isCreating,
@@ -33,32 +34,11 @@ export default function CreateClips({
   const [clipVideo, setClipVideo] = useState<File | undefined>(undefined); //choose a video from user
   const queryClient = useQueryClient();
   const uploadRef = useRef<HTMLInputElement | null>(null); //to upload video file
-  const [showAlert, setShowAlert] = useState(false);
-  const [hasValidDuration, setHasValidDuration] = useState<boolean | null>(
-    true
-  );
+  const { userPage }: any = useContext(userProvider); //current userPage
   //make a click to the hidden input(video file uploader)
   const handleUpload = () => {
     uploadRef.current?.click();
   };
-  //fetch user data
-  const { data, status } = useQuery({
-    //first get user data with related page from database
-    queryKey: ["user", session?.user.email],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/users/${session?.user.email}`
-        );
-        const data = response.data;
-        // console.log("user data in clips.", data);
-
-        return data;
-      } catch (error) {
-        return error;
-      }
-    },
-  });
   //check clipVideo length validations
   const handleFileChange = (video: any) => {
     const file = video;
@@ -73,7 +53,9 @@ export default function CreateClips({
 
         const isNotValid: boolean = parseInt(duration.toFixed(0)) > 180; //is video duration is longer than 3 minutes
         if (isNotValid) {
-          setShowAlert(true);
+          toast.error("your video is longer than 3minutes 📢", {
+            duration: 5000,
+          });
           setClipVideo(undefined);
         }
       });
@@ -85,11 +67,12 @@ export default function CreateClips({
   async function postMovie(url: string) {
     const response = await axios.post("http://localhost:3000/api/clips", {
       title: clipName, //title of clip name
-      pageOwnerId: data?.Page?.id, //user's page id , get from fetching user's data with realated page check above code
+      pageOwnerId: userPage?.id, //current user's page id , value from user context provider
       video: url, //url is link from firebase video that has been uploaded
     });
     if (response.status === 200) {
       setIsSubmiting(false); //when creating clips in database is over remove loading mode
+      toast.success("video uploaded successfully 💯");
       isCreating(); // and disabled creating mode, this function come from prop
     } else {
       setIsSubmiting(false); //when error remove loading mode
@@ -126,13 +109,12 @@ export default function CreateClips({
       );
     },
     {
-      onSuccess: () => {
+      onSuccess: () =>
         // Invalidate and refetch
-        queryClient.invalidateQueries(["clips"]);
-      },
+        queryClient.invalidateQueries(["clips"]),
     }
   );
-  //if the clips is created, show the uploading progressing bar
+  //if the clips is start uploading or creating, show the uploading progressing bar
   if (isSubmiting) return <Uploading />;
 
   return (
@@ -143,21 +125,29 @@ export default function CreateClips({
           setIsSubmiting(true);
           mutation.mutate();
         }}
-        className="top-0 z-30 left-0 h-full w-full flex justify-center items-center fixed backdrop-blur-sm "
+        className="top-0 z-30 left-0 h-full w-full flex justify-center items-center fixed bg-white "
       >
-        <form className=" bg-black flex flex-col justify-start relative xsm:w-[99%]  sm:w-[50%] h-[70%] shadow-[0px_0px_10px_purple] rounded-lg ">
+        <form className=" bg-white shadow-xl flex flex-col justify-start relative xsm:w-[99%]  sm:w-[50%] rounded-lg ">
           <label
-            className=" text-white p-2 ml-2 text-xl "
+            className=" text-slate-500 p-2 ml-2 text-xl "
             style={{ textShadow: "2px 2px 8px purple" }}
           >
             Title
           </label>
-          <input
+          <textarea
             required
             value={clipName}
-            onChange={(e) => setclipName(e.target.value)}
-            className=" flex flex-start w-2hundred ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
-            type="text"
+            autoFocus
+            onChange={(e) => {
+              setclipName(e.target.value);
+              e.target.style.height = "auto"; // Reset the height to auto
+              e.target.style.height = e.target.scrollHeight + "px";
+            }}
+            style={{
+              resize: "none",
+              height: "auto",
+            }}
+            className=" border flex overflow-y-hidden flex-start ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
           />
           <input
             required
@@ -171,7 +161,10 @@ export default function CreateClips({
             hidden
             type="file"
           />
-          <div className=" m-2 xsm:h-[70%] sm:h-[250px] flex flex-col justify-center items-center bg-white rounded-md">
+          <div className=" border m-2 xsm:h-[70%] sm:h-[250px] flex flex-col justify-center items-center bg-white rounded-md">
+            <h3 className=" text-lg text-fuchsia-400 text-center items-center">
+              upload video
+            </h3>
             <Image
               src={"/upload.svg"}
               onClick={handleUpload}
@@ -207,14 +200,9 @@ export default function CreateClips({
           >
             <FontAwesomeIcon
               icon={faXmark}
-              className=" h-[60px] w-[60px] text-white"
+              className=" h-[40px] w-[40px] text-yellow-400"
             />
           </button>
-          {showAlert && (
-            <ClipVideoLengthReminder
-              handleVisibility={() => setShowAlert(false)}
-            />
-          )}
         </form>
       </div>
     </>

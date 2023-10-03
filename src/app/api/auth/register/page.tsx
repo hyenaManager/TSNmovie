@@ -4,7 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function AuthenticationForm() {
   return (
@@ -17,7 +18,7 @@ export default function AuthenticationForm() {
       <h2 className=" font-mono text-4xl p-2 text-start w-5hundred font-bold text-fuchsia-700">
         YOKEPLAY
       </h2>
-
+      <Toaster />
       <RegisterForm />
     </main>
   );
@@ -30,7 +31,10 @@ function RegisterForm() {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
+  const [statusError, setStatusError] = useState("");
   const router = useRouter();
+
+  // console.log(errorStatus);
 
   async function handleSubmit() {
     const response = await axios.post(
@@ -47,14 +51,8 @@ function RegisterForm() {
         },
       }
     );
-    if (response.status === 200) {
-      setIsSubmiting(false);
-      alert("success");
-    } else {
-      setIsSubmiting(false);
-      alert(" there is some error....");
-    }
   }
+
   const mutation = useMutation(handleSubmit, {
     onSuccess: async () => {
       try {
@@ -63,12 +61,17 @@ function RegisterForm() {
           lastName: lastName,
           password: password,
           email: email,
-          redirect: true,
-          callbackUrl: "/clips",
         });
         setIsSubmiting(false);
         if (response?.ok) {
-          alert("success");
+          toast("user creation success ", {
+            style: {
+              fontSize: "20px",
+              color: "green",
+            },
+            icon: "🔑",
+            duration: 3000,
+          });
           router.push("/clips");
         }
       } catch (error) {
@@ -77,7 +80,24 @@ function RegisterForm() {
         return error;
       }
     },
+    onError: (error: any) => {
+      console.log(error);
+
+      setStatusError(error.response.data);
+      setIsSubmiting(false);
+    },
   });
+  useEffect(() => {
+    if (mutation.error) {
+      toast(statusError, {
+        duration: 5000,
+        icon: "🗿",
+        style: {
+          fontSize: "25px",
+        },
+      });
+    }
+  }, [mutation.error]);
   return (
     <form
       onSubmit={(e) => {

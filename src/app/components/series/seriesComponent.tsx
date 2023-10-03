@@ -1,10 +1,12 @@
+"use client";
 import { Eye, Like, Star } from "@/app/components/reactions";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { userProvider } from "@/app/context/userContext";
 type seriesImage = {
   id: string;
   name: string;
@@ -38,20 +40,21 @@ export default function SeriesImage({
   chosenSeries,
   isChecking,
 }: seriesImage) {
+  const { user, userPage }: any = useContext(userProvider);
+
   return (
     <article
       // onMouseEnter={() => setIsHover(true)}
       // onMouseLeave={() => setIsHover(false)}
-      className=" border rounded-t-2xl rounded-r-2xl border-fuchsia-500 flex flex-col justify-center items-center text-xl p-1 text-fuchsia-600 font-bold relative "
+      className=" border rounded-tr-2xl xsm:h-[30vh] sm:h-[40vh] border-fuchsia-500 flex flex-col justify-end items-center text-xl text-fuchsia-600 font-bold relative "
       key={name}
     >
       {image && (
         <Image
-          width={140}
-          height={140}
+          fill
           src={image}
           alt={image}
-          className=" rounded-t-xl rounded-r-xl bg-gray-400 bg-cover h-[80%] w-[90%] "
+          className=" rounded-t-xl rounded-r-xl bg-gray-400 bg-cover object-cover "
         />
       )}
 
@@ -66,9 +69,9 @@ export default function SeriesImage({
           chosenSeries({ name, image, content, page, id });
           isChecking();
         }}
-        className=" flex justify-center items-center"
+        className=" flex z-10 flex-col justify-center items-center w-full bg-black border-br-2xl "
       >
-        <h3 className=" text-center">{name} </h3>
+        <h3 className=" text-center text-lg w-full border-br-2xl">{name} </h3>
       </button>
     </article>
   );
@@ -81,37 +84,46 @@ export function SeriesOverview({
   handleVisibility,
   pageOwnerId,
 }: seriesOverview) {
+  const { user, userPage }: any = useContext(userProvider);
   return (
     <motion.div
-      initial={{ opacity: 1, scale: 0.2 }}
-      animate={{ scale: 1 }}
+      initial={{ opacity: 0.5 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      exit={{ scale: 0 }}
-      className=" pageWarper fixed flex justify-center items-center top-0 left-0 w-full h-full backdrop-brightness-50"
+      exit={{ opacity: 0 }}
+      className=" pageWarper z-20 fixed flex justify-center items-center top-0 left-0 w-full h-full backdrop-brightness-50"
     >
-      <article className="xsm:flex-col sm:flex-row flex max-w-fit max-h-fit bg-black shadow-[0px_0px_20px_purple] ">
+      <motion.article
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.5 }}
+        className="xsm:flex-col sm:flex-row flex max-w-fit max-h-fit bg-black shadow-[0px_0px_20px_purple] "
+      >
         <Image
           src={image}
           alt="luffy"
           width={200}
           height={200}
-          className=" w-3hundred bg-cover"
+          className=" xsm:h-[40vh] sm:h-[60vh]  "
         />
         <section className=" flex flex-col bg-black justify-start">
           <h2 className=" text-2xl text-fuchsia-500 p-2 text-start">{name}</h2>
           <p className=" xsm:w-[310px] sm:w-5hundred h-[200px] m-2 ">
-            {content}......
+            {content}
           </p>
           <h3 className=" p-2 text-fuchsia-600"> Total episodes : unknown</h3>
           <div className=" flex justify-between items-center">
             <FontAwesomeIcon
               icon={faArrowLeft}
               onClick={handleVisibility}
-              className=" p-3 m-1 text-red-400 w-[30px] h-[30px] cursor-pointer"
+              className=" p-2 m-1 text-red-400 w-[30px] border-2 rounded-full h-[30px] border-white cursor-pointer"
             />
             <Link
               href={{
-                pathname: `/streamers/${pageOwnerId}/room`,
+                pathname:
+                  userPage.id === pageOwnerId
+                    ? `/profile/page/room`
+                    : `/streamers/${pageOwnerId}/room`,
                 query: {
                   pageOwnerId: pageOwnerId,
                   seriesId: id,
@@ -123,7 +135,7 @@ export function SeriesOverview({
             </Link>
           </div>
         </section>
-      </article>
+      </motion.article>
     </motion.div>
   );
 }

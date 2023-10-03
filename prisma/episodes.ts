@@ -9,17 +9,19 @@ export async function getEpisodesBySeriesId(seriesId:string) {
         })
         return episodes
     } catch (error) {
-        return error        
+        throw error        
     }
 }
 
-export async function createEpisode(data:{name:string;episodeNumber:number;seriesId:string;video:string;}) {
+export async function createEpisode(data:any) {
+    console.log("reach in episode prisma and  this is data :",data);
     try {
         const createdEpisode = await prisma.episodes.create({
             data:data
         })
+        
         return createdEpisode
     } catch (error) {
-        return error
+        throw error
     }
 }

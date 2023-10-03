@@ -28,7 +28,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className="pageWarper text-white z-50 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
+      <nav className="pageWarper text-white z-40 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
         <div>
           <Link
             href={"/"}

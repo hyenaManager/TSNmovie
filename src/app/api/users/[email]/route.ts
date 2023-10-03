@@ -1,3 +1,4 @@
+import { NextRequest } from "next/server";
 import { getUserByMail } from "../../../../../prisma/users";
 
 export async function GET(request:Request,{params}:{params:{email:string}}) {
@@ -17,3 +18,10 @@ export async function GET(request:Request,{params}:{params:{email:string}}) {
         })
     }
 }
+
+// export async function PUT(request:NextRequest){
+//     const data = await request.json();
+//     try{
+//         const response = await
+//     }
+// }

@@ -6,8 +6,8 @@ import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import SeriesImgSkeleton from "@/app/skeletons/seriesSkeleton";
-import SeriesImage from "./seriesComponent";
-import { SeriesOverview } from "./seriesComponent";
+import SeriesImage from "../series/seriesComponent";
+import { SeriesOverview } from "../series/seriesComponent";
 import { AnimatePresence } from "framer-motion";
 
 type seriesProps = {

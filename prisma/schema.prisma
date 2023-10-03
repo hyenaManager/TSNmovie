@@ -47,7 +47,8 @@ model User {
   image         String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2FdefaultProfile.jpeg?alt=media&token=df272966-58f1-4a2f-bfa4-224d2a08b675")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  following     Page[]          @relation("follow")
+  following     Page[]          @relation("follow") //follow multiple pages m-to-m
+  likes         Clips[]         @relation("likes") //multiple likes for clips m-to-m
   accounts      Account[]
   sessions      Session[]
   Page          Page?
@@ -76,19 +77,31 @@ model VerificationRequest {
 // }
 
 model Page {
-  id        String   @id @unique @default(uuid())
-  name      String
-  admin     User     @relation(fields: [adminId], references: [id])
-  followers User[]   @relation("follow")
-  adminId   String   @unique
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
-  image     String
-  //clips
-  //series
-  movies    Movies[]
-  clips     Clips[]
-  series    Series[]
+  id         String   @id @unique @default(uuid())
+  name       String
+  admin      User     @relation(fields: [adminId], references: [id])
+  followers  User[]   @relation("follow")
+  adminId    String   @unique
+  createAt   DateTime @default(now())
+  updateAt   DateTime @updatedAt
+  image      String
+  coverImage String?
+  movies     Movies[]
+  clips      Clips[]
+  series     Series[]
+  contact    Contact? @relation("contact")
+}
+
+model Contact {
+  id          String   @id @default(uuid())
+  facebook    String?
+  twitter     String?
+  telegram    String?
+  whatsapp    String?
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  relatedPage Page     @relation("contact", fields: [pageId], references: [id])
+  pageId      String   @unique
 }
 
 model Movies {
@@ -110,7 +123,7 @@ model Clips {
   title       String?
   video       String
   //comment
-  likes       String[] //list of user's id who like
+  likes       User[]   @relation("likes")
   link        String?
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
@@ -119,18 +132,20 @@ model Clips {
 }
 
 model Series {
-  id          String     @id @unique @default(uuid())
-  name        String
-  content     String?
-  video       String?
+  id           String     @id @unique @default(uuid())
+  name         String
+  content      String?
+  video        String?
+  genre        String?
+  releasedDate String?
   //comment
-  likes       String[] //list of user's id who like
-  createAt    DateTime   @default(now())
-  updateAt    DateTime   @updatedAt
-  image       String
-  createdBy   Page       @relation(fields: [pageOwnerId], references: [id])
-  pageOwnerId String
-  episodes    Episodes[]
+  likes        String[] //list of user's id who like
+  createAt     DateTime   @default(now())
+  updateAt     DateTime   @updatedAt
+  image        String
+  createdBy    Page       @relation(fields: [pageOwnerId], references: [id])
+  pageOwnerId  String
+  episodes     Episodes[]
 }
 
 model Episodes {

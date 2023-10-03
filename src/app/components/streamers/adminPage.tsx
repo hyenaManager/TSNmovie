@@ -8,15 +8,15 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
+import { useContext } from "react";
+import { userProvider } from "@/app/context/userContext";
 
 export default function AdminPage({ pageId }: { pageId: string }) {
   const { data: session } = useSession();
-  // const handleFollow = async () =>{
-  //   const response = await axios.put()
-  // }
+  const queryClient = useQueryClient();
   const { data, status, error } = useQuery({
     queryKey: ["page", pageId],
     queryFn: async () => {
@@ -31,8 +31,37 @@ export default function AdminPage({ pageId }: { pageId: string }) {
       }
     },
   });
-  // const mutation = useMutation()
+  const { user, userPage }: any = useContext(userProvider); //getting current user from contextprovider
+
+  //check whether the user already exist in the followers,
+  const checkFollowMode = () => {
+    const followerExist =
+      data?.followers.find((user: any) => user.id === session?.user.id) !==
+      undefined;
+    return followerExist; //will return boolean,exist =>true,not exist =>false
+  };
+  //updating follow or unfollow mode
+  const handleFollow = async () => {
+    const response = await axios.put(`http://localhost:3000/api/pages`, {
+      userId: session?.user.id,
+      pageId: pageId,
+      unfollow: checkFollowMode(),
+    });
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return "there's been some error";
+    }
+  };
+  const mutation = useMutation(handleFollow, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user", user.email]);
+      queryClient.invalidateQueries(["page", pageId]);
+    },
+  });
   if (status === "loading") return <AdminSkeleton />;
+  console.log("admin cover img:", data?.coverImage);
+
   return (
     <>
       <article
@@ -41,24 +70,34 @@ export default function AdminPage({ pageId }: { pageId: string }) {
         }
       >
         {/* user profile section */}
-        <section
-          className="pageWarper rounded-md xsm:h-3hundred sm:h-full xsm:w-full sm:w-5hundred flex flex-col bg-no-repeat bg-cover justify-end items-center text-xl p-7 bg-slate-600 "
-          style={{ backgroundImage: "url(/bb.png)" }}
-        >
+        <section className="pageWarper relative rounded-md xsm:h-3hundred sm:h-full xsm:w-full sm:w-5hundred flex flex-col bg-cover bg-no-repeat bg-center justify-end items-center text-xl p-7 bg-slate-600 ">
           <Image
             width={130}
             height={130}
             alt="luffy"
-            src={data?.image}
-            className=" w-[130px] h-[130px] rounded-full bg-gray-400 border-8 border-white"
+            style={{
+              objectFit: "cover",
+            }}
+            src={data?.image || "/defaultProfile.jpeg"}
+            className=" w-[130px] h-[130px] rounded-full z-10 bg-gray-400 border-4 border-white"
+          />
+          <Image
+            fill
+            alt={"bg image"}
+            style={{
+              objectFit: "cover",
+            }}
+            quality={100}
+            src={data?.coverImage || "/defaultProfile.jpeg"}
           />
 
           <h1
-            className=" text-4xl font-bold font-mono text-white rounded-md"
+            className=" text-4xl font-bold font-mono text-white z-10 rounded-md"
             style={{ textShadow: "2px 2px 8px black" }}
           >
             {data?.name}
           </h1>
+          {/* coverImage */}
         </section>
         {/* user trophy section */}
         <section className=" xsm:w-full xsm:h-full p-2 xsm:overflow-auto sm:overflow-hidden sm:w-[50%] sm:h-full flex xsm:flex-row xsm:flex-wrap sm:flex-col ">
@@ -68,10 +107,15 @@ export default function AdminPage({ pageId }: { pageId: string }) {
               icon={faCoins}
               className="shadow-[0_0_20px_yellow] xsm:w-[10px] xsm:h-[10px] sm:w-[20px] sm:h-[20px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full"
             />
-            <span className=" mr-2 font-mono text-white">Bounty : 1k</span>
+            <span className=" mr-2 font-mono text-white">
+              Bounty : {data?.followers?.length}
+            </span>
 
-            <button className=" bg-fuchsia-500 hover:bg-fuchsia-600 p-1 rounded-md text-lg text-white">
-              follow
+            <button
+              onClick={() => mutation.mutate()}
+              className=" bg-fuchsia-500 hover:bg-fuchsia-600 p-1 rounded-md text-lg text-white"
+            >
+              {checkFollowMode() ? "unfollow" : "follow"}
             </button>
           </div>
           {/* user's rating */}

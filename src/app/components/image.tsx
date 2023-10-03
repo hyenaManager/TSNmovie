@@ -42,8 +42,6 @@ export function UserPageProfile({ id, name, image }: pagesProps) {
         key={JSON.stringify(id)}
       >
         <Image
-          // width={200}
-          // height={200}
           fill
           alt={name}
           src={image}

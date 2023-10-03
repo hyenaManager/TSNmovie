@@ -31,6 +31,19 @@ export async function createSeries(data:any){
         })
         return series
     } catch (error) {
-        
+        throw error
+    }
+}
+
+export async function deleteASerie(id:string){
+    try{
+        await prisma.series.delete({
+            where:{
+                id:id
+            }
+        })
+        return "success"
+    }catch(error){
+        throw error
     }
 }

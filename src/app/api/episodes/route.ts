@@ -17,13 +17,15 @@ export async function GET(request:NextRequest) {
 }
 
 export async function POST(request:NextRequest) {
-    const data = await request.json();
+    const {name,episodeNumber,video,seriesId} = await request.json();
     try {
-        const createdEpisode = await createEpisode(data)
+        const createdEpisode = await createEpisode({name:name,episodeNumber:parseInt(episodeNumber),video:video,seriesId:seriesId})
         return new Response(JSON.stringify(createdEpisode),{
             status:200
         })
     } catch (error) {
+        console.log("primas error: ",error);
+        
         return new Response(JSON.stringify(error),{
             status:500
         })

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
@@ -8,96 +8,33 @@ import Loading from "../components/loading";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-
+import { useMutation, useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowsRotate, faEdit } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import Link from "next/link";
 export default function GettingStart() {
   const router = useRouter();
-  const { data: session } = useSession();
-  const [pageName, setPageName] = useState("");
-  const [pageImage, setPageImage] = useState<File | undefined>(undefined);
-  const [isSubmiting, setIsSubmiting] = useState(false);
 
-  //create new page
-  async function postPage(url: string) {
-    const response = await axios.post("http://localhost:3000/api/pages", {
-      name: pageName,
-      adminId: session?.user.id,
-      image: url,
-    });
-    if (response.status === 200) {
-      router.push("/profile");
-    } else {
-      setIsSubmiting(false);
-      alert(`error - ${response.data}`);
-    }
-  }
-  async function handleSubmit() {
-    if (pageImage == null) return setIsSubmiting(false);
-    const fileName = `pages/${pageImage?.name + v4()}`;
-    const imageRef = ref(storage, fileName);
-    // console.log(fileName, " is file name....");
-    try {
-      uploadBytes(imageRef, pageImage as any).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          postPage(url);
-        });
-      });
-    } catch (error) {
-      alert(error);
-      console.log(" errorr here :(");
-      setIsSubmiting(false);
-    }
-  }
   return (
     <>
-      <main
-        onSubmit={(e) => {
-          e.preventDefault();
-          setIsSubmiting(true);
-          handleSubmit();
-        }}
-        style={{
-          backgroundImage: "url(littl.png)",
-        }}
-        className=" bg-cover h-[100vh] w-full flex justify-center items-center relative "
-      >
-        <form className=" flex flex-col justify-center items-center  w-[50%] h-[70%] shadow-[0px_0px_10px_purple] rounded-lg ">
+      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
+        <div className=" flex flex-col border bg-center shadow-2xl rounded-t-xl justify-center h-[50vh] xsm:w-[95vw] sm:w-[54vw] items-center relative">
           <h2
-            className=" text-4xl text-white text-center p-2"
-            style={{ textShadow: "2px 2px 8px purple" }}
+            className=" text-center text-[50px] text-white font-mono"
+            style={{ textShadow: "2px 2px 8px gray" }}
           >
-            Getting start
+            Hey buddy you starting in our app feel free to contact us
           </h2>
-
-          <label
-            className=" text-white p-2 ml-2 "
-            style={{ textShadow: "2px 2px 8px purple" }}
+          <Link
+            href={`/gettingStart/coverPicture`}
+            className="bg-green-400 hover:bg-green-600 p-2 rounded-md"
           >
-            Your page name
-          </label>
-          <input
-            required
-            value={pageName}
-            onChange={(e) => setPageName(e.target.value)}
-            className=" flex flex-start w-2hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
-            type="text"
-          />
-          <input
-            required
-            onChange={(e) => setPageImage(e.target.files?.[0])}
-            className=" bg-black text-fuchsia-500 p-2 cursor-pointer mt-2"
-            type="file"
-          />
-          <button
-            disabled={isSubmiting}
-            type="submit"
-            className=" text-white hover:bg-fuchsia-400 p-2 w-[90px] h-[50px] bg-fuchsia-600 rounded-md m-3"
-          >
-            create
-          </button>
-        </form>
-        {isSubmiting && <Loading />}
-      </main>
+            Create your own page
+          </Link>
+        </div>
+      </div>
     </>
   );
 }

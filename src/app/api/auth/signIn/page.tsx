@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import Loading from "@/app/components/loading";
 import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 type AuthenticateProp = {
   handleIsLogin: () => void;
@@ -22,7 +23,7 @@ export default function AuthenticationForm() {
       <h2 className=" font-mono text-4xl p-2 text-start w-5hundred font-bold text-fuchsia-700">
         YOKEPLAY
       </h2>
-
+      <Toaster />
       <LoginForm />
     </main>
   );
@@ -47,6 +48,14 @@ function LoginForm() {
         setIsSubmiting(false);
       } else {
         setIsSubmiting(false);
+        toast("login success ", {
+          style: {
+            fontSize: "20px",
+            color: "green",
+          },
+          icon: "🗝️",
+          duration: 3000,
+        });
         router.push("/clips");
       }
     });

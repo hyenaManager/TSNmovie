@@ -17,7 +17,7 @@ export async function POST(request:Request){
     const data = await request.json()
     try{
         const createdData = await createSeries(data);
-        return new Response(JSON.stringify(createdData),{
+        return new Response(JSON.stringify("success"),{
             status:200
         })
     }catch(error){

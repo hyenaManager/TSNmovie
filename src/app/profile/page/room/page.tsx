@@ -4,17 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnglesLeft,
   faAnglesRight,
+  faPlus,
+  faPlusCircle,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-// import { useQuery } from "@tanstack/react-query";
 import DefaultVideoPlayer from "./videoPlayer";
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import RoomVideoSkeleton, {
   RoomEpisodeSkeleton,
 } from "@/app/skeletons/roomSkeletons";
+import CreateEpisode from "@/app/components/episode/createEpisode";
 
 export default function Pages() {
   const [episode, setEpisode] = useState({
@@ -26,6 +28,7 @@ export default function Pages() {
   const [inputEpisode, setInputEpisode] = useState<number>(1); //for finding episode
   const [sectionIsHidden, setSectionIsHidden] = useState<boolean>(false); //section hidden and or show (section toggling)
   const episodeRef = useRef<Map<number, HTMLLIElement> | null>(null);
+  const [creatingEpisode, setCreatingEpisode] = useState(false);
   const searchParams = useSearchParams();
   const seriesId = searchParams.get("seriesId") as string;
   const pageId = searchParams.get("pageOwnerId") as string;
@@ -103,6 +106,11 @@ export default function Pages() {
           }
         >
           <div className="rounded-t-md absolute top-14 right-0 w-full p-2 flex justify-end items-center bg-white ">
+            <FontAwesomeIcon
+              onClick={() => setCreatingEpisode(true)}
+              icon={faPlus}
+              className=" w-[20px] h-[20px] bg-black border-2 border-green-400 p-2 rounded-full text-green-400 cursor-pointer"
+            />
             <input
               type="number"
               value={inputEpisode}
@@ -110,7 +118,7 @@ export default function Pages() {
                 setInputEpisode(parseInt(e.target.value));
                 scrollIntoEpisode(parseInt(e.target.value));
               }}
-              className=" bg-yellow-100 m-1 p-1 outline-none appearance-none w-full"
+              className=" bg-yellow-100 m-1 p-1 w-full outline-none appearance-none "
             />
             <FontAwesomeIcon
               onClick={() => scrollIntoEpisode(inputEpisode)}
@@ -179,11 +187,17 @@ export default function Pages() {
         />
       )}
       <Link
-        href={`/streamers/${pageId}`}
+        href={`/profile/page`}
         className=" fixed bottom-0 left-0 bg-fuchsia-600 text-xl text-black flex items-center p-2 rounded-tr-md"
       >
         <h3 className="text-center">Back to Page</h3>
       </Link>
+      {creatingEpisode && (
+        <CreateEpisode
+          seriesId={seriesId}
+          handleVisibility={() => setCreatingEpisode(false)}
+        />
+      )}
     </div>
   );
 }

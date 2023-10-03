@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import VideoPlayer from "./clipComponent";
+import VideoPlayer from "../clips/clipComponent";
 import { SkeletonSmClip } from "@/app/skeletons/skeletonClip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
@@ -48,30 +48,17 @@ export default function ClipList({ pageId }: { pageId: string }) {
       </div>
     );
   const clips = data?.clips; //destruturing clips from data
-  if (error)
-    return (
-      <div className=" w-full h-3hundred flex justify-center items-center">
-        <h3 className=" text-4xl text-red-400 m-2 uppercase">
-          Opps something went wrong
-        </h3>
-        <FontAwesomeIcon
-          icon={faArrowRotateRight}
-          className=" w-[40px] cursor-pointer h-[40px] text-red-200"
-        />
-      </div>
-    );
+
   return (
     <>
-      <section>
-        <div className=" pageWarper grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 ">
-          {status === "loading" &&
-            [1, 2, 3, 4].map((number) => <SkeletonSmClip key={number} />)}
-          {clips?.map((clip: videoProps) => (
-            <Suspense fallback={<SkeletonSmClip />} key={clip?.id}>
-              <VideoPlayer {...clip} key={clip.id} pageImage={data?.image} />
-            </Suspense>
-          ))}
-        </div>
+      <section className=" pageWarper grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 z-10 ">
+        {status === "loading" &&
+          [1, 2, 3, 4].map((number) => <SkeletonSmClip key={number} />)}
+        {clips?.map((clip: videoProps) => (
+          <Suspense fallback={<SkeletonSmClip />} key={clip?.id}>
+            <VideoPlayer {...clip} key={clip?.id} pageImage={data?.image} />
+          </Suspense>
+        ))}
       </section>
     </>
   );

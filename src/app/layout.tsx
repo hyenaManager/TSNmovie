@@ -5,6 +5,8 @@ import NavBar from "./components/navBars";
 import AuthProvider from "./context/authProvider";
 import QueryProvider from "./context/reactQeueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import UserProvider from "./context/userContext";
+import { Toaster } from "react-hot-toast";
 
 const space_gro = Space_Grotesk({ subsets: ["latin"] });
 
@@ -24,7 +26,12 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             <NavBar />
-            <div className="pageWarper min-h-[100vh] bg-black">{children}</div>
+            <UserProvider>
+              <div className="pageWarper min-h-[100vh] bg-black">
+                {children}
+              </div>
+              <Toaster />
+            </UserProvider>
           </AuthProvider>
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         </QueryProvider>

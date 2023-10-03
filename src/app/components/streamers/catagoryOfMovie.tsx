@@ -9,8 +9,8 @@ export default function CatagoryNavbar({
   // const pageName = searchParams.get("pageName");
   return (
     <>
-      <nav className="w-[100vw] mt-2 flex justify-between ">
-        <ul className="flex w-full items-center">
+      <nav className="pageWarper xsm:w-full sm:w-[100vw] mt-2 flex justify-between ">
+        <ul className="pageWarper flex w-full items-center">
           <li
             onClick={() => setCurrentCatagory("series")}
             className=" flex justify-center items-center cursor-pointer w-full h-full bg-black p-3 hover:bg-fuchsia-600 "

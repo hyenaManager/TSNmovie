@@ -11,9 +11,11 @@ import SkeletonClip from "../skeletons/skeletonClip";
 import axios from "axios";
 
 import CreateClips from "../components/clips/createClips";
-import CreateButton from "../components/clips/floatingCreateBtn";
+import CreateButton from "../components/floatingCreateBtn";
 import { ClipLoading } from "../components/loading";
 import { useInView } from "react-hook-inview";
+import { Toaster } from "react-hot-toast";
+import { signOut } from "next-auth/react";
 
 type videoPageProp = {
   id: string;
@@ -64,7 +66,7 @@ export default function VideoComponent() {
   }, [inView]);
   return (
     <>
-      <main className="pageWarper flex flex-col justify-center items-center overflow-auto ">
+      <main className="pageWarper flex flex-col justify-center items-center overflow-auto pt-3 ">
         {status === "loading" && <SkeletonClip />}
         {status === "error" && (
           <div className=" min-w-fit min-h-fit flex justify-center items-center xsm:h-[300px] sm:w-[600px] sm:h-[400px]  ">
@@ -93,6 +95,13 @@ export default function VideoComponent() {
             <ClipLoading />
           </div>
         )}
+        <Toaster />
+        <button
+          className=" fixed bottom-3 left-2 p-2 bg-blue-500 rounded-md"
+          onClick={() => signOut()}
+        >
+          signOut
+        </button>
       </main>
     </>
   );
