@@ -1,17 +1,19 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 
-import { useSession } from "next-auth/react";
 import axios from "axios";
+import { useContext } from "react";
+import { userProvider } from "../context/userContext";
+import SpinLoading from "../components/spinLoading";
 
 export default function NotiFications() {
-  // const { data: session } = useSession();
+  const { user }: any = useContext(userProvider);
   const { data, status } = useQuery({
-    queryKey: ["notifications"],
+    queryKey: ["notifications", user?.id],
     queryFn: async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/notifications"
+          `http://localhost:3000/api/notifications/${user?.id}`
         );
         return response.data;
       } catch (error) {
@@ -23,8 +25,10 @@ export default function NotiFications() {
   // const filteredNotis = data?.filter(
   //   (noti: { user: string }) => session?.user.name === noti.user
   // );
+
   return (
-    <section className=" w-[80%] min-h-[80vh] max-h-[90vh] bg-white p-3 mt-8 rounded-md ">
+    <section className=" w-[98%] h-full max-h-[95vh] bg-white p-3 mt-8 rounded-md ">
+      {/* <SpinLoading /> */}
       <h3 className=" text-xl font-bold text-fuchsia-800">Notifications</h3>
       <hr className=" border-b-2 border-b-fuchsia-500" />
       <ul className=" w-full p-2 flex justify-center flex-col">
@@ -33,7 +37,7 @@ export default function NotiFications() {
             key={index}
             className=" w-[98%] text-sm hover:text-white hover:bg-fuchsia-700 text-fuchsia-700 p-1 m-1 flex justify-between relative cursor-pointer"
           >
-            <p className=" p-1">{data.content}</p>
+            <p className=" p-1">{data?.message}</p>
             <small className=" p-1 text-end">{" boo "}</small>
             {/* show red dot if the notification is not watched */}
             {!data.watched && (

@@ -29,7 +29,7 @@ export default function MainList({ pageId }: { pageId: string }) {
     }
   };
   return (
-    <div className=" pageWarper relative min-h-[70vh]">
+    <div className=" pageWarper relative min-h-[70vh] w-full">
       <CatagoryNavbar setCurrentCatagory={handleCurrentCatagory} />
       {currentContent()}
     </div>

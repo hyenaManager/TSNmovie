@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import luffy from "public/luffy.jpg";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 type homeImageProps = {
   imageSource: string;
@@ -37,7 +38,8 @@ export default function HomeImage({ imageSource }: homeImageProps) {
 export function UserPageProfile({ id, name, image }: pagesProps) {
   return (
     <>
-      <article
+      <Link
+        href={`/streamers/${id}`}
         className=" flex flex-col items-center text-xl relative xsm:min-h-[200px] sm:max-h-[200px]  lg:max-h-[260px]"
         key={JSON.stringify(id)}
       >
@@ -46,20 +48,17 @@ export function UserPageProfile({ id, name, image }: pagesProps) {
           alt={name}
           src={image}
           sizes="(max-width:480px):50vw,(max-width:1020px):100vw"
-          className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
+          className=" rounded-xl object-cover bg-gray-400 shadow-[0_0_20px_purple] "
         />
-        <Link
-          href={`/streamers/${id}`}
-          className="absolute bottom-0 w-full flex justify-center items-end  bg-fuchsia-700 rounded-md"
-        >
+        <div className="absolute bottom-0 w-full flex justify-center items-end  bg-fuchsia-700 rounded-b-lg border-2 border-fuchsia-700">
           <h2
             className="  xsm:text-sm sm:text-lg rounded-md align-bottom  text-white"
             style={{ textShadow: "2px 2px 8px black" }}
           >
             {name}
           </h2>
-        </Link>
-      </article>
+        </div>
+      </Link>
     </>
   );
 }

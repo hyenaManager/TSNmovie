@@ -59,12 +59,12 @@ export default function MainList() {
   return (
     <>
       <Suspense fallback={<AdminSkeleton />}>
-        <div className=" relative w-[100vw]">
+        <div className=" relative w-full">
           <AdminPage pageId={userPage?.id} />
           <EditProfileButton />
         </div>
       </Suspense>
-      <div className=" pageWarper relative min-h-[70vh]">
+      <div className=" pageWarper w-full relative min-h-[70vh]">
         <CatagoryNavbar setCurrentCatagory={handleCurrentCatagory} />
         {currentContent()}
       </div>

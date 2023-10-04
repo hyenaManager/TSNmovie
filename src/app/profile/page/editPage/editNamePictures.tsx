@@ -15,6 +15,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Image from "next/image";
+import Loading from "@/app/components/loading";
 
 export default function ProfilePictureSection() {
   const { user, userPage }: any = useContext(userProvider);
@@ -24,13 +25,14 @@ export default function ProfilePictureSection() {
   const [uploadedCoverImg, setUploadedCoverImg] = useState<File | undefined>(
     undefined
   );
-  const [editingCoverImage, setEditingCoverImage] = useState(false); //for toglling edit and save buttons
-  const [editingProfileImage, setEditingProfileImage] = useState(false); //for toggling edit and save buttons
   const imgUploadProfilePic = useRef<HTMLInputElement | null>(null); //refrence for input that select profile pic
   const imgUploadCoverPic = useRef<HTMLInputElement | null>(null); //refrence for input that select profile cover pic
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const [typeOfPicture, setTypeOfPicture] = useState(""); //set type of uploaded picture , profile pic or profile cover pic
   const queryClient = useQueryClient();
+
+  console.log(uploadedCoverImg, " percent");
+
   const handleUploadProfilePic = () => {
     imgUploadProfilePic.current?.click();
   };
@@ -56,6 +58,14 @@ export default function ProfilePictureSection() {
   };
   console.log("cover image :", userPage?.coverImage);
 
+  //implement this logic to let the image fully loaded before the user hit save button
+  const handleFileUpload = async (file: File) => {
+    if (file) {
+      setIsSubmiting(false);
+    }
+  };
+
+  //upload and save changes
   const mutation = useMutation(
     async () => {
       let targetImg: any = null;
@@ -101,7 +111,6 @@ export default function ProfilePictureSection() {
         },
         (error) => {
           console.log(error);
-          setIsSubmiting(false);
           toast.error(error.message);
         },
         () => {
@@ -119,6 +128,7 @@ export default function ProfilePictureSection() {
         setUploadedCoverImg(undefined);
         setUploadedProfileImg(undefined);
         queryClient.invalidateQueries(["page"]);
+        queryClient.invalidateQueries(["user", user?.email]);
         toast.success("saved successfully 👍", {
           duration: 4000,
         });
@@ -154,19 +164,17 @@ export default function ProfilePictureSection() {
         onClick={handleResetPicture}
       />
       {/* coverImage edit button */}
-      {!editingCoverImage || !uploadedCoverImg ? (
+      {!uploadedCoverImg ? (
         <FontAwesomeIcon
           icon={faEdit}
           onClick={() => {
             handleUploadCoverPic();
-            setEditingCoverImage(true);
           }}
           className=" w-[20px] h-[20px] p-2 text-white bg-black rounded-full cursor-pointer absolute top-1 right-1"
         />
       ) : (
         <button
           onClick={() => {
-            setEditingCoverImage(false);
             setTypeOfPicture("cover");
             mutation.mutate();
           }}
@@ -191,9 +199,11 @@ export default function ProfilePictureSection() {
           type="file"
           accept="image/*"
           ref={imgUploadCoverPic}
-          onChange={(e) =>
-            setUploadedCoverImg((e?.target?.files?.[0] as File) || null)
-          }
+          onChange={(e) => {
+            setUploadedCoverImg((e?.target?.files?.[0] as File) || null);
+            setIsSubmiting(true);
+            handleFileUpload(e.target.files?.[0] as File);
+          }}
           hidden
         />
         <Image
@@ -211,19 +221,17 @@ export default function ProfilePictureSection() {
           alt="hat"
           className=" w-[100px] h-[100px] m-1 rounded-full bg-white p-1"
         />
-        {!editingProfileImage || !uploadedProfileImg ? (
+        {!uploadedProfileImg ? (
           <FontAwesomeIcon
             icon={faEdit}
             onClick={() => {
               handleUploadProfilePic();
-              setEditingProfileImage(true);
             }}
             className=" w-[20px] h-[20px] p-1 text-white bg-black rounded-full cursor-pointer absolute top-1 right-1"
           />
         ) : (
           <button
             onClick={() => {
-              setEditingProfileImage(false);
               setTypeOfPicture("notCover");
               mutation.mutate();
             }}
@@ -234,6 +242,7 @@ export default function ProfilePictureSection() {
         )}
       </div>
       <ChangProfileName />
+      {isSubmiting && <Loading />}
     </div>
   );
 }

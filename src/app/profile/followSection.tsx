@@ -18,7 +18,16 @@ export default function FollowAndVistPageSection() {
   return (
     <section className=" sm:w-[70vw] bg-black xsm:w-[100vw] xsm:h-[70vh] sm:h-[100vh] xsm:pt-2 sm:pt-14 flex flex-col ">
       {!userPage ? (
-        <ProfileNavSkeleton />
+        userPage === null ? (
+          <Link
+            href={"/gettingStart"}
+            className=" p-1 rounded-md bg-green-400 hover:bg-green-600 text-white text-lg m-1 max-w-fit"
+          >
+            create page
+          </Link>
+        ) : (
+          <ProfileNavSkeleton />
+        )
       ) : (
         <nav className=" flex p-2 justify-between items-center border-b-2 border-fuchsia-500">
           <Link
@@ -32,7 +41,7 @@ export default function FollowAndVistPageSection() {
               style={{
                 objectFit: "cover",
               }}
-              className=" w-[50px] h-[50px] rounded-full"
+              className=" w-[50px] h-[50px] object-cover rounded-full"
               alt="page"
             />
             <h3 className=" text-center text-white text-lg p-2 uppercase">

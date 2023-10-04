@@ -9,11 +9,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-export default function GetPageByItsUnique() {
+export default function GetPageByItsUnique({
+  changeUnique,
+}: {
+  changeUnique: (type: string) => void;
+}) {
   return (
-    <>
+    <aside className=" sm:w-[27vw] xsm:w-full  sm:h-[100vh] bg-slate-950 pt-14 p-2 ">
       <ul className="pageWarper w-full flex xsm:flex-row sm:flex-col justify-center xsm:text-sm sm:text-2xl text-white mt-3 ">
-        <li className=" w-full m-1 p-3 text-center cursor-pointer hover:bg-fuchsia-500 rounded-t-xl rounded-br-xl border-2 border-fuchsia-500 items-center flex xsm:flex-col sm:flex-row xsm:justify-center sm:justify-between">
+        <li
+          onClick={() => changeUnique("mostViewed")}
+          className=" w-full m-1 p-3 text-center cursor-pointer hover:bg-fuchsia-500 rounded-t-xl rounded-br-xl border-2 border-fuchsia-500 items-center flex xsm:flex-col sm:flex-row xsm:justify-center sm:justify-between"
+        >
           <span>Most viewed</span>
           <FontAwesomeIcon
             icon={faEye}
@@ -42,6 +49,6 @@ export default function GetPageByItsUnique() {
           />
         </li>
       </ul>
-    </>
+    </aside>
   );
 }

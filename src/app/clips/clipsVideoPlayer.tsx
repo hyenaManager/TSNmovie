@@ -32,6 +32,7 @@ type videoProps = {
   updateAt: Date;
   pageOwnerId: string;
   createdBy: any;
+  pageCreatorId: string; //id of user who create the page
 };
 
 function VideoPlayer({
@@ -41,6 +42,7 @@ function VideoPlayer({
   likes,
   id,
   createdBy,
+  pageCreatorId,
 }: videoProps) {
   const [isCreating, setIsCreating] = useState(false); //user is creating clips or not toggling the creation page
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
@@ -69,7 +71,43 @@ function VideoPlayer({
     }
   }, [inView]);
 
-  const handleLike = async () => {};
+  //creating new notification
+  const handleCreatNotification = async () => {
+    const response = await axios.post(
+      `http://localhost:3000/api/notifications`,
+      {
+        message: `${session?.user.name} like your clip`,
+        type: "like",
+        holder: "clip",
+        userEmail: session?.user.email,
+        userId: createdBy?.adminId,
+      }
+    );
+    if (response.status === 200) {
+      console.log("");
+    }
+    if (response.status === 500) {
+      toast.error(response.statusText);
+    }
+  };
+
+  //adding like or remove like
+  const handleLike = async () => {
+    const type = isLiked ? "removeLike" : "addLike";
+    const response = await axios.put(
+      `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${createdBy.id}`
+    );
+    if (response.status === 200) {
+      toast.success(response.data);
+      handleCreatNotification();
+    }
+    if (response.status === 500) {
+      toast.error(`${response.statusText}`);
+    }
+  };
+  const mutation = useMutation(handleLike, {
+    onSuccess: () => queryClient.invalidateQueries(["clips"]),
+  });
 
   return (
     <article
@@ -104,7 +142,7 @@ function VideoPlayer({
                   width={100}
                   height={100}
                   alt="bruh"
-                  className=" w-[50px] h-[50px] rounded-full bg-gray-400 mr-2 cursor-pointer"
+                  className=" w-[50px] h-[50px] object-cover rounded-full bg-gray-400 mr-2 cursor-pointer"
                 />
                 <h4 className=" text-lg text-slate-400 cursor-pointer">
                   {createdBy?.name}
@@ -146,9 +184,9 @@ function VideoPlayer({
           <div className=" h-1hundred w-full bg-fuchsia-600 rounded-b-lg flex justify-between items-center">
             <div className=" m-4 flex justify-center items-center">
               <FontAwesomeIcon
-                // onClick={() => {
-                //   mutation.mutate();
-                // }}
+                onClick={() => {
+                  mutation.mutate();
+                }}
                 icon={faHeart}
                 className={
                   " text-2xl p-1 cursor-pointer " +

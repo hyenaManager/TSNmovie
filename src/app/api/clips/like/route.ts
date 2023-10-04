@@ -5,18 +5,19 @@ export async function PUT(request:NextRequest){
     const clipId:number = parseInt(url.searchParams.get("clipId") as any)
     const userId:string = url.searchParams.get("userId") as string
     const type:string = url.searchParams.get("type") as string 
+    const pageId:string = url.searchParams.get("pageId") as string
     // const clipId = parseInt(params.clipId)
     // const userId = params.userId
     // const type = params.type
     try {
         if(type==="addLike"){
-            const response = await likeAClip(clipId,userId)
+            const response = await likeAClip(clipId,userId,pageId)
             return new Response(JSON.stringify(response),{
                 status:200
             })
         }
         if(type==="removeLike"){
-            const response = await removeLikeFromClip(clipId,userId)
+            const response = await removeLikeFromClip(clipId,userId,pageId)
             return new Response(JSON.stringify(response),{
                 status:200
             })

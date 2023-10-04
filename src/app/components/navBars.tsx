@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 export default function NavBar() {
   const { data: session } = useSession();
@@ -29,14 +28,15 @@ export default function NavBar() {
   return (
     <>
       <nav className="pageWarper text-white z-40 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
-        <div>
-          <Link
-            href={"/"}
-            className=" xsm:text-sm sm:text-2xl font-mono text-fuchsia-600 p-2 space-x-2"
-          >
-            YokePlay
-          </Link>
-        </div>
+        <Link href={"/"} className=" font-mono text-fuchsia-600 ml-3">
+          <Image
+            src={"/mycon.png"}
+            alt="icon"
+            width={100}
+            height={100}
+            className="w-[40px] h-[40px] "
+          />
+        </Link>
 
         <Link
           href={"/clips"}
@@ -84,7 +84,7 @@ export default function NavBar() {
           <h4 className=" xsm:hidden sm:flex">streamers</h4>
         </Link>
         <Link
-          href={data?.Page?.name ? "/profile" : "/gettingStart"}
+          href={"/profile"}
           className=" flex justify-center p-1 mainNavLink item sm:flex-row xsm:flex-cols-center"
         >
           {session ? (

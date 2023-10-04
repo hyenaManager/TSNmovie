@@ -47,3 +47,23 @@ export async function deleteASerie(id:string){
         throw error
     }
 }
+
+export async function addView(newViewList:string[],seriesId:string){
+    try {
+        await prisma.series.update({
+            where:{
+                id:seriesId
+            },
+            data:{
+                viewedBy:newViewList,
+                viewedCount:newViewList.length
+
+            }
+        })
+        return "success"
+    } catch (error) {
+        console.log(error);
+        
+        throw error
+    }
+}

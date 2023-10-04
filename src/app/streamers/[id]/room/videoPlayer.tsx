@@ -66,7 +66,7 @@ export default function DefaultVideoPlayer({
                     width={130}
                     height={130}
                     alt="bruh"
-                    className=" rounded-full w-[50px] h-[50px] bg-cover "
+                    className=" rounded-full w-[50px] h-[50px] object-cover "
                   />
                 </Link>
                 <h2 className=" m-2 text-xl">{title}</h2>

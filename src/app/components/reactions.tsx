@@ -7,7 +7,7 @@ export function Like({ colorClass = "text-white" }: { colorClass: string }) {
       className=" m-2 flex items-center "
       style={{ textShadow: "2px 2px 8px black" }}
     >
-      <span className=" text-white mr-1">0</span>
+      <span className=" text-white mr-1">{0}</span>
       <FontAwesomeIcon
         icon={faHeart}
         className={" text-2xl mr-1 cursor-auto " + colorClass}
@@ -17,13 +17,19 @@ export function Like({ colorClass = "text-white" }: { colorClass: string }) {
   );
 }
 
-export function Eye({ colorClass = "text-white" }: { colorClass: string }) {
+export function Eye({
+  colorClass = "text-white",
+  count,
+}: {
+  colorClass: string;
+  count: number;
+}) {
   return (
     <div
       className=" m-2 flex items-center "
       style={{ textShadow: "2px 2px 8px black" }}
     >
-      <span className=" text-white mr-1">0</span>
+      <span className=" text-white mr-1">{count}</span>
       <FontAwesomeIcon
         icon={faEye}
         className={" text-2xl mr-1 cursor-auto " + colorClass}

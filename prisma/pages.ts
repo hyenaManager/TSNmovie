@@ -5,6 +5,15 @@ export async function getAllPages(){
     return pages
 }
 
+export async function getPageByMostViewd(){
+    const pages = await prisma.page.findMany({
+        orderBy:{
+            viewedCount:"desc"
+        }
+    })
+    return pages
+}
+
 export async function createPage(data:any){
     try{
         await prisma.page.create({
@@ -54,6 +63,7 @@ export async function unfollow(userId:string,pageId:string){
     }
 }
 
+//get single page
 export async function getSinglePageByPageId(pageId:string){
     // console.log("logging from bruh series and clips",clips)
    try {
@@ -67,7 +77,7 @@ export async function getSinglePageByPageId(pageId:string){
             movies:true,
             followers:true,
             contact:true,
-        }
+        },
     })
     return page
    } catch (error) {
@@ -143,3 +153,24 @@ export async function deleteAPage(pageId:string){
         throw error
     }
 }
+
+//add view count
+export async function addView(newViewList:string[],pageId:string){
+    try {
+        await prisma.page.update({
+            where:{
+                id:pageId
+            },
+            data:{
+                viewedBy:newViewList,
+                viewedCount:newViewList.length
+            }
+        })
+        return "success"
+    } catch (error) {
+        throw error
+    }
+}
+
+
+

@@ -5,6 +5,38 @@ export async function getAllNotifications(){
         const data = await prisma.notifications.findMany()
         return data
     } catch (error) {
-        return error
+        throw error
+    }
+}
+
+export async function getNotificationByUserId(userId:string){
+    try {
+        const data = await prisma.notifications.findMany({
+            where:{
+                userId:userId
+            }
+        })
+        return data
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function createNotification(data:{type:string,message:string,holder:string,userId:string,userEmail:string}){
+    try {
+        await prisma.notifications.create({
+            data:{
+                type:data.type,
+                message:data.message,
+                holder:data.holder,
+                userId:data.userId,
+                userEmail:data.userEmail,
+            }
+        })
+        return "success"
+    } catch (error) {
+        console.log(error);
+        
+        throw error
     }
 }

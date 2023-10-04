@@ -5,8 +5,10 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { userProvider } from "@/app/context/userContext";
+import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 type seriesImage = {
   id: string;
   name: string;
@@ -16,6 +18,7 @@ type seriesImage = {
   createAt: Date;
   updateAt: Date;
   image: string;
+  viewedBy: string[];
   pageOwnerId: string;
   page: { id: string; name: string; adminId: string };
   chosenSeries: (series: any) => void;
@@ -29,6 +32,7 @@ type seriesOverview = {
   pageOwnerId: string;
   handleVisibility: (series: any) => void;
   episodes: any;
+  viewedBy: string[];
 };
 
 export default function SeriesImage({
@@ -39,6 +43,7 @@ export default function SeriesImage({
   page,
   chosenSeries,
   isChecking,
+  viewedBy,
 }: seriesImage) {
   const { user, userPage }: any = useContext(userProvider);
 
@@ -46,7 +51,7 @@ export default function SeriesImage({
     <article
       // onMouseEnter={() => setIsHover(true)}
       // onMouseLeave={() => setIsHover(false)}
-      className=" border rounded-tr-2xl xsm:h-[30vh] sm:h-[40vh] border-fuchsia-500 flex flex-col justify-end items-center text-xl text-fuchsia-600 font-bold relative "
+      className=" border rounded-tr-2xl xsm:h-[30vh] sm:h-[46vh] border-fuchsia-500 flex flex-col justify-end items-center text-xl text-fuchsia-600 font-bold relative "
       key={name}
     >
       {image && (
@@ -60,13 +65,13 @@ export default function SeriesImage({
 
       <div className=" flex absolute top-0 right-0 items-center flex-col justify-center backdrop-brightness-75 rounded-sm ">
         <Like colorClass={"text-red-400"} />
-        <Eye colorClass="text-blue-400" />
+        <Eye colorClass="text-blue-400" count={viewedBy.length} />
         <Star colorClass="text-yellow-500" />
       </div>
 
       <button
         onClick={() => {
-          chosenSeries({ name, image, content, page, id });
+          chosenSeries({ name, image, content, page, id, viewedBy });
           isChecking();
         }}
         className=" flex z-10 flex-col justify-center items-center w-full bg-black border-br-2xl "
@@ -83,8 +88,30 @@ export function SeriesOverview({
   content,
   handleVisibility,
   pageOwnerId,
+  viewedBy,
 }: seriesOverview) {
   const { user, userPage }: any = useContext(userProvider);
+  const queryClient = useQueryClient();
+  //add view
+  const addViewSeries = async () => {
+    const response = await axios.put(
+      `http://localhost:3000/api/series/viewed`,
+      {
+        seriesId: id,
+        viewList: [...viewedBy, user.email],
+      }
+    );
+    if (response.status === 200) {
+      queryClient.invalidateQueries(["page", pageOwnerId]);
+    }
+  };
+  useEffect(() => {
+    if (viewedBy && user && !viewedBy.includes(user?.email)) {
+      addViewSeries();
+    }
+  }, [user, viewedBy]);
+  console.log(viewedBy, "is viewed list");
+
   return (
     <motion.div
       initial={{ opacity: 0.5 }}

@@ -20,6 +20,7 @@ type seriesProps = {
   createAt: Date;
   updateAt: Date;
   image: string;
+  viewedBy: string[];
   pageOwnerId: string;
   pageImage: string;
   page: { id: string; name: string; adminId: string };
@@ -66,30 +67,28 @@ export default function SeriesList({ pageId }: { pageId: string }) {
     );
   return (
     <>
-      <section>
-        <div className=" pageWarper grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 ">
-          {status === "loading" &&
-            [1, 2, 3, 4].map((number) => <SeriesImgSkeleton key={number} />)}
-          {series?.map((serie: seriesProps) => (
-            <Suspense fallback={<SeriesImgSkeleton />} key={serie.id}>
-              <SeriesImage
-                {...serie}
-                chosenSeries={handleSelectedSeries}
-                isChecking={() => setIsCheckingSeries(!isCheckingSeries)}
-              />
-            </Suspense>
-          ))}
-        </div>
-        <AnimatePresence>
-          {isCheckingSeries && (
-            <SeriesOverview
-              {...selectedSeries}
-              pageOwnerId={pageId}
-              handleVisibility={() => setIsCheckingSeries(!isCheckingSeries)}
+      <div className=" pageWarper w-full grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 ">
+        {status === "loading" &&
+          [1, 2, 3, 4].map((number) => <SeriesImgSkeleton key={number} />)}
+        {series?.map((serie: seriesProps) => (
+          <Suspense fallback={<SeriesImgSkeleton />} key={serie.id}>
+            <SeriesImage
+              {...serie}
+              chosenSeries={handleSelectedSeries}
+              isChecking={() => setIsCheckingSeries(!isCheckingSeries)}
             />
-          )}
-        </AnimatePresence>
-      </section>
+          </Suspense>
+        ))}
+      </div>
+      <AnimatePresence>
+        {isCheckingSeries && (
+          <SeriesOverview
+            {...selectedSeries}
+            pageOwnerId={pageId}
+            handleVisibility={() => setIsCheckingSeries(!isCheckingSeries)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

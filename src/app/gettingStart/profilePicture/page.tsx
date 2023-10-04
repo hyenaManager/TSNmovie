@@ -16,7 +16,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsRotate, faEdit } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowsRotate,
+  faEdit,
+  faUpload,
+} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { storage } from "@/app/firebase";
 export default function GettingStart() {
@@ -82,11 +86,12 @@ export default function GettingStart() {
     onError: () => toast.error("Opps there is error in page creation "),
   });
   console.log("cover imagess: ", pageCoverImage);
+  console.log("profile imagess: ", profileImageUrl);
 
   return (
     <>
       <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
-        <div className=" flex flex-col border bg-center rounded-t-xl justify-center h-[70vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
+        <div className=" flex flex-col border bg-center rounded-t-xl justify-center xsm:h-[50vh] sm:h-[70vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
           <Image
             fill
             alt={"bg image"}
@@ -118,11 +123,11 @@ export default function GettingStart() {
               width={200}
               height={200}
               alt="hat"
-              className=" w-[100px] h-[100px] m-1 rounded-full bg-cover bg-white p-1"
+              className=" w-[130px] h-[130px] m-1 rounded-full bg-cover bg-white p-1"
             />
 
             <FontAwesomeIcon
-              icon={faEdit}
+              icon={faUpload}
               onClick={handleUploadProfilePic}
               className=" w-[20px] h-[20px] p-1 text-white bg-black rounded-full cursor-pointer absolute top-1 right-1"
             />

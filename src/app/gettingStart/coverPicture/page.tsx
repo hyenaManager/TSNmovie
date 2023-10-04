@@ -11,7 +11,7 @@ import {
 import { v4 } from "uuid";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faUpload } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { storage } from "@/app/firebase";
 import Link from "next/link";
@@ -64,6 +64,7 @@ export default function GettingStart() {
     <>
       <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
         <div className=" flex flex-col border bg-center rounded-t-xl justify-center h-[60vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
+          upload cover image
           {profileCoverImageUrl && (
             <Image
               fill
@@ -77,13 +78,11 @@ export default function GettingStart() {
             />
           )}
           {/* coverImage edit button */}
-
           <FontAwesomeIcon
             onClick={handleUploadCoverPic}
-            icon={faEdit}
+            icon={faUpload}
             className=" w-[20px] h-[20px] p-2 text-white bg-black rounded-full cursor-pointer absolute top-1 right-1"
           />
-
           <input
             type="file"
             accept="image/*"

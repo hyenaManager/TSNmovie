@@ -31,8 +31,8 @@ export default function Contact() {
     onSuccess: () => {
       toast.success("congratulation you just made a page ", {
         duration: 5000,
-      }),
-        setIsFinish(true);
+      });
+      setIsFinish(true);
     },
   });
   if (isFinish)

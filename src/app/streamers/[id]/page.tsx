@@ -15,7 +15,7 @@ export default async function ProfilePage({
       <Suspense fallback={<AdminSkeleton />}>
         <AdminPage pageId={params.id} />
       </Suspense>
-      <main className=" flex flex-col items-center w-full bg-black ">
+      <main className="pageWarper flex flex-col items-center w-full bg-black ">
         <MainList pageId={params.id} />
         {/* <MovieSearchBar /> */}
       </main>

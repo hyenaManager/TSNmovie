@@ -79,7 +79,11 @@ export default function VideoComponent() {
           <React.Fragment key={page.nextCursor}>
             {page?.clips?.map((video: videoPageProp, index: number) => (
               <Suspense fallback={<SkeletonClip key={index} />} key={video.id}>
-                <VideoPlayer {...video} key={video.id} />
+                <VideoPlayer
+                  {...video}
+                  key={video.id}
+                  pageCreatorId={page.id}
+                />
               </Suspense>
             ))}
           </React.Fragment>
@@ -96,12 +100,6 @@ export default function VideoComponent() {
           </div>
         )}
         <Toaster />
-        <button
-          className=" fixed bottom-3 left-2 p-2 bg-blue-500 rounded-md"
-          onClick={() => signOut()}
-        >
-          signOut
-        </button>
       </main>
     </>
   );

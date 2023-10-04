@@ -100,7 +100,7 @@ export async function deleteAClip(clipId:number){
     }
 }
 
-export async function likeAClip(clipId:number,userId:string){
+export async function likeAClip(clipId:number,userId:string,pageId:string){
     try {
         await prisma.clips.update({
             where:{
@@ -114,12 +114,14 @@ export async function likeAClip(clipId:number,userId:string){
                 }
             }
         })
+     
+        return "you like the clip"
     } catch (error) {
      throw error   
     }
 }
 
-export async function removeLikeFromClip(clipId:number,userId:string){
+export async function removeLikeFromClip(clipId:number,userId:string,pageId:string){
     try {
         await prisma.clips.update({
             where:{
@@ -133,6 +135,8 @@ export async function removeLikeFromClip(clipId:number,userId:string){
                 }
             }
         })
+    
+        return "like removed"
     } catch (error) {
         throw error
     }
