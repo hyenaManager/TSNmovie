@@ -82,7 +82,7 @@ export function EditUserProfile({
     async () => {
       if (!newUserImage) return toast.error("select a picture");
       const response = await axios.put(
-        `http://yokeplay.vercel.app/api/users/${user?.email}`,
+        `https://yokeplay.vercel.app/api/users/${user?.email}`,
         {
           image: newUserImage,
         }

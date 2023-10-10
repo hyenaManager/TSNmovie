@@ -29,7 +29,7 @@ export default function CreateEpisode({
 
   const createEpisode = async (url: string) => {
     const response = await axios.post(
-      `http://yokeplay.vercel.app/api/episodes`,
+      `https://yokeplay.vercel.app/api/episodes`,
       {
         name: episodeName,
         episodeNumber: episodeNumber,

@@ -17,7 +17,7 @@ export default function Contact() {
   const { userPage }: any = useContext(userProvider);
   async function createContact() {
     const response = await axios.post(
-      "http://yokeplay.vercel.app/api/contact",
+      "https://yokeplay.vercel.app/api/contact",
       {
         facebook: facebookLink,
         twitter: twitterLink,

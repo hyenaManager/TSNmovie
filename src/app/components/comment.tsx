@@ -44,7 +44,7 @@ export default function ClipComment({
     queryKey: ["comments", clip?.clipId],
     queryFn: async () => {
       const response = await axios.get(
-        `http://yokeplay.vercel.app/api/comments/${clip?.clipId}`
+        `https://yokeplay.vercel.app/api/comments/${clip?.clipId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -68,7 +68,7 @@ export default function ClipComment({
   //comment mode
   const createComment = async () => {
     const response = await axios.post(
-      `http://yokeplay.vercel.app/api/comments`,
+      `https://yokeplay.vercel.app/api/comments`,
       {
         text: commentText,
         userId: user?.id,
@@ -88,7 +88,7 @@ export default function ClipComment({
   //reply mode
   const createReplyComment = async () => {
     const response = await axios.post(
-      `http://yokeplay.vercel.app/api/comments`,
+      `https://yokeplay.vercel.app/api/comments`,
       {
         text: commentText,
         userId: user.id,
