@@ -104,7 +104,7 @@ export function EditUserProfile({
   return (
     <div className="pageWarper flex justify-center items-center fixed top-0 left-0 w-full h-full bg-white z-50">
       <section className=" flex flex-col z-50 justify-center items-center p-2 border-2 max-w-fit max-h-fit rounded-md">
-        <div className=" flex  justify-center z-50 items-center flex-wrap xsm:w-[100vw] sm:w-[50vw] mb-2 ">
+        <div className=" grid xsm:grid-cols-4 items-center sm:grid-cols-6 overflow-auto z-50 xsm:w-[100vw] sm:w-[70vw] mb-2 ">
           {myUserProfiles.map((profile: myProfiles) => (
             <img
               src={profile.source}
@@ -112,7 +112,7 @@ export function EditUserProfile({
               key={profile.id}
               className={
                 selectedImageId === profile.id
-                  ? " border-4 z-50 xsm:w-[20px] xsm:h-[20px] sm:w-[70px] sm:h-[70px] border-red-500 cursor-pointer "
+                  ? " border-4 z-50  border-red-500 cursor-pointer "
                   : ""
               }
               onClick={() => {
