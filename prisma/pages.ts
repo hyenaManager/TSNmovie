@@ -8,14 +8,54 @@ export async function getAllPages(){
 export async function createPage(data:any){
     try{
         await prisma.page.create({
-            data:data
+            data:data,
+       
         })
     }catch(error){
-        console.log(error)
+        throw error
     }
 }
 
-export async function getSinglePageByName(pageId:string){
+export async function newFollower(userId:string,pageId:string){
+    try {
+        await prisma.page.update({
+            where:{
+                id:pageId,
+            },
+            data:{
+                followers:{
+                    connect:{
+                        id:userId
+                    }
+                }
+            }
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function unfollow(userId:string,pageId:string){
+    try {
+        await prisma.page.update({
+            where:{
+                id:pageId,
+            },
+            data:{
+                followers:{
+                    disconnect:{
+                        id:userId
+                    }
+                }
+            }
+        })
+    } catch (error) {
+        throw error
+    }
+}
+
+//get single page
+export async function getSinglePageByPageId(pageId:string){
     // console.log("logging from bruh series and clips",clips)
    try {
     const page = await prisma.page.findUnique({
@@ -26,15 +66,58 @@ export async function getSinglePageByName(pageId:string){
             series:true,
             clips:true,
             movies:true,
-        }
+            followers:true,
+            contact:true,
+        },
     })
     return page
    } catch (error) {
-    console.log("yes prisma get page error");
+    // console.log("yes prisma get page error");
     
-    return error
+    throw error
    }
 }
+//update profile picture ,cover piture and name 
+export async function updatePageProfilePicture(pageId:string,image:string,updateType:string,name:string){
+
+    try {
+        if (updateType==="notCover"){
+            await prisma.page.update({
+                where:{
+                    id:pageId
+                },
+                data:{
+                    image:image
+                }
+            })
+        }
+        if (updateType==="name"){
+            await prisma.page.update({
+                where:{
+                    id:pageId
+                },
+                data:{
+                    name:name
+                }
+            })
+        }
+        
+        if(updateType==="cover"){
+            await prisma.page.update({
+                where:{
+                    id:pageId
+                },
+                data:{
+                    coverImage:image
+                }
+            })
+        }
+    } catch (error) {
+        throw error
+    }
+}
+
+
 export async function getSinglePageById(id:string){
     try {
      const page = await prisma.page.findUnique({
@@ -47,3 +130,59 @@ export async function getSinglePageById(id:string){
      return error
     }
  }
+
+//delete page
+export async function deleteAPage(pageId:string){
+    try {
+        await prisma.page.delete({
+            where:{
+                id:pageId
+            }
+        })
+        return "delete success"
+    } catch (error) {
+        throw error
+    }
+}
+
+//add view count
+export async function addView(newViewList:string[],pageId:string){
+    try {
+        await prisma.page.update({
+            where:{
+                id:pageId
+            },
+            data:{
+                viewedBy:newViewList,
+                viewedCount:newViewList.length
+            }
+        })
+        return "success"
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function ratePage(newRaterList:string[],pageId:string,newRating:number){
+    try {
+        await prisma.page.update({
+            where:{
+                id:pageId
+            },
+            data:{
+                ratedBy:newRaterList,
+                rating:{
+                    increment:newRating
+                }
+            }
+        })
+        return "success"
+    } catch (error) {
+        console.log(error);
+        
+        return error
+    }
+}
+
+
+
