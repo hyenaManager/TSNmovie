@@ -114,7 +114,7 @@ export function EditUserProfile({
               height={20}
               className={
                 selectedImageId === profile.id
-                  ? " border-4 z-50 w-[20px] h-[20px] border-red-500 cursor-pointer "
+                  ? " border-4 z-50 xsm:w-[20px] xsm:h-[20px] sm:w-[70px] sm:h-[70px] border-red-500 cursor-pointer "
                   : ""
               }
               onClick={() => {
