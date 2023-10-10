@@ -1,14 +1,32 @@
-import { createPage, getAllPages } from "../../../../prisma/pages";
+import { NextRequest } from "next/server";
+import { createPage, getAllPages, getPageByMostRated, getPageByMostViewd, newFollower, unfollow } from "../../../../prisma/pages";
 
-export async function GET(request:Request) {//called from streamers / main.tsx
+export async function GET(request:NextRequest) {//called from streamers / main.tsx
+    const url = new URL(request.url)
+    const getPageBy = url.searchParams.get("getBy");
+    console.log(getPageBy);
+    
     try {
-        const response = await getAllPages()
-        // console.log("this is respone...",response);
-        const data = JSON.stringify(response)
-        
-        return new Response(data,{
+        if (getPageBy === "mostViewed"){
+            const pages = await getPageByMostViewd()
+            return new Response(JSON.stringify(pages),{
+                status:200
+            })
+        }
+        if (getPageBy === "mostRated"){
+            const pages = await getPageByMostRated()
+            return new Response(JSON.stringify(pages),{
+                status:200
+            })
+        }
+        // const response = await getAllPages()
+        // // console.log("this is respone...",response);
+        // const data = JSON.stringify(response)
+        const pages = await getAllPages();
+        return new Response(JSON.stringify(pages),{
             status:200
         })
+        
     } catch (error) {
         console.log(error,"errrrrrrrorrrr.......")
         return new Response(JSON.stringify(error),{
@@ -17,16 +35,40 @@ export async function GET(request:Request) {//called from streamers / main.tsx
     }
 }
 
-export async function POST(request:Request){//called and post from getting and start creating page
+export async function POST(request:Request){// for getting and start creating page
     try{
-        const data = await request.json()
+        const pageData = await request.json()
         // console.log("this is page post ...",data);
         
-        await createPage(data);
-        return new Response("Success...",{
+        const createdPage =  await createPage(pageData);
+        return new Response(JSON.stringify(createdPage),{
             status:200
         })
     }catch(error){
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
+    }
+}
+
+export async function PUT(request:NextRequest) {
+    const request_data = await request.json()
+
+    try {
+        if(request_data.unfollow){
+            const updatedData = await unfollow(request_data.userId,request_data.pageId)
+            return new Response(JSON.stringify(updatedData),{
+                status:200
+            })
+
+        }else{
+            const updatedData = await newFollower(request_data.userId,request_data.pageId)
+            return new Response(JSON.stringify(updatedData),{
+                status:200
+            })
+        }
+        
+    } catch (error) {
         return new Response(JSON.stringify(error),{
             status:500
         })

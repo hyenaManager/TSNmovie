@@ -19,16 +19,54 @@ export async function getUserByMail(email:string){
                 email:email
             },
             include:{
-                Page:true
+                Page:true,
+                following:true,
             }
         })
         return user
-    } catch (error) {
-        return error
-    }
+    } catch (e:any) {
+       throw e
+      }
 }
 
 export async function createUser(newUser:userType){
-    const users = await prisma.user.create({data:newUser})
-    return users
+    try {
+        const users = await prisma.user.create({data:newUser})
+    return users    
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function changeUserImage(image:string,email:string){
+    try {
+        const respone = await prisma.user.update({
+            where:{
+                email:email
+            },
+            data:{
+                image:image
+            }
+        })
+        return respone
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function changeUserName(firstName:string,lastName:string,email:string){
+    try {
+        const respone = await prisma.user.update({
+            where:{
+                email:email
+            },
+            data:{
+                firstName:firstName,
+                lastName:lastName,
+            }
+        })
+        return respone
+    } catch (error) {
+        throw error
+    }
 }

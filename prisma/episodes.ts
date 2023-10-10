@@ -14,7 +14,11 @@ export async function getEpisodesBySeriesId(seriesId:string) {
 }
 
 export async function createEpisode(data:any) {
+<<<<<<< HEAD
     // console.log("reach in episode prisma and  this is data :",data);
+=======
+    console.log("reach in episode prisma and  this is data :",data);
+>>>>>>> locahostMode
     try {
         const createdEpisode = await prisma.episodes.create({
             data:data

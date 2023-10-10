@@ -69,7 +69,7 @@ const handler = NextAuth(
         // Add logic here to look up the user from the credentials supplied
         const fetchUser = await prisma.user.findUnique({
           where:{
-            email:credentials?.email
+            email:credentials?.email 
           }
         })      
         console.log("this is Authentication and user is ",fetchUser);

@@ -1,5 +1,5 @@
-import AdminPage from "./adminPage";
-import CatagoryNavbar from "./catagoryOfMovie";
+import AdminPage from "../../components/streamers/adminPage";
+import CatagoryNavbar from "../../components/streamers/catagoryOfMovie";
 import { Suspense } from "react";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { NormalSkeleton } from "@/app/skeletons/skeletonStreamer";
@@ -15,7 +15,7 @@ export default async function ProfilePage({
       <Suspense fallback={<AdminSkeleton />}>
         <AdminPage pageId={params.id} />
       </Suspense>
-      <main className=" flex flex-col items-center w-full bg-black ">
+      <main className="pageWarper flex flex-col items-center w-full bg-black ">
         <MainList pageId={params.id} />
         {/* <MovieSearchBar /> */}
       </main>

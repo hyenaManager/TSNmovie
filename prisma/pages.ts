@@ -5,6 +5,23 @@ export async function getAllPages(){
     return pages
 }
 
+export async function getPageByMostViewd(){
+    const pages = await prisma.page.findMany({
+        orderBy:{
+            viewedCount:"desc"
+        }
+    })
+    return pages
+}
+export async function getPageByMostRated(){
+    const pages = await prisma.page.findMany({
+        orderBy:{
+            rating:"desc"
+        }
+    })
+    return pages
+}
+
 export async function createPage(data:any){
     try{
         await prisma.page.create({

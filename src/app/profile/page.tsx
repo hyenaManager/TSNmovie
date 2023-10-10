@@ -1,22 +1,15 @@
-import CatagoryNav from "./catagoryNav";
-import MovieList from "./movieList";
-import Profile from "./profile";
-import LogInOut from "./testLogin";
+import FollowAndVistPageSection from "./followSection";
 
-type routeParams = {
-  name: string;
-};
-
-export default function ProfilePage() {
+import UserProfile from "./userProfile";
+export default function Profile() {
   return (
-    <div className="pageWarper flex flex-col justify-center text-white ">
-      <Profile />
-      <main className=" flex flex-col items-center w-full bg-black ">
-        <CatagoryNav />
-        <MovieList />
-        {/* <MovieSearchBar /> */}
+    <>
+      <main className=" pageWarper flex xsm:flex-col sm:flex-row xsm:w-full sm:h-[100vh] ">
+        {/* user section */}
+        <UserProfile />
+        {/* follow and page section */}
+        <FollowAndVistPageSection />
       </main>
-      <LogInOut />
-    </div>
+    </>
   );
 }

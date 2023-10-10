@@ -33,7 +33,8 @@ export async function getClipsByCursor(cursor:number) {
             take:2,
             skip:cursor,
             include:{
-                createdBy:true
+                createdBy:true,
+                likes:true
             },
             // cursor:{
             //     id:cursor
@@ -42,7 +43,7 @@ export async function getClipsByCursor(cursor:number) {
                 id:"asc"
             }
         });
-        console.log("result: ",clipCount);
+      
         const nextCursor = cursor+2 <= clipCount-1 ? cursor+2:null //return nextcursor for fetchNextPage's cursor
         return {clips,nextCursor}
     } catch (error) {
@@ -62,7 +63,7 @@ export async function getClipsByPageId(id:string) {
         });
         return clips
     } catch (error) {
-        return error
+        throw error
     }
 }
 
@@ -73,7 +74,7 @@ export async function createClip(data:clipType) {
         })
         return createClip
     }catch(error){
-        return error
+        throw error
     }
 }
 
@@ -82,6 +83,78 @@ export async function deleteAllClips() {
         await prisma.clips.deleteMany({});
         return "delete success"
     } catch (error) {
-        return error
+        throw error
+    }
+}
+
+export async function deleteAClip(clipId:number){
+    try {
+        await prisma.clips.delete({
+            where:{
+                id:clipId
+            }
+        })
+        return "burn it successfully 🔥"
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function likeAClip(clipId:number,userId:string,pageId:string){
+    try {
+        await prisma.clips.update({
+            where:{
+                id:clipId
+            },
+            data:{
+                likes:{
+                    connect:{
+                        id:userId
+                    }
+                }
+            }
+        })
+     
+        return "you like the clip"
+    } catch (error) {
+     throw error   
+    }
+}
+
+export async function removeLikeFromClip(clipId:number,userId:string,pageId:string){
+    try {
+        await prisma.clips.update({
+            where:{
+                id:clipId
+            },
+            data:{
+                likes:{
+                    disconnect:{
+                        id:userId
+                    }
+                }
+            }
+        })
+    
+        return "like removed"
+    } catch (error) {
+        throw error
+    }
+}
+
+export async function getAClipByClipId(clipId:number){
+    try {
+        const clip = await prisma.clips.findUnique({
+            where:{
+                id:clipId
+            },
+            include:{
+                likes:true,
+                createdBy:true
+            }
+        })
+        return clip
+    } catch (error) {
+        throw error        
     }
 }

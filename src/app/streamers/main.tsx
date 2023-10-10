@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import PageSearchBar from "../components/searchBar";
 import { NormalSkeleton, HalfSkeleton } from "../skeletons/skeletonStreamer";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +7,8 @@ import axios from "axios";
 import Loading from "../components/loading";
 import Link from "next/link";
 import Image from "next/image";
+import { UserPageProfile } from "../components/image";
+import GetPageByItsUnique from "./getPageByUnique";
 
 type pagesProps = {
   id: string;
@@ -17,22 +19,30 @@ type pagesProps = {
   image: string;
 };
 export default function Main() {
+  //fetch pages by its view rank,most viewed page will be rendered on top,(most like,most rated.etc...)
+  const [getPageBy, setGetPageBy] = useState("mostViewed");
   const getPagess = async () => {
     try {
-      const res = await axios.get("https://yokeplay.vercel.app/api/pages");
+      const res = await axios.get(
+        `http://localhost:3000/api/pages?getBy=${getPageBy}`
+      );
       return res.data;
     } catch (error) {
       console.log(error);
     }
   };
+  const handleGetPageType = (type: string) => {
+    setGetPageBy(type);
+  };
   const { data, status, error } = useQuery({
-    queryKey: ["userPages"],
+    queryKey: ["pages", getPageBy],
     queryFn: getPagess,
   });
   // console.log("this is data.... ", data);
 
   return (
     <>
+      <GetPageByItsUnique changeUnique={handleGetPageType} />
       <main className=" flex flex-col items-center min-h-[100vh] xsm:pt-2 sm:pt-14 w-full bg-black ">
         <PageSearchBar />
         {status === "error" && (
@@ -43,20 +53,21 @@ export default function Main() {
           </div>
         )}
         {/* {status === "loading" && <Loading />} */}
-        {data?.length === 0 && (
+        {data && data?.length === 0 && (
           <div className=" w-full h-full flex justify-center items-center ">
             <h1 className=" text-4xl text-red-400 ">
               Opps there is no data right now!!
             </h1>
           </div>
         )}
-        <section className="pageWarper mt-3 w-full h-full  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
+        <section className="pageWarper mt-3 w-full h-full p-2  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
           {status === "loading" ? (
             <>
               <NormalSkeleton />
               <HalfSkeleton />
             </>
           ) : (
+            data &&
             data?.map((page: pagesProps, index: number) => (
               <Suspense fallback={<HalfSkeleton />} key={index}>
                 <UserPageProfile {...page} />
@@ -65,38 +76,6 @@ export default function Main() {
           )}
         </section>
       </main>
-    </>
-  );
-}
-
-export function UserPageProfile({ id, name, image }: pagesProps) {
-  return (
-    <>
-      <article
-        className=" flex flex-col items-center text-xl relative xsm:min-h-[200px] sm:max-h-[200px]  lg:max-h-[260px]"
-        key={JSON.stringify(id)}
-      >
-        <Image
-          // width={200}
-          // height={200}
-          fill
-          alt={name}
-          src={image}
-          sizes="(max-width:480px):50vw,(max-width:1020px):100vw"
-          className=" rounded-full bg-gray-400 shadow-[0_0_20px_purple] "
-        />
-        <Link
-          href={`/streamers/${id}`}
-          className="absolute bottom-0 w-full flex justify-center items-end  bg-fuchsia-700 rounded-md"
-        >
-          <h2
-            className="  xsm:text-sm sm:text-lg rounded-md align-bottom  text-white"
-            style={{ textShadow: "2px 2px 8px black" }}
-          >
-            {name}
-          </h2>
-        </Link>
-      </article>
     </>
   );
 }

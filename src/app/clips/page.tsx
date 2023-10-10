@@ -1,18 +1,9 @@
 import React from "react";
 import VideoComponent from "./videoComponent";
-import CreateButton from "./floatingCreateBtn";
-
-type videoPageProp = {
-  title: string;
-  poster: { name: string };
-  video: string;
-  id: number;
-  like: number[];
-};
 
 export default function ClipPage() {
   return (
-    <div className="pageWarper pt-14 flex justify-center">
+    <div className="pageWarper flex justify-center overflow-auto">
       <VideoComponent />
     </div>
   );

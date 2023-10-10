@@ -8,7 +8,35 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
-
+/*
 .pageWarper {
   @apply xsm:max-w-[480px] sm:max-w-[640px] md:max-w-[1600px];
+}*/
+
+@media screen and (max-width: 480px) {
+  .pageWarper {
+    max-width: 480px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .pageWarper {
+    max-width: 640px;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px; /* Adjust this value to change the width */
+}
+::-webkit-scrollbar-track {
+  background: white; /* Change the background color */
+}
+
+/* Style the thumb (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: purple; /* Change the thumb color */
+  border-radius: 2px; /* Adjust the border-radius for rounded corners */
+}
+
+/* Style the thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: purple; /* Change the hover color */
 }

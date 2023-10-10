@@ -18,8 +18,8 @@ export async function GET(request:Request) {
 }
 
 export async function POST(request:Request) {
+    const body = await request.json()
     try {
-        const body = await request.json()
         const response = await createUser(body)
         // console.log("this is creating User...",body);
         const data = JSON.stringify(response)
@@ -27,12 +27,13 @@ export async function POST(request:Request) {
         return new Response(data,{
             status:200
         })
-    } catch (error) {
+    } catch (error:any) {
+        let statusError = '';
         // console.log("body: 000000::  ",JSON.stringify(data));
-        
-        console.log(error,"error in user creation.......")
-        return new Response(JSON.stringify(error),{
-            status:500
+        if (error.code === "P2002") statusError=`${body.email} is already used`;
+        return  new Response(JSON.stringify(statusError),{
+            status:500,
+            statusText:statusError
         })
     }
 }

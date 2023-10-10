@@ -1,4 +1,5 @@
-import { getUserByMail } from "../../../../../prisma/users";
+import { NextRequest } from "next/server";
+import { changeUserImage, getUserByMail } from "../../../../../prisma/users";
 
 export async function GET(request:Request,{params}:{params:{email:string}}) {
     const email = params.email
@@ -12,6 +13,21 @@ export async function GET(request:Request,{params}:{params:{email:string}}) {
         })
     } catch (error) {
         console.log(error,"error in user.......")
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
+    }
+}
+
+export async function PUT(request:NextRequest,{params}:{params:{email:string}}){
+    const data = await request.json();
+    const email = params.email
+    try{
+        const response = await changeUserImage(data.image,email)
+        return new Response(JSON.stringify(response),{
+            status:200
+        })
+    }catch(error){
         return new Response(JSON.stringify(error),{
             status:500
         })
