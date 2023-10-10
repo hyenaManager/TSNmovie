@@ -59,7 +59,7 @@ export default function VideoComponent() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/clips/cursor?cursor=${pageParam}`
+          `http://yokeplay.vercel.app/api/clips/cursor?cursor=${pageParam}`
         );
         const data = response.data;
         return data;

@@ -44,7 +44,7 @@ export default function ClipComment({
     queryKey: ["comments", clip?.clipId],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/api/comments/${clip?.clipId}`
+        `http://yokeplay.vercel.app/api/comments/${clip?.clipId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -67,12 +67,15 @@ export default function ClipComment({
   };
   //comment mode
   const createComment = async () => {
-    const response = await axios.post(`http://localhost:3000/api/comments`, {
-      text: commentText,
-      userId: user?.id,
-      clipId: clip?.clipId,
-      mode: "comment",
-    });
+    const response = await axios.post(
+      `http://yokeplay.vercel.app/api/comments`,
+      {
+        text: commentText,
+        userId: user?.id,
+        clipId: clip?.clipId,
+        mode: "comment",
+      }
+    );
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       setCommentParent(null);
@@ -84,13 +87,16 @@ export default function ClipComment({
   };
   //reply mode
   const createReplyComment = async () => {
-    const response = await axios.post(`http://localhost:3000/api/comments`, {
-      text: commentText,
-      userId: user.id,
-      parentId: commentParent?.parentId,
-      userImage: user.image,
-      mode: "reply",
-    });
+    const response = await axios.post(
+      `http://yokeplay.vercel.app/api/comments`,
+      {
+        text: commentText,
+        userId: user.id,
+        parentId: commentParent?.parentId,
+        userImage: user.image,
+        mode: "reply",
+      }
+    );
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       commentTextRef.current = null;

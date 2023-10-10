@@ -28,12 +28,15 @@ export default function CreateEpisode({
   };
 
   const createEpisode = async (url: string) => {
-    const response = await axios.post(`http://localhost:3000/api/episodes`, {
-      name: episodeName,
-      episodeNumber: episodeNumber,
-      seriesId: seriesId,
-      video: url,
-    });
+    const response = await axios.post(
+      `http://yokeplay.vercel.app/api/episodes`,
+      {
+        name: episodeName,
+        episodeNumber: episodeNumber,
+        seriesId: seriesId,
+        video: url,
+      }
+    );
     if (response.status === 200) {
       toast.success("create successfully ");
     }

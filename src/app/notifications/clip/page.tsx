@@ -32,7 +32,7 @@ export default function ClipNoti() {
     queryKey: ["clip", parseInt(clipId)],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/api/clips/noti?clipId=${clipId}`
+        `http://yokeplay.vercel.app/api/clips/noti?clipId=${clipId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -46,7 +46,7 @@ export default function ClipNoti() {
   const mutation = useMutation(
     async () => {
       const response = await axios.put(
-        "http://localhost:3000/api/notifications",
+        "http://yokeplay.vercel.app/api/notifications",
         {
           notificationId: notiId,
         }

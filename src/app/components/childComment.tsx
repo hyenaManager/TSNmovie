@@ -26,7 +26,7 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
     queryKey: ["childComment", parentId],
     queryFn: async ({ pageParam = 0 }) => {
       const response = await axios.get(
-        `http://localhost:3000/api/comments/cursor?parentId=${parentId}&cursor=${pageParam}`
+        `http://yokeplay.vercel.app/api/comments/cursor?parentId=${parentId}&cursor=${pageParam}`
       );
       if (response.status === 200) {
         return response.data;

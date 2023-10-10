@@ -30,7 +30,7 @@ export function ChangePageContact() {
     queryKey: ["page", userPage?.id],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/api/pages/${userPage?.id}`
+        `http://yokeplay.vercel.app/api/pages/${userPage?.id}`
       );
       if (response.status === 200) {
         return response.data;
@@ -44,7 +44,7 @@ export function ChangePageContact() {
     //create contact if contact is null
     if (data.contact === null) {
       await axios
-        .post(`http://localhost:3000/api/contact`, {
+        .post(`http://yokeplay.vercel.app/api/contact`, {
           facebook: facebookLink,
           whatsapp: whatsappLink,
           telegram: telegramLink,
@@ -56,7 +56,7 @@ export function ChangePageContact() {
       //or edit contact
     } else {
       await axios
-        .put(`http://localhost:3000/api/contact`, {
+        .put(`http://yokeplay.vercel.app/api/contact`, {
           facebook: facebookLink,
           whatsapp: whatsappLink,
           telegram: telegramLink,
