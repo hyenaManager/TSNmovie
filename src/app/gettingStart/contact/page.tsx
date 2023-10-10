@@ -14,6 +14,7 @@ export default function Contact() {
   const [twitterLink, setTwitterLink] = useState("");
   const [telegramLink, setTelegramLink] = useState("");
   const [isFinish, setIsFinish] = useState(false);
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const { userPage }: any = useContext(userProvider);
   async function createContact() {
     const response = await axios.post(
@@ -27,7 +28,10 @@ export default function Contact() {
       }
     );
     if (response.status === 200) {
-      toast.success("creating contact also success");
+      toast.success("working.....");
+    } else {
+      setIsSubmiting(false);
+      toast.error(response.statusText);
     }
   }
   const mutation = useMutation(createContact, {
@@ -66,7 +70,7 @@ export default function Contact() {
         <h3 className=" p-2 text-xl text-white text-center">
           Add social account link to contact you or you can skip for now
         </h3>
-        <li className=" w-[90%] m-2 text-center xsm:h-full sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
+        <li className=" w-[90%] xsm:m-0 sm:m-2 text-center xsm:max-h-fit sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
           <h2 className="w-[130px] h-full text-slate-800  text-center items-center ">
             Facebook
           </h2>
@@ -75,11 +79,11 @@ export default function Contact() {
             value={facebookLink}
             onChange={(e) => setFacebookLink(e.target.value)}
             className={
-              "w-full outline-fuchsia-600 p-2 ml-2 h-[40px] text-lg text-slate-800 text-center "
+              "w-full outline-fuchsia-600 xsm:p-1 sm:p-2 sm:ml-2 xsm:h-[20px] sm:h-[40px] xsm:text-sm sm:text-lg text-slate-800 text-center "
             }
           />
         </li>
-        <li className=" w-[90%] m-2 text-center xsm:h-full sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
+        <li className=" w-[90%] xsm:m-0 sm:m-2 text-center xsm:max-h-fit sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
           <h2 className="w-[130px] h-full text-slate-800  text-center items-center ">
             Telegram
           </h2>
@@ -88,11 +92,11 @@ export default function Contact() {
             value={telegramLink}
             onChange={(e) => setTelegramLink(e.target.value)}
             className={
-              "w-full outline-fuchsia-600 p-2 ml-2 h-[40px] text-lg text-slate-800 text-center "
+              "w-full outline-fuchsia-600 xsm:p-1 sm:p-2 sm:ml-2 xsm:h-[20px] sm:h-[40px] xsm:text-sm sm:text-lg text-slate-800 text-center "
             }
           />
         </li>
-        <li className=" w-[90%] m-2 text-center xsm:h-full sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
+        <li className=" w-[90%] xsm:m-0 sm:m-2 text-center xsm:max-h-fit sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
           <h2 className="w-[130px] h-full text-slate-800  text-center items-center ">
             Whatsapp
           </h2>
@@ -101,11 +105,11 @@ export default function Contact() {
             value={whatsappLink}
             onChange={(e) => setWhatsappLink(e.target.value)}
             className={
-              "w-full outline-fuchsia-600 p-2 ml-2 h-[40px] text-lg text-slate-800 text-center "
+              "w-full outline-fuchsia-600 xsm:p-1 sm:p-2 sm:ml-2 xsm:h-[20px] sm:h-[40px] xsm:text-sm sm:text-lg text-slate-800 text-center "
             }
           />
         </li>
-        <li className=" w-[90%] m-2 text-center xsm:h-full sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
+        <li className=" w-[90%] xsm:m-0 sm:m-2 text-center xsm:max-h-fit sm:h-[50px] flex bg-white justify-center xsm:flex-col sm:flex-row items-center p-2 rounded-xl text-xl">
           <h2 className="w-[130px] h-full text-slate-800  text-center items-center ">
             Twitter
           </h2>
@@ -114,14 +118,18 @@ export default function Contact() {
             value={twitterLink}
             onChange={(e) => setTwitterLink(e.target.value)}
             className={
-              "w-full outline-fuchsia-600 p-2 ml-2 h-[40px] text-lg text-slate-800 text-center "
+              "w-full outline-fuchsia-600 xsm:p-1 sm:p-2 sm:ml-2 xsm:h-[20px] sm:h-[40px] xsm:text-sm sm:text-lg text-slate-800 text-center "
             }
           />
         </li>
       </ul>
 
       <button
-        onClick={() => mutation.mutate()}
+        disabled={isSubmiting}
+        onClick={() => {
+          mutation.mutate();
+          setIsSubmiting(true);
+        }}
         className=" p-2 bg-green-500 rounded-md text-lg text-white"
       >
         Finished
