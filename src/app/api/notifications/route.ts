@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { createNotification, getAllNotifications } from "../../../../prisma/notifications";
+import { createNotification, getAllNotifications, setWatchedTrue } from "../../../../prisma/notifications";
 
 export async function GET(request:Request){
     try {
@@ -15,9 +15,16 @@ export async function GET(request:Request){
 }
 
 export async function POST(request:NextRequest){
-    const {type,message,holder,userId,userEmail} = await request.json()
+    const data:{
+        message:string,
+        type:string,
+        holder:string,
+        userEmail:string,
+        userId:string,
+        holderId:number,
+    } = await request.json()
     try {
-        const respone = await createNotification({message:message,type:type,holder:holder,userId:userId,userEmail:userEmail})
+        const respone = await createNotification(data)
         return new Response(JSON.stringify(respone),{
             status:200
         })
@@ -27,3 +34,18 @@ export async function POST(request:NextRequest){
         })
     }
 }
+
+//set watched to true(nofication)
+export async function PUT(request:NextRequest){
+    try {
+        const {notificationId} = await request.json()
+        const data = await setWatchedTrue(notificationId)
+        return new Response(JSON.stringify(data),{
+            status:200
+        }) 
+    } catch (error) {
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
+    }
+} 

@@ -13,6 +13,14 @@ export async function getPageByMostViewd(){
     })
     return pages
 }
+export async function getPageByMostRated(){
+    const pages = await prisma.page.findMany({
+        orderBy:{
+            rating:"desc"
+        }
+    })
+    return pages
+}
 
 export async function createPage(data:any){
     try{
@@ -169,6 +177,27 @@ export async function addView(newViewList:string[],pageId:string){
         return "success"
     } catch (error) {
         throw error
+    }
+}
+
+export async function ratePage(newRaterList:string[],pageId:string,newRating:number){
+    try {
+        await prisma.page.update({
+            where:{
+                id:pageId
+            },
+            data:{
+                ratedBy:newRaterList,
+                rating:{
+                    increment:newRating
+                }
+            }
+        })
+        return "success"
+    } catch (error) {
+        console.log(error);
+        
+        return error
     }
 }
 

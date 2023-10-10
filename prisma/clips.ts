@@ -141,3 +141,20 @@ export async function removeLikeFromClip(clipId:number,userId:string,pageId:stri
         throw error
     }
 }
+
+export async function getAClipByClipId(clipId:number){
+    try {
+        const clip = await prisma.clips.findUnique({
+            where:{
+                id:clipId
+            },
+            include:{
+                likes:true,
+                createdBy:true
+            }
+        })
+        return clip
+    } catch (error) {
+        throw error        
+    }
+}

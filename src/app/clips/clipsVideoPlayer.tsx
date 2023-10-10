@@ -1,26 +1,18 @@
 "use client";
-import {
-  faComment,
-  faEllipsisVertical,
-  faHeart,
-  faPause,
-  faPlay,
-  faVolumeHigh,
-} from "@fortawesome/free-solid-svg-icons";
+import { faComment, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import CreateButton from "../components/floatingCreateBtn";
+
 import Image from "next/image";
 import ReportSomething from "../components/reportComponent";
 import { useInView } from "react-hook-inview";
-import { userProvider } from "../context/userContext";
+
 import axios from "axios";
 import toast from "react-hot-toast";
-import { storage } from "../firebase";
-import { deleteObject, ref } from "firebase/storage";
+
 import MoreOption from "../components/clips/moreOption";
 type videoProps = {
   id: string;
@@ -32,17 +24,17 @@ type videoProps = {
   updateAt: Date;
   pageOwnerId: string;
   createdBy: any;
-  pageCreatorId: string; //id of user who create the page
+  handleComment: (clip: any) => void;
 };
 
-function VideoPlayer({
+function ClipVideoPlayer({
   title,
   video,
   pageOwnerId,
   likes,
   id,
   createdBy,
-  pageCreatorId,
+  handleComment,
 }: videoProps) {
   const [isCreating, setIsCreating] = useState(false); //user is creating clips or not toggling the creation page
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
@@ -53,7 +45,7 @@ function VideoPlayer({
   const [ref, inView] = useInView({ threshold: 0.3 });
   const { data: session, status } = useSession();
   const isLiked =
-    likes.find((user: any) => user.id === session?.user.id) !== undefined; //check current video is already liked by current user?
+    likes?.find((user: any) => user.id === session?.user.id) !== undefined; //check current video is already liked by current user?
   console.log("like givers :", likes);
 
   const handlePlayPause = () => {
@@ -81,11 +73,9 @@ function VideoPlayer({
         holder: "clip",
         userEmail: session?.user.email,
         userId: createdBy?.adminId,
+        holderId: id,
       }
     );
-    if (response.status === 200) {
-      console.log("");
-    }
     if (response.status === 500) {
       toast.error(response.statusText);
     }
@@ -93,13 +83,13 @@ function VideoPlayer({
 
   //adding like or remove like
   const handleLike = async () => {
-    const type = isLiked ? "removeLike" : "addLike";
+    const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
     const response = await axios.put(
       `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${createdBy.id}`
     );
     if (response.status === 200) {
       toast.success(response.data);
-      handleCreatNotification();
+      type === "addLike" && handleCreatNotification();
     }
     if (response.status === 500) {
       toast.error(`${response.statusText}`);
@@ -134,7 +124,7 @@ function VideoPlayer({
           >
             <div className="profileDiv flex justify-between items-center">
               <Link
-                href={`/streamers/${createdBy?.name}`}
+                href={`/streamers/${createdBy?.id}`}
                 className=" flex justify-start items-center p-1"
               >
                 <Image
@@ -195,10 +185,13 @@ function VideoPlayer({
               />
               <span className=" text-white">{likes?.length}</span>
             </div>
-            <FontAwesomeIcon
-              icon={faComment}
-              className=" text-white text-2xl m-4 cursor-pointer  "
-            />
+            <button className="flex justify-center m-4 items-center">
+              <FontAwesomeIcon
+                onClick={() => handleComment({ clipTitle: title, clipId: id })}
+                icon={faComment}
+                className=" text-white text-2xl mr-1  cursor-pointer  "
+              />
+            </button>
           </div>
         </div>
       )}
@@ -207,4 +200,4 @@ function VideoPlayer({
   );
 }
 
-export default VideoPlayer;
+export default ClipVideoPlayer;

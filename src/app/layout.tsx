@@ -26,8 +26,8 @@ export default function RootLayout({
       <body className={space_gro.className}>
         <QueryProvider>
           <AuthProvider>
-            <NavBar />
             <UserProvider>
+              <NavBar />
               <div className="pageWarper min-h-[100vh] bg-black">
                 {children}
               </div>

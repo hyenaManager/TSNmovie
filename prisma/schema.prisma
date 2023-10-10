@@ -54,6 +54,7 @@ model User {
   Page              Page?
   Notifications     Notifications[] @relation("notificationOwner")
   NotificationsMade Notifications[] @relation("notificationMaker")
+  Comment           Comment[]
 }
 
 model VerificationRequest {
@@ -88,6 +89,8 @@ model Page {
   image       String
   viewedBy    String[] //collect user's email 
   viewedCount Int      @default(0) //count of users who viewed page
+  ratedBy     String[]
+  rating      Int      @default(0)
   coverImage  String?
   movies      Movies[]
   clips       Clips[]
@@ -122,15 +125,15 @@ model Movies {
 }
 
 model Clips {
-  id          Int      @id @unique @default(autoincrement())
+  id          Int       @id @unique @default(autoincrement())
   title       String?
   video       String
-  //comment
-  likes       User[]   @relation("like")
+  comment     Comment[]
+  likes       User[]    @relation("like")
   link        String?
-  createAt    DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
+  createAt    DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+  createdBy   Page      @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
 }
 
@@ -173,7 +176,7 @@ model Notifications {
   type      String
   message   String
   holder    String //holder may be clip,movie,episode(video)
-  holderId  String? //holder's id
+  holderId  Int? //so the user can fetch(see) the reacted clip,movie or episode
   watched   Boolean  @default(false)
   createdAt DateTime @default(now())
   link      String?
@@ -181,4 +184,21 @@ model Notifications {
   userId    String
   notiBy    User     @relation("notificationMaker", fields: [userEmail], references: [email])
   userEmail String
+}
+
+model Comment {
+  id            String    @id @unique @default(uuid())
+  text          String
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  userImage     String? //for using the in replied comment image...
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  clipId        Int?
+  clip          Clips?    @relation(fields: [clipId], references: [id])
+  parentId      String?
+  //many-to-one relationship between Comment and its parent Comment 
+  parent        Comment?  @relation("childComments", fields: [parentId], references: [id])
+  // one-to-many relationship between Comment and its child Comments for reply
+  childComments Comment[] @relation("childComments")
 }

@@ -23,3 +23,20 @@ input::-webkit-inner-spin-button {
     max-width: 640px;
   }
 }
+::-webkit-scrollbar {
+  width: 10px; /* Adjust this value to change the width */
+}
+::-webkit-scrollbar-track {
+  background: white; /* Change the background color */
+}
+
+/* Style the thumb (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: purple; /* Change the thumb color */
+  border-radius: 2px; /* Adjust the border-radius for rounded corners */
+}
+
+/* Style the thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: purple; /* Change the hover color */
+}

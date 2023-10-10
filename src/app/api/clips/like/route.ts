@@ -22,6 +22,9 @@ export async function PUT(request:NextRequest){
                 status:200
             })
         }
+        return new Response("error",{
+            status:200
+        })
     } catch (error) {
         return new Response(JSON.stringify(error),{
             status:500

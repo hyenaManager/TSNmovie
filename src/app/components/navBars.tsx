@@ -5,25 +5,13 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { userProvider } from "../context/userContext";
 export default function NavBar() {
   const { data: session } = useSession();
-  const router = useRouter();
-  // console.log("id ", session?.user.id);
-  const { data, status } = useQuery({
-    queryKey: ["user", session?.user?.email],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/users/${session?.user.email}`
-        );
-        const data = response.data;
-        return data;
-      } catch (error) {
-        return error;
-      }
-    },
-  });
   //checking if the user has page ,if exist push to profile path
+  console.log("session image is :", session?.user.image);
+  const { user, userPage }: any = useContext(userProvider);
 
   return (
     <>
@@ -87,17 +75,17 @@ export default function NavBar() {
           href={"/profile"}
           className=" flex justify-center p-1 mainNavLink item sm:flex-row xsm:flex-cols-center"
         >
-          {session ? (
+          {user ? (
             <>
               <span className=" text-fuchsia-400 xsm:hidden sm:block text-lg p-1">
-                {session?.user?.name}
+                {user?.firstName + " " + user?.lastName}
               </span>
               <Image
                 width={400}
                 height={400}
                 alt="haih"
-                src={`${session?.user?.image as string}`}
-                className=" rounded-full bg-cover xsm:w-[24px] xsm:h-[24px] sm:w-[40px] sm:h-[40px] "
+                src={`${user?.image as string}`}
+                className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
               />
             </>
           ) : (

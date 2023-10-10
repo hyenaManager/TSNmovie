@@ -33,7 +33,7 @@ function Movies({ name, image, id, author }: videoProp) {
 
       <div className=" flex absolute top-0 right-0 items-center flex-col justify-center backdrop-brightness-75 rounded-sm ">
         <Like colorClass={"text-red-400"} />
-        <Eye colorClass="text-blue-400" />
+        <Eye colorClass="text-blue-400" count={0} />
         <Star colorClass="text-yellow-500" />
       </div>
 

@@ -59,7 +59,7 @@ export default function SeriesImage({
           fill
           src={image}
           alt={image}
-          className=" rounded-t-xl rounded-r-xl bg-gray-400 bg-cover object-cover "
+          className=" rounded-tr-xl  bg-gray-400 bg-cover object-cover "
         />
       )}
 

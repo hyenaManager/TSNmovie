@@ -34,7 +34,10 @@ export default function GetPageByItsUnique({
             className=" w-[20px] h-[20px] text-yellow-700"
           />
         </li>
-        <li className=" w-full m-1 p-3 text-center cursor-pointer hover:bg-fuchsia-500 rounded-t-xl rounded-br-xl border-2 border-fuchsia-500 items-center flex xsm:flex-col sm:flex-row xsm:justify-center sm:justify-between">
+        <li
+          onClick={() => changeUnique("mostRated")}
+          className=" w-full m-1 p-3 text-center cursor-pointer hover:bg-fuchsia-500 rounded-t-xl rounded-br-xl border-2 border-fuchsia-500 items-center flex xsm:flex-col sm:flex-row xsm:justify-center sm:justify-between"
+        >
           <span>Most Rated</span>
           <FontAwesomeIcon
             icon={faStar}

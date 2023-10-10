@@ -3,6 +3,7 @@ import {
   faCoins,
   faEye,
   faHeart,
+  faPeopleGroup,
   faStar,
   faThumbsUp,
   faTrophy,
@@ -15,6 +16,7 @@ import axios from "axios";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { useContext, useEffect } from "react";
 import { userProvider } from "@/app/context/userContext";
+import RatePage from "./rating";
 
 export default function AdminPage({ pageId }: { pageId: string }) {
   const { data: session } = useSession();
@@ -121,8 +123,8 @@ export default function AdminPage({ pageId }: { pageId: string }) {
           {/* user's bounty or followers */}
           <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
             <FontAwesomeIcon
-              icon={faCoins}
-              className="shadow-[0_0_20px_yellow] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full"
+              icon={faPeopleGroup}
+              className="shadow-[0_0_20px_green] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-green-600 p-4 border-2 border-white rounded-full"
             />
             <span className=" mr-2 font-mono text-white">
               Followers : {data?.followers?.length}
@@ -136,25 +138,19 @@ export default function AdminPage({ pageId }: { pageId: string }) {
             </button>
           </div>
           {/* user's rating */}
-          <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
-            <FontAwesomeIcon
-              icon={faStar}
-              className="shadow-[0_0_20px_yellow] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full"
-            />
-            <span className=" mr-2 font-mono text-white">Rating : 4.5</span>
-
-            <button className=" bg-fuchsia-500 hover:bg-fuchsia-600 p-1 rounded-md text-lg text-white">
-              Rate
-            </button>
-          </div>
+          <RatePage
+            raterList={data?.ratedBy}
+            pageId={data?.id}
+            rating={data?.rating}
+          />
           {/* user trophy */}
-          <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
+          {/* <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
             <FontAwesomeIcon
               icon={faHeart}
               className=" shadow-[0_0_20px_red] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-red-600 p-4 border-2 border-white rounded-full"
             />
             <span className=" mr-2 font-mono text-white">Seek : un</span>
-          </div>
+          </div> */}
           {/* user trophy */}
           <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
             <FontAwesomeIcon

@@ -14,12 +14,12 @@ import Image from "next/image";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
-const { user, userPage }: any = useContext(userProvider);
 export function UserPic() {
   const [profilePic, setProfilePic] = useState<File | undefined>(undefined);
   const [profilePicUrl, setProfilePicUrl] = useState("");
   const [editingPic, setEditingPic] = useState(false);
   const queryClient = useQueryClient();
+  const { user, userPage }: any = useContext(userProvider);
   async function handleUploadImageToFirebase(profilePic: File) {
     if (profilePicUrl !== "") {
       const coverImageRef = ref(storage, profilePicUrl);

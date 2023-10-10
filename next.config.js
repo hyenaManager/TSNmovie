@@ -11,5 +11,7 @@ module.exports = {
             // pathname: '/account123/**',
           },
         ],
+        dangerouslyAllowSVG: true,
+
       },
 }

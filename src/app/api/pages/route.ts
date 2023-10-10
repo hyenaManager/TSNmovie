@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { createPage, getAllPages, getPageByMostViewd, newFollower, unfollow } from "../../../../prisma/pages";
+import { createPage, getAllPages, getPageByMostRated, getPageByMostViewd, newFollower, unfollow } from "../../../../prisma/pages";
 
 export async function GET(request:NextRequest) {//called from streamers / main.tsx
     const url = new URL(request.url)
@@ -13,10 +13,19 @@ export async function GET(request:NextRequest) {//called from streamers / main.t
                 status:200
             })
         }
+        if (getPageBy === "mostRated"){
+            const pages = await getPageByMostRated()
+            return new Response(JSON.stringify(pages),{
+                status:200
+            })
+        }
         // const response = await getAllPages()
         // // console.log("this is respone...",response);
         // const data = JSON.stringify(response)
-        
+        const pages = await getAllPages();
+        return new Response(JSON.stringify(pages),{
+            status:200
+        })
         
     } catch (error) {
         console.log(error,"errrrrrrrorrrr.......")

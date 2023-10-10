@@ -1,6 +1,5 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
-import VideoPlayer from "./clipsVideoPlayer";
 import {
   useInfiniteQuery,
   useQuery,
@@ -16,6 +15,9 @@ import { ClipLoading } from "../components/loading";
 import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import { signOut } from "next-auth/react";
+import ClipVideoPlayer from "./clipsVideoPlayer";
+import ClipComment from "../components/comment";
+import { AnimatePresence } from "framer-motion";
 
 type videoPageProp = {
   id: string;
@@ -33,6 +35,16 @@ export default function VideoComponent() {
   const queryClient = useQueryClient();
   const [ref, inView] = useInView();
   const [isCreating, setIsCreating] = useState(false);
+  const [onComment, setOnComment] = useState(false); //on click comment button
+  const [selectedClip, setSelectedClip] = useState<{
+    clipTitle: string;
+    clipId: number;
+  } | null>(null); //{clipTitle:title,clipId:id}
+
+  const handleComment = (clip: { clipTitle: string; clipId: number }) => {
+    setSelectedClip(clip);
+    setOnComment(true);
+  };
 
   // queryClient.invalidateQueries({ queryKey: ["clips"] });
   const {
@@ -66,23 +78,16 @@ export default function VideoComponent() {
   }, [inView]);
   return (
     <>
-      <main className="pageWarper flex flex-col justify-center items-center overflow-auto pt-3 ">
+      <main className="pageWarper flex flex-col justify-center items-center pt-14 ">
         {status === "loading" && <SkeletonClip />}
-        {status === "error" && (
-          <div className=" min-w-fit min-h-fit flex justify-center items-center xsm:h-[300px] sm:w-[600px] sm:h-[400px]  ">
-            <h1 className=" text-4xl text-red-400 min-w-fit min-h-fit text-center ">
-              Opps there is an error:(
-            </h1>
-          </div>
-        )}
         {data?.pages?.map((page) => (
           <React.Fragment key={page.nextCursor}>
             {page?.clips?.map((video: videoPageProp, index: number) => (
               <Suspense fallback={<SkeletonClip key={index} />} key={video.id}>
-                <VideoPlayer
+                <ClipVideoPlayer
                   {...video}
                   key={video.id}
-                  pageCreatorId={page.id}
+                  handleComment={handleComment}
                 />
               </Suspense>
             ))}
@@ -100,6 +105,14 @@ export default function VideoComponent() {
           </div>
         )}
         <Toaster />
+        <AnimatePresence>
+          {onComment && (
+            <ClipComment
+              clip={selectedClip}
+              hideComment={() => setOnComment(false)}
+            />
+          )}
+        </AnimatePresence>
       </main>
     </>
   );

@@ -18,7 +18,7 @@ export function Like({ colorClass = "text-white" }: { colorClass: string }) {
 }
 
 export function Eye({
-  colorClass = "text-white",
+  colorClass,
   count,
 }: {
   colorClass: string;
