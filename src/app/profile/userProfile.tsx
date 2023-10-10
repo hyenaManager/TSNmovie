@@ -110,8 +110,6 @@ export function EditUserProfile({
               src={profile.source}
               alt="profile"
               key={profile.id}
-              width={20}
-              height={20}
               className={
                 selectedImageId === profile.id
                   ? " border-4 z-50 xsm:w-[20px] xsm:h-[20px] sm:w-[70px] sm:h-[70px] border-red-500 cursor-pointer "
