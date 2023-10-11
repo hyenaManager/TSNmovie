@@ -55,8 +55,6 @@ export default function ClipComment({
   });
 
   const handleComment = () => {
-    setCommentParent(null);
-    setCommentText("");
     mutation.mutate();
   };
   const handleReplying = (
@@ -83,6 +81,8 @@ export default function ClipComment({
     );
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
+      setCommentParent(null);
+      setCommentText("");
       commentTextRef.current = null;
       return toast.success("commented");
     } else {
@@ -103,6 +103,8 @@ export default function ClipComment({
     );
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
+      setCommentParent(null);
+      setCommentText("");
       commentTextRef.current = null;
       return toast.success("commented");
     } else {
