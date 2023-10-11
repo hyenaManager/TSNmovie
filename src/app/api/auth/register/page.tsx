@@ -105,7 +105,7 @@ function RegisterForm() {
         e.preventDefault();
         mutation.mutate();
       }}
-      className="pageWarper xsm:-[w-96vw] sm:w-[60vw] shadow-[0_0_20px_purple] flex justify-center relative flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-5hundred font-mono "
+      className="pageWarper xsm:-[w-96vw] sm:w-[60vw] shadow-[0_0_20px_purple] flex justify-center relative flex-col xsm:p-2 sm:p-4 rounded-lg m-0 bg-black font-mono "
     >
       <label className=" p-1 text-fuchsia-600  text-lg">first name </label>
       <input

@@ -77,7 +77,7 @@ function LoginForm() {
         }}
         className="pageWarper xsm:w-[96vw] sm:w-[60vw] relative shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
       >
-        <label className=" p-2 text-fuchsia-600  text-2xl  w-4hundred text-start ">
+        <label className=" p-2 text-fuchsia-600  text-2xl  w-4hundred xsm:text-center sm:text-start ">
           Email
         </label>
         <input
@@ -87,8 +87,8 @@ function LoginForm() {
           className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
           type="email"
         />
-        <label className=" p-2 text-fuchsia-600 text-2xl w-4hundred text-start ">
-          Password{" "}
+        <label className=" p-2 text-fuchsia-600 text-2xl w-4hundred xsm:text-center sm:text-start ">
+          Password
         </label>
         <input
           required
