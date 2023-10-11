@@ -15,7 +15,7 @@ type AuthenticateProp = {
 export default function AuthenticationForm() {
   return (
     <main
-      className=" min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
+      className="pageWarper min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
       style={{
         backgroundImage: "url(/bruh.png)",
       }}
@@ -75,7 +75,7 @@ function LoginForm() {
           setIsSubmiting(true);
           handleSubmit();
         }}
-        className=" relative shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
+        className=" xsm:w-[96vw] sm:w-[60vw] relative shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
       >
         <label className=" p-2 text-fuchsia-600  text-2xl  w-4hundred text-start ">
           Email

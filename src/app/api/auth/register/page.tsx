@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function AuthenticationForm() {
   return (
     <main
-      className=" min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
+      className="pageWarper min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
       style={{
         backgroundImage: "url(/bruh.png)",
       }}
@@ -105,7 +105,7 @@ function RegisterForm() {
         e.preventDefault();
         mutation.mutate();
       }}
-      className=" shadow-[0_0_20px_purple] flex justify-center relative flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-5hundred font-mono "
+      className=" xsm:-[w-96vw] sm:w-[60vw] shadow-[0_0_20px_purple] flex justify-center relative flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-5hundred font-mono "
     >
       <label className=" p-1 text-fuchsia-600  text-lg">first name </label>
       <input
