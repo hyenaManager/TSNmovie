@@ -102,7 +102,7 @@ function ClipVideoPlayer({
   return (
     <article
       ref={ref}
-      className=" video-player flex flex-col justify-center m-1 items-center xsm:w-[100vw] sm:w-[600px] relative rounded-lg mt-2"
+      className=" video-player flex flex-col justify-center items-center xsm:w-[100vw] sm:w-[600px] relative rounded-lg mt-2"
     >
       <video
         ref={videoRef}
@@ -114,7 +114,7 @@ function ClipVideoPlayer({
       />
       {/* cover video with purble bars, disabled only when the use play the video */}
       {!isPlaying && (
-        <div className=" absolute top-0 left-0 xsm:w-[99vw] sm:w-full h-full z-10 rounded-xl flex flex-col justify-between items-center ">
+        <div className=" absolute top-0 left-50 xsm:w-[99vw] sm:w-full h-full z-10 rounded-xl flex flex-col justify-between items-center ">
           {/* user profile and more option button and  blah blah */}
           <section
             className={
