@@ -239,7 +239,7 @@ export default function ClipComment({
             className=" border w-full rounded-lg flex overflow-y-hidden flex-start ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
           />
 
-          {!mutation.isLoading && (
+          {mutation.status !== "loading" && (
             <button
               className="flex justify-center items-center"
               onClick={handleComment}
