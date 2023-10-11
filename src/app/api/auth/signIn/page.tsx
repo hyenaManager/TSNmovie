@@ -20,7 +20,7 @@ export default function AuthenticationForm() {
         backgroundImage: "url(/bruh.png)",
       }}
     >
-      <h2 className=" font-mono text-4xl p-2 text-start w-5hundred font-bold text-fuchsia-700">
+      <h2 className=" font-mono text-4xl p-2 text-start xsm:w-[50%] sm:w-5hundred font-bold text-fuchsia-700">
         YOKEPLAY
       </h2>
       <Toaster />
