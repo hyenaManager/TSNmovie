@@ -3,6 +3,7 @@ import {
   faComment,
   faCommentDots,
   faReply,
+  faSpinner,
   faTrash,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -34,6 +35,7 @@ export default function ClipComment({
   clip: { clipTitle: string; clipId: number } | null;
 }) {
   const { user }: any = useContext(userProvider);
+  const [isCommenting, setIsCommenting] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [commentParent, setCommentParent] = useState<CommentParent | null>(
     null
@@ -55,6 +57,7 @@ export default function ClipComment({
   });
 
   const handleComment = () => {
+    setIsCommenting(true);
     mutation.mutate();
   };
   const handleReplying = (
@@ -123,6 +126,7 @@ export default function ClipComment({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments", clip?.clipId]);
+        setIsCommenting(false);
         queryClient.invalidateQueries(["childComment"]);
       },
     }
@@ -239,17 +243,21 @@ export default function ClipComment({
             className=" border w-full rounded-lg flex overflow-y-hidden flex-start ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
           />
 
-          {mutation.status !== "loading" && (
-            <button
-              className="flex justify-center items-center"
-              onClick={handleComment}
-            >
+          <button className="flex justify-center items-center">
+            {!isCommenting ? (
               <FontAwesomeIcon
+                onClick={handleComment}
                 icon={faArrowUp}
                 className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
               />
-            </button>
-          )}
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
+              />
+            )}
+          </button>
         </div>
         <button>
           <FontAwesomeIcon
