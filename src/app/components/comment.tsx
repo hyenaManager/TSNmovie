@@ -239,20 +239,17 @@ export default function ClipComment({
             className=" border w-full rounded-lg flex overflow-y-hidden flex-start ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
           />
 
-          <button
-            disabled={mutation.isLoading}
-            className="flex justify-center items-center"
-            onClick={handleComment}
-          >
-            {!mutation.isLoading ? (
+          {!mutation.isLoading && (
+            <button
+              className="flex justify-center items-center"
+              onClick={handleComment}
+            >
               <FontAwesomeIcon
                 icon={faArrowUp}
                 className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
               />
-            ) : (
-              "..."
-            )}
-          </button>
+            </button>
+          )}
         </div>
         <button>
           <FontAwesomeIcon
