@@ -54,6 +54,11 @@ export default function ClipComment({
     },
   });
 
+  const handleComment = () => {
+    setCommentParent(null);
+    setCommentText("");
+    mutation.mutate();
+  };
   const handleReplying = (
     parentId: string,
     commentUser: {
@@ -78,7 +83,6 @@ export default function ClipComment({
     );
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
-      setCommentParent(null);
       commentTextRef.current = null;
       return toast.success("commented");
     } else {
@@ -100,8 +104,6 @@ export default function ClipComment({
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       commentTextRef.current = null;
-      setCommentParent(null);
-      setCommentText("");
       return toast.success("commented");
     } else {
       toast.error(response.statusText);
@@ -235,12 +237,19 @@ export default function ClipComment({
             className=" border w-full rounded-lg flex overflow-y-hidden flex-start ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
           />
 
-          <button>
-            <FontAwesomeIcon
-              onClick={() => mutation.mutate()}
-              icon={faArrowUp}
-              className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
-            />
+          <button
+            disabled={mutation.isLoading}
+            className="flex justify-center items-center"
+          >
+            {!mutation.isLoading ? (
+              <FontAwesomeIcon
+                onClick={handleComment}
+                icon={faArrowUp}
+                className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
+              />
+            ) : (
+              "..."
+            )}
           </button>
         </div>
         <button>
