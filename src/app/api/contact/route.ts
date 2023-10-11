@@ -16,6 +16,8 @@ export async function POST(request:NextRequest){
             status:200,
         })
     } catch (error) {
+        console.log("contact error is :",error);
+        
         return new Response(JSON.stringify(error),{
             status:500,
         })
