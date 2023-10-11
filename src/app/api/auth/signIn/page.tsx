@@ -40,7 +40,8 @@ function LoginForm() {
     await signIn("credentials", {
       email: email,
       password: password,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/clips",
     }).then((res) => {
       if (res?.error) {
         setErrorLogin(true);
