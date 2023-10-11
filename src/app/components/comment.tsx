@@ -242,10 +242,10 @@ export default function ClipComment({
           <button
             disabled={mutation.isLoading}
             className="flex justify-center items-center"
+            onClick={handleComment}
           >
             {!mutation.isLoading ? (
               <FontAwesomeIcon
-                onClick={handleComment}
                 icon={faArrowUp}
                 className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
               />
