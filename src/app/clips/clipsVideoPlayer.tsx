@@ -3,7 +3,7 @@ import { faComment, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 
 import Image from "next/image";
@@ -14,6 +14,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import MoreOption from "../components/clips/moreOption";
+import { type } from "os";
 type videoProps = {
   id: string;
   title: string | null;
@@ -27,27 +28,43 @@ type videoProps = {
   handleComment: (clip: any) => void;
 };
 
-function ClipVideoPlayer({
-  title,
-  video,
-  pageOwnerId,
-  likes,
-  id,
-  createdBy,
-  handleComment,
-}: videoProps) {
-  const [isCreating, setIsCreating] = useState(false); //user is creating clips or not toggling the creation page
+function ClipVideoPlayer({ id, handleComment }: videoProps) {
+  const { data: session } = useSession();
+  const [isLikeIsRed, setIsLikeIsRed] = useState<boolean | null>(null); //is the like is red color or not
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
   const [hide, setHide] = useState(true); //is report widget or page is hide or not
   const queryClient = useQueryClient();
-  const [clipLikes, setClipLikes] = useState(likes?.length);
   const [readMore, setReadMore] = useState(false);
   const [ref, inView] = useInView({ threshold: 0.3 });
-  const { data: session, status } = useSession();
+  const { data, status } = useQuery({
+    queryKey: ["clip", id],
+    queryFn: async () => {
+      const response = await axios.get(
+        `http://localhost:3000/api/clips/oneClip?clipId=${id}`
+      );
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return toast.error(response.statusText);
+      }
+    },
+  });
+  const [clipLikes, setClipLikes] = useState<number>(0);
+  useEffect(() => {
+    if (data) {
+      setClipLikes(data?.likes.length);
+    }
+  }, [data]);
+
   const isLiked =
-    likes?.find((user: any) => user.id === session?.user.id) !== undefined; //check current video is already liked by current user?
-  console.log("like givers :", likes);
+    data?.likes?.find((user: any) => user.id === session?.user.id) !==
+    undefined; //check current video is already liked by current user?
+  useEffect(() => {
+    if (data) {
+      setIsLikeIsRed(isLiked);
+    }
+  }, [data]);
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef?.current?.pause();
@@ -66,13 +83,13 @@ function ClipVideoPlayer({
   //creating new notification
   const handleCreatNotification = async () => {
     const response = await axios.post(
-      `https://yokeplay.vercel.app/api/notifications`,
+      `http://localhost:3000/api/notifications`,
       {
         message: `${session?.user.name} like your clip`,
         type: "like",
         holder: "clip",
         userEmail: session?.user.email,
-        userId: createdBy?.adminId,
+        userId: data?.createdBy?.adminId,
         holderId: id,
       }
     );
@@ -82,10 +99,13 @@ function ClipVideoPlayer({
   };
 
   //adding like or remove like
+  console.log(` isLiked value for ${data?.title} is :`, isLiked);
+
   const handleLike = async () => {
     const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
+    console.log(`type for ${data?.title} is : `, type);
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${createdBy.id}`
+      `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
     );
     if (response.status === 200) {
       toast.success(response.data);
@@ -95,29 +115,30 @@ function ClipVideoPlayer({
       toast.error(`${response.statusText}`);
     }
   };
-  // const mutation = useMutation(handleLike, {
-  //   onSuccess: () => queryClient.invalidateQueries(["clips"]),
-  // });
   const mutation = useMutation({
     mutationFn: handleLike,
     onMutate: async () => {
-      await queryClient.cancelQueries(["clips"]);
+      // await queryClient.cancelQueries(["clips"]);
       if (isLiked) {
+        setIsLikeIsRed(false);
         return setClipLikes((preLike) => preLike - 1);
       } else {
+        setIsLikeIsRed(true);
         return setClipLikes((preLike) => preLike + 1);
       }
     },
     onError: () => {
       toast.error("you can't like a clip due to error");
       if (!isLiked) {
+        setIsLikeIsRed(false);
         return setClipLikes((preLike) => preLike - 1);
       } else {
+        setIsLikeIsRed(true);
         return setClipLikes((preLike) => preLike + 1);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["clips"]);
+      queryClient.invalidateQueries(["clip", id]);
     },
   });
 
@@ -128,7 +149,7 @@ function ClipVideoPlayer({
     >
       <video
         ref={videoRef}
-        src={video}
+        src={data?.video}
         className=" h-5hundred flex justify-center rounded-xl "
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -146,39 +167,39 @@ function ClipVideoPlayer({
           >
             <div className="profileDiv flex justify-between items-center">
               <Link
-                href={`/streamers/${createdBy?.id}`}
-                className=" flex justify-start items-center p-1"
+                href={`/streamers/${data?.createdBy?.id}`}
+                className=" flex justify-start items-center m-1"
               >
                 <Image
-                  src={createdBy?.image}
+                  src={data?.createdBy?.image || "/defaultProfile.jpeg"}
                   width={100}
                   height={100}
                   alt="bruh"
                   className=" w-[50px] h-[50px] object-cover rounded-full bg-gray-400 mr-2 cursor-pointer"
                 />
                 <h4 className=" text-lg text-slate-400 cursor-pointer">
-                  {createdBy?.name}
+                  {data?.createdBy?.name}
                 </h4>
               </Link>
               {/* this is moreOption  */}
               <MoreOption
                 setHide={() => setHide(false)}
                 clipId={id}
-                pageOwnerId={pageOwnerId}
-                video={video}
+                pageOwnerId={data?.pageOwnerId}
+                video={data?.video}
               />
             </div>
             <pre
               className={
-                " text-sm text-slate-100 text-start items-center relative p-1 " +
+                " text-sm text-slate-100 text-start items-center relative m-1 " +
                 (!readMore &&
-                  title &&
-                  title.split("").length > 40 &&
+                  data?.title &&
+                  data?.title.split("").length > 40 &&
                   " line-clamp-1")
               }
             >
-              {readMore ? title : title?.substring(0, 40)}
-              {title && title.split("").length > 40 && (
+              {readMore ? data?.title : data?.title?.substring(0, 40)}
+              {data?.title && data?.title.split("").length > 40 && (
                 <button
                   onClick={() => setReadMore(!readMore)}
                   className=" text-start items-center text-white absolute right-0 top-0"
@@ -202,14 +223,16 @@ function ClipVideoPlayer({
                 icon={faHeart}
                 className={
                   " text-2xl p-1 cursor-pointer " +
-                  (isLiked ? " text-red-600" : " text-white")
+                  (isLikeIsRed ? " text-red-600" : " text-white")
                 }
               />
               <span className=" text-white">{clipLikes}</span>
             </div>
             <button className="flex justify-center m-4 items-center">
               <FontAwesomeIcon
-                onClick={() => handleComment({ clipTitle: title, clipId: id })}
+                onClick={() =>
+                  handleComment({ clipTitle: data?.title, clipId: id })
+                }
                 icon={faComment}
                 className=" text-white text-2xl mr-1  cursor-pointer  "
               />
