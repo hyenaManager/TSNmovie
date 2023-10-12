@@ -39,9 +39,9 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
 
   console.log("comment page  is ", data?.pages);
 
-  if (!hideReplies)
-    return (
-      <>
+  return (
+    <>
+      {!hideReplies && (
         <ul className="w-full overflow-auto  flex flex-col justify-start p-1">
           {data?.pages.map((page: any, index: number) => (
             <React.Fragment key={index}>
@@ -77,7 +77,7 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
               ))}
             </React.Fragment>
           ))}
-          {hasNextPage && (
+          {!hideReplies && hasNextPage && (
             <button
               className=" text-sm text-slate-600 italic text-start"
               onClick={() => fetchNextPage()}
@@ -86,15 +86,16 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
             </button>
           )}
           {/* toggling view or hide replies  */}
-          {data?.pages[0].comments.length !== 0 && (
-            <button
-              className=" text-sm text-slate-900 font-bold  max-w-fit absolute top-0 right-0"
-              onClick={() => setHideReplies(!hideReplies)}
-            >
-              {hideReplies ? "view reply" : "hide reply"}
-            </button>
-          )}
         </ul>
-      </>
-    );
+      )}
+      {data?.pages[0].comments.length !== 0 && (
+        <button
+          className=" text-sm text-slate-900 font-bold  max-w-fit absolute bottom-0 right-0"
+          onClick={() => setHideReplies(!hideReplies)}
+        >
+          {hideReplies ? "view reply" : "hide reply"}
+        </button>
+      )}
+    </>
+  );
 }

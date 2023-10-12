@@ -168,7 +168,7 @@ export default function ClipComment({
                 className=" w-[40px] h-[40px] bg-fuchsia-500 rounded-full"
               />
               <div
-                className="w-full  max-h-fit flex flex-col justify-start ml-2"
+                className="w-full relative  max-h-fit flex flex-col justify-start ml-2"
                 style={{ height: "fit-content" }}
               >
                 <small className=" text-sm text-fuchsia-700 ">
