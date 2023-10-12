@@ -201,7 +201,10 @@ export default function ClipComment({
                     </button>
                   )}
                 </div>
-                {!hideReplies && <ChildrenComment parentId={comment.id} />}
+                <ChildrenComment
+                  parentId={comment.id}
+                  hideReplies={hideReplies}
+                />
               </div>
             </li>
           ))}

@@ -14,7 +14,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import MoreOption from "../components/clips/moreOption";
-import { type } from "os";
 type videoProps = {
   id: string;
   title: string | null;

@@ -19,7 +19,13 @@ type commentData = {
   nextCursor: number;
 };
 
-export default function ChildrenComment({ parentId }: { parentId: string }) {
+export default function ChildrenComment({
+  parentId,
+  hideReplies,
+}: {
+  parentId: string;
+  hideReplies: boolean;
+}) {
   const { user }: any = useContext(userProvider);
   const { data, status, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ["childComment", parentId],
@@ -38,53 +44,54 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
 
   console.log("comment page  is ", data?.pages);
 
-  return (
-    <>
-      <ul className="w-full relative overflow-auto  flex flex-col justify-start p-1">
-        {data?.pages.map((page: any, index: number) => (
-          <React.Fragment key={index}>
-            {page.comments.map((repliedComment: repliedCommentType) => (
-              <li
-                className=" w-full max-h-fit flex justify-start "
-                key={repliedComment.id}
-              >
-                <Image
-                  src={repliedComment?.userImage || "/defaultProfile.jpeg"}
-                  alt="image"
-                  width={40}
-                  height={40}
-                  className=" w-[40px] h-[40px] bg-fuchsia-500 object-cover rounded-full  p-1"
-                />
-                <div
-                  className="w-full  max-h-fit flex flex-col justify-start ml-2"
-                  style={{ height: "fit-content" }}
+  if (!hideReplies)
+    return (
+      <>
+        <ul className="w-full relative overflow-auto  flex flex-col justify-start p-1">
+          {data?.pages.map((page: any, index: number) => (
+            <React.Fragment key={index}>
+              {page.comments.map((repliedComment: repliedCommentType) => (
+                <li
+                  className=" w-full max-h-fit flex justify-start "
+                  key={repliedComment.id}
                 >
-                  <small className=" text-sm text-fuchsia-700 ">
-                    {repliedComment?.user?.firstName +
-                      " " +
-                      repliedComment?.user?.lastName}
-                  </small>
-                  <p className="w-full max-h-fit bg-fuchsia-500 text-white text-sm rounded-md p-1">
-                    {repliedComment.text}
-                  </p>
-                  {repliedComment?.user.id === user.id && (
-                    <DeleteComment commentId={repliedComment?.id} />
-                  )}
-                </div>
-              </li>
-            ))}
-          </React.Fragment>
-        ))}
-        {hasNextPage && (
-          <button
-            className=" text-sm text-slate-600 italic text-start"
-            onClick={() => fetchNextPage()}
-          >
-            ...see more comments
-          </button>
-        )}
-        {/* toggling view or hide replies */}
-      </ul>
-    </>
-  );
+                  <Image
+                    src={repliedComment?.userImage || "/defaultProfile.jpeg"}
+                    alt="image"
+                    width={40}
+                    height={40}
+                    className=" w-[40px] h-[40px] bg-fuchsia-500 object-cover rounded-full  p-1"
+                  />
+                  <div
+                    className="w-full  max-h-fit flex flex-col justify-start ml-2"
+                    style={{ height: "fit-content" }}
+                  >
+                    <small className=" text-sm text-fuchsia-700 ">
+                      {repliedComment?.user?.firstName +
+                        " " +
+                        repliedComment?.user?.lastName}
+                    </small>
+                    <p className="w-full max-h-fit bg-fuchsia-500 text-white text-sm rounded-md p-1">
+                      {repliedComment.text}
+                    </p>
+                    {repliedComment?.user.id === user.id && (
+                      <DeleteComment commentId={repliedComment?.id} />
+                    )}
+                  </div>
+                </li>
+              ))}
+            </React.Fragment>
+          ))}
+          {hasNextPage && (
+            <button
+              className=" text-sm text-slate-600 italic text-start"
+              onClick={() => fetchNextPage()}
+            >
+              ...see more comments
+            </button>
+          )}
+          {/* toggling view or hide replies */}
+        </ul>
+      </>
+    );
 }
