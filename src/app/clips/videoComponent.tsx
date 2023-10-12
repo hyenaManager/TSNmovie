@@ -79,7 +79,8 @@ export default function VideoComponent() {
   return (
     <>
       <main className="pageWarper flex flex-col justify-center items-center pt-14 ">
-        {status === "loading" && <SkeletonClip />}
+        {status === "loading" &&
+          [1, 2, 3, 4].map((number) => <SkeletonClip key={number} />)}
         {data?.pages?.map((page) => (
           <React.Fragment key={page.nextCursor}>
             {page?.clips?.map((video: videoPageProp, index: number) => (
