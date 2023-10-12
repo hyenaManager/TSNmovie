@@ -84,7 +84,7 @@ export default function NotiFications() {
               <FontAwesomeIcon
                 onClick={() => handleDeleteNoti(noti.id)}
                 icon={faTrash}
-                className=" w-[30px] h-[30px] text-red-500 p-2 rounded-md"
+                className=" w-[14px] h-[14px] text-red-500 p-2 rounded-md"
               />
             </div>
             {/* show red dot if the notification is not watched */}
