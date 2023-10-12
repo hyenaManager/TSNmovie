@@ -3,7 +3,6 @@ import {
   faComment,
   faCommentDots,
   faReply,
-  faSpinner,
   faTrash,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -35,7 +34,7 @@ export default function ClipComment({
   clip: { clipTitle: string; clipId: number } | null;
 }) {
   const { user }: any = useContext(userProvider);
-  const [isCommenting, setIsCommenting] = useState(false);
+  const [hideReplies, setHideReplies] = useState(true);
   const [commentText, setCommentText] = useState("");
   const [commentParent, setCommentParent] = useState<CommentParent | null>(
     null
@@ -46,7 +45,7 @@ export default function ClipComment({
     queryKey: ["comments", clip?.clipId],
     queryFn: async () => {
       const response = await axios.get(
-        `https://yokeplay.vercel.app/api/comments/${clip?.clipId}`
+        `http://localhost:3000/api/comments/${clip?.clipId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -56,10 +55,6 @@ export default function ClipComment({
     },
   });
 
-  const handleComment = () => {
-    setIsCommenting(true);
-    mutation.mutate();
-  };
   const handleReplying = (
     parentId: string,
     commentUser: {
@@ -73,19 +68,15 @@ export default function ClipComment({
   };
   //comment mode
   const createComment = async () => {
-    const response = await axios.post(
-      `https://yokeplay.vercel.app/api/comments`,
-      {
-        text: commentText,
-        userId: user?.id,
-        clipId: clip?.clipId,
-        mode: "comment",
-      }
-    );
+    const response = await axios.post(`http://localhost:3000/api/comments`, {
+      text: commentText,
+      userId: user?.id,
+      clipId: clip?.clipId,
+      mode: "comment",
+    });
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       setCommentParent(null);
-      setCommentText("");
       commentTextRef.current = null;
       return toast.success("commented");
     } else {
@@ -94,21 +85,18 @@ export default function ClipComment({
   };
   //reply mode
   const createReplyComment = async () => {
-    const response = await axios.post(
-      `https://yokeplay.vercel.app/api/comments`,
-      {
-        text: commentText,
-        userId: user.id,
-        parentId: commentParent?.parentId,
-        userImage: user.image,
-        mode: "reply",
-      }
-    );
+    const response = await axios.post(`http://localhost:3000/api/comments`, {
+      text: commentText,
+      userId: user.id,
+      parentId: commentParent?.parentId,
+      userImage: user.image,
+      mode: "reply",
+    });
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
+      commentTextRef.current = null;
       setCommentParent(null);
       setCommentText("");
-      commentTextRef.current = null;
       return toast.success("commented");
     } else {
       toast.error(response.statusText);
@@ -126,7 +114,6 @@ export default function ClipComment({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments", clip?.clipId]);
-        setIsCommenting(false);
         queryClient.invalidateQueries(["childComment"]);
       },
     }
@@ -185,7 +172,7 @@ export default function ClipComment({
                   {comment.text}
                 </p>
                 {/* option... */}
-                <div className="flex justify-start items-center">
+                <div className="flex relative justify-start items-center">
                   <button
                     onClick={() => handleReplying(comment.id, comment.user)}
                     className="flex justify-start m-1 "
@@ -199,10 +186,16 @@ export default function ClipComment({
                   {comment.user.id === user.id && (
                     <DeleteComment commentId={comment.id} />
                   )}
+                  {comment.childComments.length !== 0 && (
+                    <button
+                      className=" text-sm text-slate-900 font-bold  max-w-fit absolute top-0 right-0"
+                      onClick={() => setHideReplies(!hideReplies)}
+                    >
+                      {hideReplies ? "view reply" : "hide reply"}
+                    </button>
+                  )}
                 </div>
-                <ul className=" flex-col w-full">
-                  <ChildrenComment parentId={comment.id} />
-                </ul>
+                {!hideReplies && <ChildrenComment parentId={comment.id} />}
               </div>
             </li>
           ))}
@@ -243,20 +236,12 @@ export default function ClipComment({
             className=" border w-full rounded-lg flex overflow-y-hidden flex-start ml-2 mr-2 text-lg p-2 text-fuchsia-800 font-bold outline-none bg-none"
           />
 
-          <button className="flex justify-center items-center">
-            {!isCommenting ? (
-              <FontAwesomeIcon
-                onClick={handleComment}
-                icon={faArrowUp}
-                className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
-              />
-            )}
+          <button>
+            <FontAwesomeIcon
+              onClick={() => mutation.mutate()}
+              icon={faArrowUp}
+              className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
+            />
           </button>
         </div>
         <button>
