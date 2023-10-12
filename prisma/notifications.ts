@@ -59,3 +59,15 @@ export async function setWatchedTrue(notificationId:string){
         return error
     }
 }
+
+export async function deleteNotiById(notificationId:string){
+    try {
+        await prisma.notifications.delete({
+            where:{
+                id:notificationId
+            },
+        })
+    } catch (error) {
+        return error
+    }
+}

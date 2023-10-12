@@ -81,6 +81,7 @@ export default function ClipComment({
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       setCommentParent(null);
       commentTextRef.current = null;
+      queryClient.invalidateQueries(["childComment"]);
       return toast.success("commented");
     } else {
       toast.error(response.statusText);
