@@ -42,7 +42,7 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
   return (
     <>
       {!hideReplies && (
-        <ul className="w-full overflow-auto  flex flex-col justify-start mb-3">
+        <ul className="w-full overflow-auto  flex flex-col justify-start mb-4">
           {data?.pages.map((page: any, index: number) => (
             <React.Fragment key={index}>
               {page.comments.map((repliedComment: repliedCommentType) => (
