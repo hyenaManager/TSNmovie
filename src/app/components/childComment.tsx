@@ -19,14 +19,9 @@ type commentData = {
   nextCursor: number;
 };
 
-export default function ChildrenComment({
-  parentId,
-  hideReplies,
-}: {
-  parentId: string;
-  hideReplies: boolean;
-}) {
+export default function ChildrenComment({ parentId }: { parentId: string }) {
   const { user }: any = useContext(userProvider);
+  const [hideReplies, setHideReplies] = useState(true);
   const { data, status, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ["childComment", parentId],
     queryFn: async ({ pageParam = 0 }) => {
@@ -47,7 +42,7 @@ export default function ChildrenComment({
   if (!hideReplies)
     return (
       <>
-        <ul className="w-full relative overflow-auto  flex flex-col justify-start p-1">
+        <ul className="w-full overflow-auto  flex flex-col justify-start p-1">
           {data?.pages.map((page: any, index: number) => (
             <React.Fragment key={index}>
               {page.comments.map((repliedComment: repliedCommentType) => (
@@ -90,7 +85,15 @@ export default function ChildrenComment({
               ...see more comments
             </button>
           )}
-          {/* toggling view or hide replies */}
+          {/* toggling view or hide replies  */}
+          {data?.pages[0].comments.length !== 0 && (
+            <button
+              className=" text-sm text-slate-900 font-bold  max-w-fit absolute top-0 right-0"
+              onClick={() => setHideReplies(!hideReplies)}
+            >
+              {hideReplies ? "view reply" : "hide reply"}
+            </button>
+          )}
         </ul>
       </>
     );

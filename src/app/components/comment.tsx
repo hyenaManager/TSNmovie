@@ -34,7 +34,7 @@ export default function ClipComment({
   clip: { clipTitle: string; clipId: number } | null;
 }) {
   const { user }: any = useContext(userProvider);
-  const [hideReplies, setHideReplies] = useState(true);
+
   const [commentText, setCommentText] = useState("");
   const [commentParent, setCommentParent] = useState<CommentParent | null>(
     null
@@ -192,24 +192,13 @@ export default function ClipComment({
                   {comment.user.id === user.id && (
                     <DeleteComment commentId={comment.id} />
                   )}
-                  {comment.childComments.length !== 0 && (
-                    <button
-                      className=" text-sm text-slate-900 font-bold  max-w-fit absolute top-0 right-0"
-                      onClick={() => setHideReplies(!hideReplies)}
-                    >
-                      {hideReplies ? "view reply" : "hide reply"}
-                    </button>
-                  )}
                 </div>
-                <ChildrenComment
-                  parentId={comment.id}
-                  hideReplies={hideReplies}
-                />
+                <ChildrenComment parentId={comment.id} />
               </div>
             </li>
           ))}
         </ul>
-        {/* comment section */}
+        {/* comment submit section */}
         <div className=" flex justify-start p-2 xsm:w-[100%] sm:w-[50%] bg-fuchsia-400 rounded-xl items-center border absolute bottom-2 right-50 ">
           {commentParent !== null && (
             <div className=" flex justify-center items-center text-blue text-sm">
