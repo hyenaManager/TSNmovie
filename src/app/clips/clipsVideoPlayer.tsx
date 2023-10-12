@@ -41,13 +41,13 @@ function ClipVideoPlayer({
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
   const [hide, setHide] = useState(true); //is report widget or page is hide or not
   const queryClient = useQueryClient();
+  const [clipLikes, setClipLikes] = useState(likes?.length);
   const [readMore, setReadMore] = useState(false);
   const [ref, inView] = useInView({ threshold: 0.3 });
   const { data: session, status } = useSession();
   const isLiked =
     likes?.find((user: any) => user.id === session?.user.id) !== undefined; //check current video is already liked by current user?
   console.log("like givers :", likes);
-
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef?.current?.pause();
@@ -95,8 +95,30 @@ function ClipVideoPlayer({
       toast.error(`${response.statusText}`);
     }
   };
-  const mutation = useMutation(handleLike, {
-    onSuccess: () => queryClient.invalidateQueries(["clips"]),
+  // const mutation = useMutation(handleLike, {
+  //   onSuccess: () => queryClient.invalidateQueries(["clips"]),
+  // });
+  const mutation = useMutation({
+    mutationFn: handleLike,
+    onMutate: async () => {
+      await queryClient.cancelQueries(["clips"]);
+      if (isLiked) {
+        return setClipLikes((preLike) => preLike - 1);
+      } else {
+        return setClipLikes((preLike) => preLike + 1);
+      }
+    },
+    onError: () => {
+      toast.error("you can't like a clip due to error");
+      if (!isLiked) {
+        return setClipLikes((preLike) => preLike - 1);
+      } else {
+        return setClipLikes((preLike) => preLike + 1);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["clips"]);
+    },
   });
 
   return (
@@ -183,7 +205,7 @@ function ClipVideoPlayer({
                   (isLiked ? " text-red-600" : " text-white")
                 }
               />
-              <span className=" text-white">{likes?.length}</span>
+              <span className=" text-white">{clipLikes}</span>
             </div>
             <button className="flex justify-center m-4 items-center">
               <FontAwesomeIcon
