@@ -1,5 +1,5 @@
 "use client";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
 import { useContext, useState, useTransition } from "react";
@@ -8,11 +8,14 @@ import Link from "next/link";
 import NotiSkeletonLi from "../skeletons/notiSkeletons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 export default function NotiFications() {
   const { user }: any = useContext(userProvider);
   const [selectedNotiId, setSelectedNotiId] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const queryClient = useQueryClient();
   const { data, status } = useQuery({
     queryKey: ["notifications"],
     queryFn: async () => {
@@ -34,6 +37,11 @@ export default function NotiFications() {
     const response = await axios.delete(
       `https://yokeplay.vercel.app/api/notifications/${selectedNotiId}`
     );
+    if (response.status === 200) {
+      queryClient.invalidateQueries(["notifications"]);
+    } else {
+      toast.error(response.statusText);
+    }
   });
   return (
     <section className=" w-[98%] h-full bg-white p-3 mt-4 rounded-md ">
@@ -46,10 +54,20 @@ export default function NotiFications() {
         {data?.map((noti: any, index: number) => (
           <li
             key={index}
-            className=" w-[98%] text-sm hover:text-white hover:bg-fuchsia-700 text-fuchsia-700 p-1 m-1 flex justify-between relative cursor-pointer"
+            className=" w-[98%] text-sm text-fuchsia-700 p-1 m-1 flex justify-between relative cursor-pointer"
           >
-            <p className=" p-1">{noti?.message}</p>
-            <div className=" flex justify-end items-center">
+            <div className="mainNoti flex justify-start items-center">
+              <Image
+                src={noti.notiBy.image}
+                alt="noti"
+                width={20}
+                height={20}
+                className="w-[20px] h-[20px] rounded-full object-cover mr-1"
+              />
+              <p className=" p-1">{noti?.message}</p>
+            </div>
+
+            <div className="actions flex justify-end items-center">
               <Link
                 href={{
                   pathname: `/notifications/${noti?.holder}`,

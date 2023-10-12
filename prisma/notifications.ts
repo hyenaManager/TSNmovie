@@ -14,6 +14,9 @@ export async function getNotificationByUserId(userId:string){
         const data = await prisma.notifications.findMany({
             where:{
                 userId:userId
+            },
+            include:{
+                notiBy:true
             }
         })
         return data
