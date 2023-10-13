@@ -22,6 +22,30 @@ export async function createEpisode(data:any) {
         
         return createdEpisode
     } catch (error) {
-        throw error
+        console.log(error,"error is");
+        
+        return error
+    }
+}
+
+export async function getAllEpisodes(){
+    try {
+        const episodes = await prisma.episodes.findMany();
+        return episodes
+    } catch (error) {
+        return error
+    }
+}
+
+export async function deleteEpisode(episodeId:string){
+    try {
+        await prisma.episodes.delete({
+            where:{
+                id:episodeId
+            }
+        })
+        return "delete successfully"
+    } catch (error) {
+        return error
     }
 }
