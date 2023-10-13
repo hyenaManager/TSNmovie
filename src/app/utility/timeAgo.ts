@@ -1,4 +1,4 @@
-function getTimeAgo(then: Date): string {
+export function getTimeAgo(then: Date): string {
     const now = new Date();
     const diffMillis = now.getTime() - then.getTime();
     const secondsAgo = diffMillis / 1000;

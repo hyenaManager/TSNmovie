@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { getTimeAgo } from "../utility/timeAgo";
 
 export default function NotiFications() {
   const { user }: any = useContext(userProvider);
@@ -66,7 +67,9 @@ export default function NotiFications() {
               />
               <p className=" p-1">{noti?.message}</p>
             </div>
-
+            <small className="text-slate-500">
+              {getTimeAgo(new Date(noti.createdAt))}
+            </small>
             <div className="actions flex justify-end items-center">
               <Link
                 href={{
