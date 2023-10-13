@@ -55,9 +55,9 @@ export default function NotiFications() {
         {data?.map((noti: any, index: number) => (
           <li
             key={index}
-            className=" w-[98%] text-sm text-fuchsia-700 p-1 m-1 flex justify-between relative cursor-pointer"
+            className=" w-[98%] text-sm text-fuchsia-700 p-1 m-1 flex justify-between relative "
           >
-            <div className="mainNoti flex justify-start items-center">
+            <div className="mainNoti flex justify-start items-center cursor-pointer">
               <Image
                 src={noti.notiBy.image}
                 alt="noti"
@@ -80,14 +80,14 @@ export default function NotiFications() {
                     notiWatched: noti?.watched, //if the noti is already watched or not
                   },
                 }}
-                className=" p-1 text-end"
+                className=" p-1 text-end cursor-pointer"
               >
                 check
               </Link>
               <FontAwesomeIcon
                 onClick={() => handleDeleteNoti(noti.id)}
                 icon={faTrash}
-                className=" w-[14px] h-[14px] text-red-500 p-2 rounded-md"
+                className=" w-[14px] h-[14px] text-red-500 cursor-pointer p-2 rounded-md"
               />
             </div>
             {/* show red dot if the notification is not watched */}
