@@ -1,18 +1,17 @@
 import { NextRequest } from "next/server";
-import { createEpisode, getEpisodesBySeriesId } from "../../../../prisma/episodes";
+import { createEpisode, getAllEpisodes } from "../../../../prisma/episodes";
 
-export async function GET(request:NextRequest) {
-    const url = new URL(request.url)
-    const seriesId = url.searchParams.get("seriesId") as string
+
+export async function GET(request:NextRequest){
     try {
-        const data = await getEpisodesBySeriesId(seriesId)
-        return new Response(JSON.stringify(data),{
-            status:200
-        })
+        const notifications = await getAllEpisodes();
+    return new Response(JSON.stringify(notifications),{
+        status:200
+    })
     } catch (error) {
-        return new Response(JSON.stringify(error),{
-            status:500
-        })
+      return new Response(JSON.stringify(error),{
+        status:500
+      })  
     }
 }
 
