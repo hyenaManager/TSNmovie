@@ -10,14 +10,18 @@ import AdminPage from "@/app/components/streamers/adminPage";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { userProvider } from "@/app/context/userContext";
 import { CreateSeries } from "@/app/components/series/createSeries";
+import { useCatagory } from "@/app/store";
 
 const ClipList = lazy(() => import("../../components/streamers/clipList"));
 const SeriesList = lazy(() => import("../../components/streamers/seriesList"));
 
 export default function MainList() {
   const { userPage }: any = useContext(userProvider);
-  const [currentCatagory, setCurrentCatagory] = useState("clips");
   const [creatingSomething, setCreatingSomething] = useState(false);
+  const currentCatagory = useCatagory((state: any) => state.currentCatagory);
+  const setCurrentCatagory: any = useCatagory(
+    (state: any) => state.changeCurrentCatagory
+  );
   const handleCurrentCatagory = (catagory: string) => {
     setCurrentCatagory(catagory);
   };
