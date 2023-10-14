@@ -5,7 +5,6 @@ import {
   faAnglesLeft,
   faAnglesRight,
   faPlus,
-  faPlusCircle,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import DefaultVideoPlayer from "./videoPlayer";
@@ -24,6 +23,7 @@ export default function Pages() {
     episode: 1,
     source: "",
     like: [0, 0],
+    id: "",
   }); //selected episode that will define episode of video
   const [inputEpisode, setInputEpisode] = useState<number>(1); //for finding episode
   const [sectionIsHidden, setSectionIsHidden] = useState<boolean>(false); //section hidden and or show (section toggling)
@@ -74,6 +74,7 @@ export default function Pages() {
         episode: episodes?.[0].episodeNumber,
         source: episodes?.[0].video,
         like: episodes?.[0].like,
+        id: episodes?.[0].id,
       });
     }
   }, [episodes]);
@@ -91,7 +92,8 @@ export default function Pages() {
             image={data?.image}
             like={episode?.like}
             author={episodes?.author}
-            videoLink={episode.source}
+            id={episode.id}
+            seriesId={seriesId}
           />
         )}
       </main>
@@ -155,6 +157,7 @@ export default function Pages() {
                           episode: Episode.episodeNumber,
                           source: Episode.video,
                           like: Episode.like,
+                          id: Episode.id,
                         })
                       }
                       className=" bg-fuchsia-800 rounded-md p-2 text-white hover:bg-fuchsia-600"

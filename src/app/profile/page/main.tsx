@@ -1,11 +1,9 @@
 "use client";
-import { SkeletonSmClip } from "@/app/skeletons/skeletonClip";
 import CatagoryNavbar from "../../components/streamers/catagoryOfMovie";
 import { Suspense, lazy, useContext, useState } from "react";
 import CreateClips from "@/app/components/clips/createClips";
 import {
-  CreateClipButton,
-  CreateSeriesButton,
+  CreateSomethingButton,
   EditProfileButton,
 } from "@/app/components/floatingCreateBtn";
 import AdminPage from "@/app/components/streamers/adminPage";
@@ -26,31 +24,33 @@ export default function MainList() {
   const currentContent = () => {
     if (currentCatagory === "clips") {
       return (
-        <Suspense fallback={<SkeletonSmClip />}>
-          <div className=" relative">
-            <ClipList pageId={userPage?.id} />
-            <CreateClipButton isCreating={() => setCreatingSomething(true)} />
-            {creatingSomething && (
+        <div className=" relative">
+          <ClipList pageId={userPage?.id} />
+          <CreateSomethingButton
+            isCreating={() => setCreatingSomething(true)}
+          />
+          {creatingSomething && (
+            <Suspense>
               <CreateClips isCreating={() => setCreatingSomething(false)} />
-            )}
-          </div>
-        </Suspense>
+            </Suspense>
+          )}
+        </div>
       );
     }
     if (currentCatagory === "series") {
       return (
-        <Suspense>
-          <div className=" relative">
-            <SeriesList pageId={userPage?.id} />
-            <CreateSeriesButton isCreating={() => setCreatingSomething(true)} />
-            {creatingSomething && (
-              <CreateSeries
-                pageOwnerId={userPage?.id}
-                handleVisibility={() => setCreatingSomething(false)}
-              />
-            )}
-          </div>
-        </Suspense>
+        <div className=" relative">
+          <SeriesList pageId={userPage?.id} />
+          <CreateSomethingButton
+            isCreating={() => setCreatingSomething(true)}
+          />
+          {creatingSomething && (
+            <CreateSeries
+              pageOwnerId={userPage?.id}
+              handleVisibility={() => setCreatingSomething(false)}
+            />
+          )}
+        </div>
       );
     } else {
       return <h3 className=" text-4xl"> Bruh</h3>;

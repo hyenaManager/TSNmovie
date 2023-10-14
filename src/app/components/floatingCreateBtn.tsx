@@ -2,8 +2,6 @@ import { faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { userProvider } from "../context/userContext";
 
 export default function CreateButton({
   isCreating,
@@ -19,47 +17,23 @@ export default function CreateButton({
   );
 }
 
-export function CreateClipButton({ isCreating }: { isCreating: () => void }) {
+export function CreateSomethingButton({
+  isCreating,
+}: {
+  isCreating: () => void;
+}) {
   return (
     <button
       onClick={isCreating}
       title="create clip"
-      className="p-2 flex justify-center absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10 xsm:w-[40px] xsm:h-[20px] sm:w-[70px] sm:h-[40px] bg-fuchsia-400 rounded-br-lg text-white items-center"
+      className="p-2 flex justify-center absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10 xsm:w-[40px] xsm:h-[20px] sm:w-[70px] sm:h-[40px] bg-green-500 rounded-br-lg text-white items-center"
     >
-      <Image src={"/svgs/clips.svg"} width={40} height={40} alt="stack" />
-      <FontAwesomeIcon icon={faPlus} />
-    </button>
-  );
-}
-
-export function CreateSeriesButton({ isCreating }: { isCreating: () => void }) {
-  return (
-    <button
-      onClick={isCreating}
-      title="create clip"
-      className="p-2 flex justify-center absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10 xsm:w-[40px] xsm:h-[20px] sm:w-[70px] sm:h-[40px] bg-fuchsia-400 rounded-br-lg text-white items-center"
-    >
-      <Image src={"/svgs/stack.svg"} width={40} height={40} alt="stack" />
-      <FontAwesomeIcon icon={faPlus} />
-    </button>
-  );
-}
-
-export function CreateMovieButton({ isCreating }: { isCreating: () => void }) {
-  return (
-    <button
-      onClick={isCreating}
-      title="create clip"
-      className="p-2 flex justify-center absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10 xsm:w-[40px] xsm:h-[20px] sm:w-[70px] sm:h-[40px] bg-fuchsia-400 rounded-br-lg text-white items-center"
-    >
-      <Image src={"/svgs/movie.svg"} width={40} height={40} alt="stack" />
-      <FontAwesomeIcon icon={faPlus} />
+      <FontAwesomeIcon icon={faPlus} className="w-[15px] h-[15px]" />
     </button>
   );
 }
 
 export function EditProfileButton() {
-  const { userPage }: any = useContext(userProvider);
   return (
     <Link
       href={`/profile/page/editPage`}

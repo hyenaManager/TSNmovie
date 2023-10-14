@@ -10,6 +10,11 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import ReportSomething from "@/app/components/reportComponent";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { deleteObject, ref } from "firebase/storage";
+import { storage } from "@/app/firebase";
 type videoProps = {
   videoSource: string;
   episode: number;
@@ -17,7 +22,8 @@ type videoProps = {
   image: string;
   like: number[];
   author: string;
-  videoLink: string;
+  id: string;
+  seriesId: string;
 };
 
 export default function DefaultVideoPlayer({
@@ -27,17 +33,36 @@ export default function DefaultVideoPlayer({
   image,
   like,
   author,
-  videoLink,
+  id,
+  seriesId,
 }: videoProps) {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [moreOption, setMoreOption] = useState<boolean>(false);
   const [hide, setHide] = useState<boolean>(true); //hide report or not boolean
+  const queryClient = useQueryClient();
 
-  const copyLink = () => {
-    navigator.clipboard.writeText(videoLink);
+  // const copyLink = () => {
+  //   navigator.clipboard.writeText(videoLink);
+  // };
+  const handleDeleteEpisode = async () => {
+    const response = await axios.delete(
+      `https://yokeplay.vercel.app/api/episodes/${id}`
+    );
+    if (response.status === 200) {
+      toast.success("delete successfully");
+      queryClient.invalidateQueries(["series"]);
+    }
   };
-
+  const { mutate, status } = useMutation(async () => {
+    const videoRef = ref(storage, videoSource);
+    deleteObject(videoRef)
+      .then(() => handleDeleteEpisode())
+      .catch((error) => {
+        toast.error(error.message);
+        console.log(error);
+      });
+  });
   return (
     <>
       <div className=" likeOverlay relative max-w-fit max-h-fit  mt-4">
@@ -55,7 +80,7 @@ export default function DefaultVideoPlayer({
         {/* like button */}
 
         {/* show user widget and like button only when the video is not playing */}
-        {!isPlaying && (
+        {videoSource && !isPlaying && (
           <>
             {/* profile and backbutton */}
             <div className=" absolute top-0 left-0 flex items-center justify-between bg-fuchsia-500 p-3 rounded-t-lg w-full">
@@ -82,13 +107,13 @@ export default function DefaultVideoPlayer({
                   <ul className=" absolute origin-top-right right-1 top-[50px] rounded-md flex flex-col bg-white divide-y divide-fuchsia-600">
                     <li
                       onClick={(e) => {
-                        copyLink();
+                        mutate();
                         setMoreOption(!moreOption);
                         e.stopPropagation;
                       }} //copy link of video
                       className="text-black text-sm min-w-[100px] rounded-t-md text-center hover:bg-fuchsia-300 cursor-pointer p-2"
                     >
-                      copy link
+                      delete
                     </li>
                     <li
                       onClick={(e) => {
@@ -136,6 +161,11 @@ export default function DefaultVideoPlayer({
           </>
         )}
       </div>
+      {status === "loading" && (
+        <div className=" fixed top-0 left-0 w-full h-full backdrop-blur-sm z-50 flex justify-center items-center">
+          <h3 className="text-white text-4xl">Deleting....</h3>
+        </div>
+      )}
       <AnimatePresence>
         {!hide && <ReportSomething handleVisibillity={() => setHide(true)} />}
       </AnimatePresence>
