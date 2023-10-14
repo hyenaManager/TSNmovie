@@ -29,6 +29,9 @@ export default function CreateEpisode({
   const currentLoadingProcess = useCurrentUploadings(
     (state) => state.currentUploading
   );
+  const addNewUploading = useCurrentUploadings(
+    (state) => state.setNewUploading
+  );
   const videoRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
   const handleVideoUpload = () => {
@@ -65,11 +68,19 @@ export default function CreateEpisode({
         var percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgressingPercent(JSON.stringify(percent));
         console.log(percent + "percent");
-        addToUploadingList({
-          id: `${currentLoadingProcess.length}`,
-          title: uploadedVideo?.name as string,
-          loadingPercent: percent.toFixed(0),
-        });
+        if (currentLoadingProcess.length === 0) {
+          addNewUploading({
+            id: `${currentLoadingProcess.length}`,
+            title: uploadedVideo?.name as string,
+            loadingPercent: percent.toFixed(0),
+          });
+        } else {
+          addToUploadingList({
+            id: `${currentLoadingProcess.length}`,
+            title: uploadedVideo?.name as string,
+            loadingPercent: percent.toFixed(0),
+          });
+        }
         if (parseInt(percent.toFixed(0)) == 100) {
           setIsSubmiting(false);
           handleVisibility();
