@@ -55,7 +55,7 @@ export default function NotiFications() {
         {data?.map((noti: any, index: number) => (
           <li
             key={index}
-            className=" w-[98%] text-sm text-fuchsia-700 p-1 m-1 flex justify-between relative "
+            className=" w-[98%] text-sm text-fuchsia-700 p-1 m-1 flex items-center justify-between relative "
           >
             <div className="mainNoti flex justify-start items-center cursor-pointer">
               <Image
@@ -67,7 +67,7 @@ export default function NotiFications() {
               />
               <p className=" p-1">{noti?.message}</p>
             </div>
-            <small className="text-slate-500">
+            <small className="text-slate-500 text-center">
               {getTimeAgo(new Date(noti.createdAt))}
             </small>
             <div className="actions flex justify-end items-center">
