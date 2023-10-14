@@ -7,6 +7,7 @@ import Uploading, { ProgressingUpload } from "../uploading";
 import { storage } from "@/app/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 } from "uuid";
+import { useCurrentUploadings } from "@/app/store";
 
 export default function CreateEpisode({
   handleVisibility,
@@ -21,6 +22,12 @@ export default function CreateEpisode({
   const [progressingPercent, setProgressingPercent] = useState("");
   const [uploadedVideo, setUploadedVideo] = useState<File | undefined>(
     undefined
+  );
+  const addToUploadingList = useCurrentUploadings(
+    (state) => state.updateCurrentUploading
+  );
+  const currentLoadingProcess = useCurrentUploadings(
+    (state) => state.currentUploading
   );
   const videoRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
@@ -58,7 +65,11 @@ export default function CreateEpisode({
         var percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setProgressingPercent(JSON.stringify(percent));
         console.log(percent + "percent");
-
+        addToUploadingList({
+          id: `${currentLoadingProcess.length}`,
+          title: uploadedVideo?.name as string,
+          loadingPercent: percent.toFixed(0),
+        });
         if (parseInt(percent.toFixed(0)) == 100) {
           setIsSubmiting(false);
           handleVisibility();

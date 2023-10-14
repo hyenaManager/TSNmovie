@@ -7,6 +7,7 @@ import QueryProvider from "./context/reactQeueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import UserProvider from "./context/userContext";
 import { Toaster } from "react-hot-toast";
+import CurrentUploading from "./components/currentLoadingProcess";
 
 const space_gro = Space_Grotesk({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <AuthProvider>
             <UserProvider>
               <NavBar />
+              <CurrentUploading />
               <div className="pageWarper min-h-[100vh] bg-black">
                 {children}
               </div>
