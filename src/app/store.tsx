@@ -1,12 +1,16 @@
 import { create } from "zustand";
 
-type currentCataType = {
-  currentCatgory: string;
-  changeCurrentCatagory: (incommingCatagory: string) => void;
+type State = {
+  currentCatagory: string;
 };
-//current catagory in navagation of userPage ( like clips or series or movie)
-export const useCatagory = create((set) => ({
+
+type Action = {
+  changeCurrentCatagory: (newCatagory: State["currentCatagory"]) => void;
+};
+
+// Current category in navigation of userPage (like clips or series or movie)
+export const useCatagory = create<State & Action>((set) => ({
   currentCatagory: "clips",
-  changeCurrentCatagory: (incommingCatagory: string) =>
-    set(() => ({ currentCatgory: incommingCatagory })),
+  changeCurrentCatagory: (newCatagory) =>
+    set(() => ({ currentCatagory: newCatagory })),
 }));
