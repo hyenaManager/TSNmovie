@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 export function ProgressingUpload({ percent }: { percent: string }) {
   return (
