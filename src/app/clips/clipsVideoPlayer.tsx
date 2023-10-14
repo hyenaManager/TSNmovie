@@ -153,6 +153,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onClick={handlePlayPause}
+        key={data?.video}
       />
       {/* cover video with purble bars, disabled only when the use play the video */}
       {!isPlaying && (
