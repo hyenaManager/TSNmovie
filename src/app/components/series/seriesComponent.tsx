@@ -23,6 +23,7 @@ type seriesImage = {
   page: { id: string; name: string; adminId: string };
   chosenSeries: (series: any) => void;
   isChecking: () => void;
+  episodes: { id: string; video: string };
 };
 type seriesOverview = {
   id: string;
@@ -44,6 +45,7 @@ export default function SeriesImage({
   chosenSeries,
   isChecking,
   viewedBy,
+  episodes,
 }: seriesImage) {
   const { user, userPage }: any = useContext(userProvider);
 

@@ -156,7 +156,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
       />
       {/* cover video with purble bars, disabled only when the use play the video */}
       {!isPlaying && (
-        <div className=" absolute top-0 left-50 xsm:w-[99vw] sm:w-full h-full z-10 rounded-xl flex flex-col justify-between items-center ">
+        <div className=" absolute top-0 left-0 xsm:w-[100vw] sm:w-full h-full z-10 xsm:rounded-none sm:rounded-xl flex flex-col justify-between items-center ">
           {/* user profile and more option button and  blah blah */}
           <section
             className={

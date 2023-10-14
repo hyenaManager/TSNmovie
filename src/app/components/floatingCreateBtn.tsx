@@ -25,7 +25,7 @@ export function CreateSomethingButton({
   return (
     <button
       onClick={isCreating}
-      title="create clip"
+      title="create "
       className="p-2 flex justify-center absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10 xsm:w-[40px] xsm:h-[20px] sm:w-[70px] sm:h-[40px] bg-green-500 rounded-br-lg text-white items-center"
     >
       <FontAwesomeIcon icon={faPlus} className="w-[15px] h-[15px]" />

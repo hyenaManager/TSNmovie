@@ -19,8 +19,8 @@ export async function GET(request:Request,{params}:{params:{id:string}}){
 export async function DELETE(request:NextRequest,{params}:{params:{id:string}}){
     try{
         const id = params.id
-        const data = await deleteASerie(id)
-        return new Response(JSON.stringify(data),{
+        const response = await deleteASerie(id)
+        return new Response(JSON.stringify(response),{
             status:200
         })
     }catch(error){

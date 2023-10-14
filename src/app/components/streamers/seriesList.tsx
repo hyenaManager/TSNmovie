@@ -25,6 +25,7 @@ type seriesProps = {
   pageImage: string;
   page: { id: string; name: string; adminId: string };
   createdBy: any;
+  episodes: { id: string; video: string };
 };
 export default function SeriesList({ pageId }: { pageId: string }) {
   const [isCheckingSeries, setIsCheckingSeries] = useState(false); //if true show the serieOverview component else hide
