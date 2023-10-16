@@ -50,7 +50,7 @@ export default function DefaultVideoPlayer({
           onPause={() => setIsPlaying(false)}
           src={videoSource}
           key={videoSource}
-          className="w-[70vw] h-5hundred flex justify-center shadow-[0_0_30px_purple] rounded-lg "
+          className="xsm:w-[97vw] sm:w-[70vw] h-5hundred flex justify-center shadow-[0_0_30px_purple] rounded-lg "
         />
         {/* like button */}
 
