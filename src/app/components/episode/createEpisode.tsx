@@ -110,8 +110,8 @@ export default function CreateEpisode({
         }}
         className=" xsm:w-[90vw] sm:w-[60vw] rounded-lg flex bg-fuchsia-200 flex-col  justify-center items-center border-2 border-fuchsia-500"
       >
-        <div className=" flex justify-center items-center">
-          <label className=" text-center text-lg text-fuchsia-800 items-center">
+        <div className=" flex xsm:flex-col sm:flex-row justify-center items-center">
+          <label className=" text-center text-lg w-full text-fuchsia-800 items-center">
             Episode name
           </label>
           <input
@@ -120,9 +120,9 @@ export default function CreateEpisode({
             required
             type="text"
             placeholder="episode name"
-            className="p-1 outline-none rounded-md bg-white text-fuchsia-600 border-2 border-fuchsia-600  m-2"
+            className="p-1 outline-none rounded-md w-full bg-white text-fuchsia-600 border-2 border-fuchsia-600  m-2"
           />
-          <label className=" text-center text-lg text-fuchsia-800 items-center">
+          <label className=" text-center text-lg w-full text-fuchsia-800 items-center">
             Episode number
           </label>
           <input
@@ -131,7 +131,7 @@ export default function CreateEpisode({
             required
             type="number"
             placeholder="episode number"
-            className="p-1 outline-none rounded-md bg-white text-fuchsia-600 border-2 border-fuchsia-600  m-2"
+            className="p-1 outline-none rounded-md w-full bg-white text-fuchsia-600 border-2 border-fuchsia-600  m-2"
           />
         </div>
         <div className=" w-full bg-white m-2 h-3hundred border re flex justify-center items-center relative">

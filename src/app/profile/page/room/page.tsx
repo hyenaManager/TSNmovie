@@ -80,8 +80,8 @@ export default function Pages() {
   }, [episodes]);
 
   return (
-    <div className=" flex justify-center h-[100vh]  text-white pageWarper ml-3 mr-3">
-      <main className=" flex flex-col items-center pt-14 w-[75vw] bg-black ">
+    <div className="flex xsm:flex-col sm:flex-row xsm:justify-start sm:justify-center min-h-[100vh]  text-white pageWarper sm:ml-3 sm:mr-3 xsm:ml-1 xsm:mr-1">
+      <main className=" flex flex-col items-center xsm:pt-10 sm:pt-14 xsm:w-[97vw] sm:w-[95%] bg-black ">
         {status === "loading" ? (
           <RoomVideoSkeleton />
         ) : (
@@ -103,7 +103,7 @@ export default function Pages() {
       ) : (
         <aside
           className={
-            " w-[25vw] relative max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col  " +
+            " xsm:w-[95vw] sm:w-[25vw] relative xsm:max-h-fit sm:max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col " +
             (sectionIsHidden ? " hidden " : " flex ")
           }
         >
@@ -128,7 +128,7 @@ export default function Pages() {
               className=" w-[20px] h-[20px] bg-black border-2 border-fuchsia-400 p-2 rounded-full text-fuchsia-400 cursor-pointer"
             />
           </div>
-          <ul className=" rounded-b-md flex flex-col w-full items-center overflow-auto mt-12 bg-white h-[80vh] ">
+          <ul className="pageWarper  xsm:w-[94vw] sm:w-[24vw] rounded-b-md  flex xsm:flex-row sm:flex-col w-full items-center overflow-auto mt-12 bg-white sm:h-[80vh] ">
             {episodes?.length !== 0 ? (
               episodes?.map(
                 (Episode: {
@@ -140,7 +140,7 @@ export default function Pages() {
                 }) => (
                   <li
                     key={Episode.episodeNumber}
-                    className=" w-full flex justify-between p-2 items-center "
+                    className=" sm:w-[23vw] xsm:w-full flex xsm:justify-start  sm:justify-between p-2 items-center "
                     ref={(node) => {
                       const map = getMap();
                       if (node) {
@@ -164,7 +164,7 @@ export default function Pages() {
                     >
                       Episode :{Episode.episodeNumber}
                     </button>
-                    <span className=" font-bold text-red-900 p-2">
+                    <span className=" xsm:hidden sm:block font-bold text-red-900 p-2">
                       {Episode.name}
                     </span>
                   </li>
