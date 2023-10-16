@@ -10,37 +10,60 @@ export const useCatagory = create<CatagoryState>((set) => ({
   changeCurrentCatagory: (newCatagory) =>
     set(() => ({ currentCatagory: newCatagory })),
 }));
+type LoadingObj = {
+  title: string;
+  id: string;
+  percent: number;
+};
 
 type CurrentLoading = {
-  currentUploading: object[];
-  updateCurrentUploading: (newUploading: {
-    title: string;
-    loadingPercent: string;
-    id: string;
-  }) => void;
-  setNewUploading: (newUploading: {
-    title: string;
-    loadingPercent: string;
-    id: string;
-  }) => void;
+  currentUploading: LoadingObj[];
+
+  updateCurrentUploading: (newUploading: any) => void;
 };
 
 //for show current uploading processes
+// export const useCurrentUploadings = create<CurrentLoading>((set) => ({
+//   currentUploading: [],
+//   updateCurrentUploading: (newUploading) =>
+//     set(() => ({
+//       currentUploading: newUploading,
+//     })),
+//   // setNewUploading: (newUploading) =>
+//   //   set((state) => ({
+//   //     currentUploading: [...state.currentUploading, newUploading],
+//   //   })),
+// }));
+
 export const useCurrentUploadings = create<CurrentLoading>((set) => ({
   currentUploading: [],
   updateCurrentUploading: (newUploading) =>
     set((state) => ({
-      currentUploading: state.currentUploading.map((process: any) => {
-        //update only the target loading percent
-        if (process.id === newUploading.id) {
-          return { ...process, loadingPercent: newUploading.loadingPercent };
-        } else {
-          return process;
-        }
-      }),
-    })),
-  setNewUploading: (newUploading) =>
-    set((state) => ({
-      currentUploading: [...state.currentUploading, newUploading],
+      currentUploading: mySwitchMode(newUploading, state.currentUploading),
+      // state.currentUploading?.map((obj) => {
+      //     if (obj.percent == 100) {
+      //       console.log("it should be removed");
+      //     } else if (obj.id === newUploading.id) {
+      //       console.log("add new");
+
+      //       return newUploading;
+      //     } else {
+      //       console.log("just return it");
+
+      //       return obj;
+      //     }
+      //   })
+      // myStoreUpdater(state.currentUploading, newUploading)
     })),
 }));
+
+const mySwitchMode = (newObj: { id: string; percent: number }, myList: any) => {
+  const existingObject = myList.find((obj: any) => obj.id === newObj.id);
+  let finalList: any = [];
+  if (existingObject === undefined) {
+    finalList = [...myList, newObj];
+  } else {
+    finalList = myList.map((obj: any) => (obj.id === newObj.id ? newObj : obj));
+  }
+  return finalList.filter((obj: any) => obj.percent != 100);
+};

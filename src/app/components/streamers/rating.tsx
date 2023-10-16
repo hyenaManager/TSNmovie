@@ -19,10 +19,10 @@ export default function RatePage({
 }) {
   const [isRating, setIsRating] = useState(false); //show rating component or not
   const { user, userPage }: any = useContext(userProvider);
-  const userAlreadyRated = raterList.includes(user?.email);
+  const userAlreadyRated = raterList?.includes(user?.email);
   const ratingContent = `Rating : ${
-    rating === 0 ? rating : (rating / raterList.length).toFixed(1)
-  }/5 (${raterList.length} ${raterList.length > 1 ? "users" : "user"})`;
+    rating === 0 ? rating : (rating / raterList?.length).toFixed(1)
+  }/5 (${raterList?.length} ${raterList?.length > 1 ? "users" : "user"})`;
 
   return (
     <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
@@ -66,7 +66,7 @@ function Rating({
   const mutation = useMutation(
     async () => {
       const response = await axios.put(
-        `https://yokeplay.vercel.app/api/pages/rating`,
+        `http://localhost:3000/api/pages/rating`,
         {
           newRaterList: [...raterList, user?.email],
           newRating: rating,

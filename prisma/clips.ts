@@ -30,7 +30,7 @@ export async function getClipsByCursor(cursor:number) {
     const clipCount = await prisma.clips.count();//counting all clips count for nextCursor whether fetching next page is available or not
     try {
         const clips = await prisma.clips.findMany({
-            take:2,
+            take:4,
             skip:cursor,
             include:{
                 createdBy:true,
@@ -44,7 +44,7 @@ export async function getClipsByCursor(cursor:number) {
             }
         });
       
-        const nextCursor = cursor+2 <= clipCount-1 ? cursor+2:null //return nextcursor for fetchNextPage's cursor
+        const nextCursor = cursor+4 <= clipCount-1 ? cursor+4:null //return nextcursor for fetchNextPage's cursor
         return {clips,nextCursor}
     } catch (error) {
         return error

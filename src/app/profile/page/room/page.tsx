@@ -38,7 +38,7 @@ export default function Pages() {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/series/${seriesId}`
+          `http://localhost:3000/api/series/${seriesId}`
         );
         const data = response.data;
         return data;
@@ -129,7 +129,7 @@ export default function Pages() {
             />
           </div>
           <ul className=" rounded-b-md flex flex-col w-full items-center overflow-auto mt-12 bg-white h-[80vh] ">
-            {episodes?.length !== 0 &&
+            {episodes?.length !== 0 ? (
               episodes?.map(
                 (Episode: {
                   id: string;
@@ -169,7 +169,12 @@ export default function Pages() {
                     </span>
                   </li>
                 )
-              )}
+              )
+            ) : (
+              <h2 className="text-2xl text-black text-center w-full">
+                No video avaiable
+              </h2>
+            )}
           </ul>
         </aside>
       )}
@@ -198,6 +203,7 @@ export default function Pages() {
       {creatingEpisode && (
         <CreateEpisode
           seriesId={seriesId}
+          key={"new"}
           handleVisibility={() => setCreatingEpisode(false)}
         />
       )}

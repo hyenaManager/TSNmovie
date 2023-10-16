@@ -19,19 +19,13 @@ export default function CreateEpisode({
   const [episodeName, setEpisodeName] = useState("");
   const [episodeNumber, setEpisodeNumber] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const [progressingPercent, setProgressingPercent] = useState("");
   const [uploadedVideo, setUploadedVideo] = useState<File | undefined>(
     undefined
   );
   const addToUploadingList = useCurrentUploadings(
     (state) => state.updateCurrentUploading
   );
-  const currentLoadingProcess = useCurrentUploadings(
-    (state) => state.currentUploading
-  );
-  const addNewUploading = useCurrentUploadings(
-    (state) => state.setNewUploading
-  );
+
   const videoRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
   const handleVideoUpload = () => {
@@ -39,15 +33,12 @@ export default function CreateEpisode({
   };
 
   const createEpisode = async (url: string) => {
-    const response = await axios.post(
-      `https://yokeplay.vercel.app/api/episodes`,
-      {
-        name: episodeName,
-        episodeNumber: episodeNumber,
-        seriesId: seriesId,
-        video: url,
-      }
-    );
+    const response = await axios.post(`http://localhost:3000/api/episodes`, {
+      name: episodeName,
+      episodeNumber: episodeNumber,
+      seriesId: seriesId,
+      video: url,
+    });
     if (response.status === 200) {
       toast.success("create successfully");
       queryClient.invalidateQueries(["series", seriesId]);
@@ -66,24 +57,15 @@ export default function CreateEpisode({
       "state_changed",
       (snapshot) => {
         var percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgressingPercent(JSON.stringify(percent));
-        console.log(percent + "percent");
-        if (currentLoadingProcess.length === 0) {
-          addNewUploading({
-            id: `${currentLoadingProcess.length}`,
-            title: uploadedVideo?.name as string,
-            loadingPercent: percent.toFixed(0),
-          });
-        } else {
-          addToUploadingList({
-            id: `${currentLoadingProcess.length}`,
-            title: uploadedVideo?.name as string,
-            loadingPercent: percent.toFixed(0),
-          });
-        }
+
+        addToUploadingList({
+          title: episodeName,
+          percent: percent.toFixed(0),
+          id: uploadedVideo?.name,
+        });
+        //is video upload success disable all loading status
         if (parseInt(percent.toFixed(0)) == 100) {
           setIsSubmiting(false);
-          handleVisibility();
         }
       },
       (error) => {
@@ -110,13 +92,12 @@ export default function CreateEpisode({
       return toast.error("please select a video");
     } else {
       console.log("also shere");
-
-      setIsSubmiting(true);
-      return mutation.mutate();
+      mutation.mutate();
+      handleVisibility();
     }
   };
 
-  if (isSubmiting) return <ProgressingUpload percent={progressingPercent} />;
+  // if (isSubmiting) return <ProgressingUpload percent={progressingPercent} />;
   return (
     <div className="pageWarper fixed top-0 left-0 bg-white z-50  flex justify-center flex-col items-center w-[100vw] h-[100vh] ">
       <form
