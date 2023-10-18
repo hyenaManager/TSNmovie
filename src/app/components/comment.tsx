@@ -101,7 +101,7 @@ export default function ClipComment({
 
   //comment mode
   const createComment = async () => {
-<<<<<<< HEAD
+    createNoti(clip?.adminId as string, "comment");
     const response = await axios.post(
       `https://yokeplay.vercel.app/api/comments`,
       {
@@ -111,15 +111,6 @@ export default function ClipComment({
         mode: "comment",
       }
     );
-=======
-    createNoti(clip?.adminId as string, "comment");
-    const response = await axios.post(`https://yokeplay.vercel.app/api/comments`, {
-      text: commentText,
-      userId: user?.id,
-      clipId: clip?.clipId,
-      mode: "comment",
-    });
->>>>>>> zustand
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       setCommentParent(null);
@@ -132,28 +123,18 @@ export default function ClipComment({
   };
   //reply mode
   const createReplyComment = async () => {
-<<<<<<< HEAD
+    createNoti(commentParent?.replyingToUser.id as string, "reply");
     const response = await axios.post(
       `https://yokeplay.vercel.app/api/comments`,
       {
         text: commentText,
-        userId: user.id,
-        parentId: commentParent?.parentId,
+        userId: user.id, //user(current user) who replied parent comment
+        parentId: commentParent?.parentId, //id to connect with parent comment
         userImage: user.image,
         mode: "reply",
+        replyingTo: commentParent?.replyingToUser.id,
       }
     );
-=======
-    createNoti(commentParent?.replyingToUser.id as string, "reply");
-    const response = await axios.post(`https://yokeplay.vercel.app/api/comments`, {
-      text: commentText,
-      userId: user.id, //user(current user) who replied parent comment
-      parentId: commentParent?.parentId, //id to connect with parent comment
-      userImage: user.image,
-      mode: "reply",
-      replyingTo: commentParent?.replyingToUser.id,
-    });
->>>>>>> zustand
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
       commentTextRef.current = null;
