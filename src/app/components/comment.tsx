@@ -81,7 +81,7 @@ export default function ClipComment({
   const createNoti = async (notiTo: string, notiType: string) => {
     const notiMakerUser = `${user.firstName} ${user.lastName}`;
     const response = await axios.post(
-      "http://localhost:3000/api/notifications",
+      "https://yokeplay.vercel.app/api/notifications",
       {
         message:
           notiType === "comment"
@@ -113,7 +113,7 @@ export default function ClipComment({
     );
 =======
     createNoti(clip?.adminId as string, "comment");
-    const response = await axios.post(`http://localhost:3000/api/comments`, {
+    const response = await axios.post(`https://yokeplay.vercel.app/api/comments`, {
       text: commentText,
       userId: user?.id,
       clipId: clip?.clipId,
@@ -145,7 +145,7 @@ export default function ClipComment({
     );
 =======
     createNoti(commentParent?.replyingToUser.id as string, "reply");
-    const response = await axios.post(`http://localhost:3000/api/comments`, {
+    const response = await axios.post(`https://yokeplay.vercel.app/api/comments`, {
       text: commentText,
       userId: user.id, //user(current user) who replied parent comment
       parentId: commentParent?.parentId, //id to connect with parent comment
