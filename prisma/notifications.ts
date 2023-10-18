@@ -17,6 +17,9 @@ export async function getNotificationByUserId(userId:string){
             },
             include:{
                 notiBy:true
+            },
+            orderBy:{
+                createdAt:"desc"
             }
         })
         return data
@@ -25,9 +28,39 @@ export async function getNotificationByUserId(userId:string){
     }
 }
 
+export async function getNotificationByCursor(cursor:number,userId:string) {
+    const clipCount = await prisma.notifications.count({
+        where:{
+            userId:userId
+        }
+    });//counting all clips count for nextCursor whether fetching next page is available or not
+    try {
+        const notifications = await prisma.notifications.findMany({
+            take:5,
+            skip:cursor,
+            include:{
+                notiBy:true,
+            },
+            where:{
+                userId:userId
+            },
+            // cursor:{
+            //     id:cursor
+            // },
+            orderBy:{
+                createdAt:"desc"
+            }
+        });
+      
+        const nextCursor = cursor+5 <= clipCount-1 ? cursor+5:null //return nextcursor for fetchNextPage's cursor
+        return {notifications,nextCursor}
+    } catch (error) {
+        return error
+    }
+}
+
 export async function createNotification(data:{type:string,message:string,holder:string,userId:string,userEmail:string,holderId:number}){
    
-    
     try {
         await prisma.notifications.create({
             data:{

@@ -55,6 +55,7 @@ model User {
   Page              Page?
   Notifications     Notifications[] @relation("notificationOwner")
   NotificationsMade Notifications[] @relation("notificationMaker")
+  Replied           Comment[]       @relation("replied")
   Comment           Comment[]
 }
 
@@ -68,16 +69,6 @@ model VerificationRequest {
 
   @@unique([identifier, token])
 }
-
-// model User {
-//   id            String          @unique @default(uuid())
-//   firstName     String
-//   lastName      String
-//   createAt      DateTime        @default(now())
-//   updateAt      DateTime
-//   image         String
-//   //other
-// }
 
 model Page {
   id          String   @id @unique @default(uuid())
@@ -188,18 +179,20 @@ model Notifications {
 }
 
 model Comment {
-  id            String    @id @unique @default(uuid())
-  text          String
-  userId        String
-  user          User      @relation(fields: [userId], references: [id])
-  userImage     String? //for using the in replied comment image...
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  clipId        Int?
-  clip          Clips?    @relation(fields: [clipId], references: [id])
-  parentId      String?
+  id              String    @id @unique @default(uuid())
+  text            String
+  repliedTo       User?     @relation("replied", fields: [repliedToUserId], references: [id]) //user who got replied(not replier)
+  repliedToUserId String?
+  userId          String
+  user            User      @relation(fields: [userId], references: [id]) //user who comment or reply
+  userImage       String? //for using the in replied comment image...
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  clipId          Int?
+  clip            Clips?    @relation(fields: [clipId], references: [id])
+  parentId        String?
   //many-to-one relationship between Comment and its parent Comment 
-  parent        Comment?  @relation("childComments", fields: [parentId], references: [id])
+  parent          Comment?  @relation("childComments", fields: [parentId], references: [id])
   // one-to-many relationship between Comment and its child Comments for reply
-  childComments Comment[] @relation("childComments")
+  childComments   Comment[] @relation("childComments")
 }

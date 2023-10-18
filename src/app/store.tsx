@@ -67,3 +67,16 @@ const mySwitchMode = (newObj: { id: string; percent: number }, myList: any) => {
   }
   return finalList.filter((obj: any) => obj.percent != 100);
 };
+
+type notiType = {
+  unSeenNotifications: number;
+  setUnSeenNotifications: (notiCount: number) => void;
+};
+
+export const useNotifications = create<notiType>((set) => ({
+  unSeenNotifications: 0,
+  setUnSeenNotifications: (notiCount) =>
+    set(() => ({
+      unSeenNotifications: notiCount,
+    })),
+}));

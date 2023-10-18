@@ -120,7 +120,7 @@ export function SeriesOverview({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       exit={{ opacity: 0 }}
-      className=" pageWarper z-50 backdrop-blur-sm fixed flex justify-center items-start top-0 left-0 w-full h-full backdrop-brightness-50"
+      className=" pageWarper z-50 mt-1 backdrop-blur-sm fixed flex justify-center items-start top-0 left-0 w-full h-full backdrop-brightness-50"
     >
       <motion.article
         initial={{ opacity: 0 }}
@@ -128,16 +128,12 @@ export function SeriesOverview({
         transition={{ duration: 0.3, delay: 0.5 }}
         className="xsm:flex-col sm:flex-row flex max-w-fit max-h-[100vh] overflow-auto bg-black shadow-[0px_0px_20px_purple] "
       >
-        <Image
-          src={image}
-          alt="luffy"
-          width={200}
-          height={200}
-          className=" xsm:w-full sm:h-[60vh]  "
-        />
+        <div className="relative xsm:h-4hundred xsm:w-full sm:w-4hundred">
+          <Image fill src={image} alt="luffy" className=" object-cover " />
+        </div>
         <section className=" flex flex-col bg-black justify-start">
           <h2 className=" text-2xl text-fuchsia-500 p-2 text-start">{name}</h2>
-          <p className=" xsm:w-[90vw] sm:w-5hundred xsm:max-h-fit sm:h-[200px] m-2 ">
+          <p className=" xsm:w-[87vw] overflow-auto sm:w-5hundred h-[200px] m-2 ">
             {content}
           </p>
           <h3 className=" p-2 text-fuchsia-600"> Total episodes : unknown</h3>

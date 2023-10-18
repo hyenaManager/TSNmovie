@@ -19,6 +19,12 @@ import ChildrenComment from "./childComment";
 import DeleteComment from "./deleteComment";
 interface CommentParent {
   parentId: string;
+  replyingToUser: {
+    id: string;
+    lastName: string;
+    firstName: string;
+    image: string;
+  };
   commentUser: {
     id: string;
     lastName: string;
@@ -31,7 +37,11 @@ export default function ClipComment({
   clip,
 }: {
   hideComment: () => void;
-  clip: { clipTitle: string; clipId: number } | null;
+  clip: {
+    clipTitle: string;
+    clipId: number;
+    adminId: string;
+  } | null;
 }) {
   const { user }: any = useContext(userProvider);
 
@@ -56,18 +66,42 @@ export default function ClipComment({
   });
 
   const handleReplying = (
-    parentId: string,
+    parentId: string, //parent comment id
     commentUser: {
       id: string;
       lastName: string;
       firstName: string;
       image: string;
-    }
+    }, //user who comment (current user)
+    replyingToUser: any
   ) => {
-    setCommentParent({ parentId, commentUser });
+    setCommentParent({ parentId, commentUser, replyingToUser });
   };
+  //create noti for bot reply and comment mode
+  const createNoti = async (notiTo: string, notiType: string) => {
+    const notiMakerUser = `${user.firstName} ${user.lastName}`;
+    const response = await axios.post(
+      "http://localhost:3000/api/notifications",
+      {
+        message:
+          notiType === "comment"
+            ? `${notiMakerUser} comment on your clip`
+            : `${notiMakerUser} replied you on a clip`,
+        type: notiType,
+        holder: "clip",
+        userEmail: user.email, //user who replied(current user)
+        userId: notiTo, //user who got replied
+        holderId: clip?.clipId,
+      }
+    );
+    if (response.status === 200) {
+      return "success";
+    }
+  };
+
   //comment mode
   const createComment = async () => {
+    createNoti(clip?.adminId as string, "comment");
     const response = await axios.post(`http://localhost:3000/api/comments`, {
       text: commentText,
       userId: user?.id,
@@ -86,12 +120,14 @@ export default function ClipComment({
   };
   //reply mode
   const createReplyComment = async () => {
+    createNoti(commentParent?.replyingToUser.id as string, "reply");
     const response = await axios.post(`http://localhost:3000/api/comments`, {
       text: commentText,
-      userId: user.id,
-      parentId: commentParent?.parentId,
+      userId: user.id, //user(current user) who replied parent comment
+      parentId: commentParent?.parentId, //id to connect with parent comment
       userImage: user.image,
       mode: "reply",
+      replyingTo: commentParent?.replyingToUser.id,
     });
     if (response.status === 200) {
       queryClient.invalidateQueries(["comments", clip?.clipId]);
@@ -175,7 +211,9 @@ export default function ClipComment({
                 {/* option... */}
                 <div className="flex relative justify-start items-center">
                   <button
-                    onClick={() => handleReplying(comment.id, comment.user)}
+                    onClick={() =>
+                      handleReplying(comment.id, user, comment?.user)
+                    }
                     className="flex justify-start m-1 "
                   >
                     <FontAwesomeIcon
@@ -188,7 +226,10 @@ export default function ClipComment({
                     <DeleteComment commentId={comment.id} />
                   )}
                 </div>
-                <ChildrenComment parentId={comment.id} />
+                <ChildrenComment
+                  parentId={comment.id}
+                  handleReplying={handleReplying}
+                />
               </div>
             </li>
           ))}
@@ -198,9 +239,9 @@ export default function ClipComment({
           {commentParent !== null && (
             <div className=" flex justify-center items-center text-blue text-sm">
               <i className=" text-center">{`replying to @${
-                commentParent?.commentUser.firstName +
+                commentParent?.replyingToUser.firstName +
                 " " +
-                commentParent?.commentUser.lastName
+                commentParent?.replyingToUser.lastName
               }`}</i>
               <button
                 onClick={() => setCommentParent(null)}

@@ -14,4 +14,7 @@ module.exports = {
         dangerouslyAllowSVG: true,
 
       },
+    experimental: {
+        scrollRestoration: true,
+    },
 }

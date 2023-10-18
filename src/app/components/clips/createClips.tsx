@@ -2,7 +2,7 @@
 
 import { useContext, useRef, useState } from "react";
 import { storage } from "../../firebase";
-import ReactPlayer from "react-player";
+
 import {
   getDownloadURL,
   ref,
@@ -10,7 +10,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { v4 } from "uuid";
-import Loading from "../loading";
+
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
