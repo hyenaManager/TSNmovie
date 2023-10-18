@@ -6,12 +6,15 @@ import toast from "react-hot-toast";
 import React from "react";
 import { userProvider } from "../context/userContext";
 import DeleteComment from "./deleteComment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faReply } from "@fortawesome/free-solid-svg-icons";
 
 type repliedCommentType = {
   user: { lastName: string; image: string; id: string; firstName: string };
   userImage: string;
   text: string;
   id: string;
+  repliedTo: { firstName: string; lastName: string };
 };
 
 type commentData = {
@@ -19,7 +22,17 @@ type commentData = {
   nextCursor: number;
 };
 
-export default function ChildrenComment({ parentId }: { parentId: string }) {
+export default function ChildrenComment({
+  parentId,
+  handleReplying,
+}: {
+  parentId: string;
+  handleReplying: (
+    parentId: string,
+    author: any,
+    replyingToUserId: any
+  ) => void;
+}) {
   const { user }: any = useContext(userProvider);
   const [hideReplies, setHideReplies] = useState(true);
   const { data, status, hasNextPage, fetchNextPage } = useInfiniteQuery({
@@ -62,16 +75,29 @@ export default function ChildrenComment({ parentId }: { parentId: string }) {
                     style={{ height: "fit-content" }}
                   >
                     <small className=" text-sm text-fuchsia-700 ">
-                      {repliedComment?.user?.firstName +
-                        " " +
-                        repliedComment?.user?.lastName}
+                      {`${repliedComment?.user?.firstName} ${repliedComment?.user?.lastName}>${repliedComment?.repliedTo?.firstName} ${repliedComment?.repliedTo?.lastName}`}
                     </small>
                     <p className="w-full max-h-fit bg-fuchsia-500 text-white text-sm rounded-md p-1">
                       {repliedComment.text}
                     </p>
-                    {repliedComment?.user.id === user.id && (
-                      <DeleteComment commentId={repliedComment?.id} />
-                    )}
+                    {/* reply and delete mode */}
+                    <div className="flex justify-start items-center">
+                      {repliedComment?.user.id === user.id && (
+                        <DeleteComment commentId={repliedComment?.id} />
+                      )}
+                      <button
+                        onClick={() =>
+                          handleReplying(parentId, user, repliedComment?.user)
+                        }
+                        className="flex justify-start m-1 "
+                      >
+                        <FontAwesomeIcon
+                          icon={faReply}
+                          className=" w-[20px] h-[20px] text-fuchsia-500"
+                        />
+                        <i className="text-fuchsia-500 text-sm ">Reply</i>
+                      </button>
+                    </div>
                   </div>
                 </li>
               ))}

@@ -32,18 +32,23 @@ export async function createComment({text,userId,clipId}:{text:string,userId:str
     }
 }
 
-export async function replyComment({text,userId,parentId,userImage}:{text:string,userId:string,parentId:string,userImage:string}){
+export async function replyComment({text,userId,parentId,userImage,replyingTo}:{text:string,userId:string,parentId:string,userImage:string,replyingTo:string}){
     try {
-        await prisma.comment.create({
+        const repliedComment = await prisma.comment.create({
             data:{
                 text:text,
                 userId:userId,
                 parentId:parentId,
-                userImage:userImage
+                userImage:userImage,
+                repliedToUserId:replyingTo
             }
         })
+        console.log(repliedComment);
+        
         return "success"
     } catch (error) {
+        console.log(error);
+        
         return error
     }
 }
@@ -67,9 +72,8 @@ export async function getCommentsByCursor(cursor:number,parentId:string) {
             parentId:parentId
         }
     })
-    console.log("count + is :",count);
-    console.log("cursor is:",cursor);
-    
+    // console.log("count + is :",count);
+    // console.log("cursor is:",cursor);
     
     try {
         const comments = await prisma.comment.findMany({
@@ -79,13 +83,14 @@ export async function getCommentsByCursor(cursor:number,parentId:string) {
             take:3,
             skip:cursor,
             include:{
-                user:true
+                user:true,
+                repliedTo:true,
             },
             orderBy:{
                 id:"desc"
             }
         });
-        console.log("and comments are :",comments.length);
+        // console.log("and comments are :",comments);
         
         const nextCursor = (cursor+3 <= count-1) ? cursor+3:null //return nextcursor for fetchNextPage's cursor
         return {comments,nextCursor}

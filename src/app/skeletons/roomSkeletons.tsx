@@ -1,6 +1,3 @@
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 export default function RoomVideoSkeleton() {
   return (
     <div className="w-[70vw] mt-4 h-5hundred flex justify-center shadow-[0_0_30px_purple] rounded-lg border-2 border-fuchsia-600 animate-pulse relative">
@@ -13,7 +10,7 @@ export function RoomEpisodeSkeleton() {
   return (
     <aside
       className={
-        " w-[25vw] animate-pulse relative max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col flex"
+        " xsm:w-[95vw] sm:w-[25vw] relative xsm:max-h-fit sm:max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col "
       }
     >
       <div className="border-2 border-fuchsia-500 rounded-t-md absolute top-14 right-0 w-full p-2 flex justify-end items-center ">

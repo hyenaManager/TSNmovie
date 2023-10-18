@@ -98,11 +98,11 @@ export default function Pages() {
       ) : (
         <aside
           className={
-            " xsm:w-[95vw] sm:w-[25vw] relative xsm:max-h-fit sm:max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col  " +
+            " xsm:w-[95vw] sm:w-[25vw] relative xsm:h-[200px] sm:max-h-[100vh] bg-black  text-black xsm:pt-0 sm:pt-16 rounded-md flex-col  " +
             (sectionIsHidden ? " hidden " : " flex ")
           }
         >
-          <div className="rounded-t-md absolute top-14 right-0 w-full p-2 flex justify-end items-center bg-white ">
+          <div className="rounded-t-md absolute xsm:top-0 sm:top-14 border-2 right-0 w-full p-2 flex justify-end items-center bg-white ">
             <input
               type="number"
               value={inputEpisode}
@@ -118,7 +118,7 @@ export default function Pages() {
               className=" w-[20px] h-[20px] bg-black border-2 border-fuchsia-400 p-2 rounded-full text-fuchsia-400 cursor-pointer"
             />
           </div>
-          <ul className=" rounded-b-md flex xsm:flex-row sm:flex-col w-full items-center overflow-auto mt-12 bg-white sm:h-[80vh] ">
+          <ul className=" rounded-b-md flex xsm:flex-row sm:flex-col w-full items-center overflow-auto xsm:mt-14 sm:mt-12 bg-white sm:h-[80vh] ">
             {episodes?.length !== 0 ? (
               episodes?.map(
                 (Episode: {

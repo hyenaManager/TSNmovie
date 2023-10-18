@@ -234,7 +234,11 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
             <button className="flex justify-center m-4 items-center">
               <FontAwesomeIcon
                 onClick={() =>
-                  handleComment({ clipTitle: data?.title, clipId: id })
+                  handleComment({
+                    clipTitle: data?.title,
+                    clipId: id,
+                    adminId: data?.createdBy.adminId,
+                  })
                 }
                 icon={faComment}
                 className=" text-white text-2xl mr-1  cursor-pointer  "
