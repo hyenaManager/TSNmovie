@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function PageSearchBar() {
   return (
     <>
-      <div className=" flex justify-end items-center fixed top-12 text-fuchsia-500 opacity-80  right-4">
+      <div className=" flex z-30 justify-end items-center fixed top-12 text-fuchsia-500 opacity-80  right-4">
         <input
           type="text"
           className=" p-1 border-b-2 border-white bg-black m-2 outline-none"

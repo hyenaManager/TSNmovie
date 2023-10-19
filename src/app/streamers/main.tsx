@@ -4,9 +4,6 @@ import PageSearchBar from "../components/searchBar";
 import { NormalSkeleton, HalfSkeleton } from "../skeletons/skeletonStreamer";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Loading from "../components/loading";
-import Link from "next/link";
-import Image from "next/image";
 import { UserPageProfile } from "../components/image";
 import GetPageByItsUnique from "./getPageByUnique";
 
