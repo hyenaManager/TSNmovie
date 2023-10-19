@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import { likeAClip, removeLikeFromClip } from "../../../../../prisma/clips";
-
 export async function PUT(request:NextRequest){
     const url = new URL(request.url)
     const clipId:number = parseInt(url.searchParams.get("clipId") as any)
