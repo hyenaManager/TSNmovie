@@ -120,6 +120,29 @@ export async function likeAClip(clipId:number,userId:string,pageId:string){
      throw error   
     }
 }
+export async function addLike(clipId:number,userId:string){
+    try {
+        await prisma.likes.update({
+            where:{
+                holderId:JSON.stringify(clipId)
+            },
+            data:{
+                likedBy:{
+                    connect:{
+                        id:userId
+                    }
+                },
+                totalLike:{
+                    increment:1
+                }
+            }
+        })
+     
+        return "you like the clip"
+    } catch (error) {
+     throw error   
+    }
+}
 
 export async function removeLikeFromClip(clipId:number,userId:string,pageId:string){
     try {
@@ -132,6 +155,29 @@ export async function removeLikeFromClip(clipId:number,userId:string,pageId:stri
                     disconnect:{
                         id:userId
                     }
+                }
+            }
+        })
+    
+        return "like removed"
+    } catch (error) {
+        throw error
+    }
+}
+export async function removeLike(clipId:number,userId:string){
+    try {
+        await prisma.likes.update({
+            where:{
+                holderId:JSON.stringify(clipId)
+            },
+            data:{
+                likedBy:{
+                    disconnect:{
+                        id:userId
+                    }
+                },
+                totalLike:{
+                    decrement:1
                 }
             }
         })

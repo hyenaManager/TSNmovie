@@ -30,7 +30,6 @@ type videoProps = {
 
 function ClipVideoPlayer({ id, handleComment }: videoProps) {
   const { data: session } = useSession();
-  const [isLikeIsRed, setIsLikeIsRed] = useState<boolean | null>(null); //is the like is red color or not
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
   const [hide, setHide] = useState(true); //is report widget or page is hide or not
@@ -41,7 +40,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
     queryKey: ["clip", id],
     queryFn: async () => {
       const response = await axios.get(
-        `https://yokeplay.vercel.app/api/clips/oneClip?clipId=${id}`
+        `http://localhost:3000/api/clips/oneClip?clipId=${id}`
       );
       if (response.status === 200) {
         return response.data;
@@ -50,21 +49,11 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
       }
     },
   });
-  const [clipLikes, setClipLikes] = useState<number>(0);
-  useEffect(() => {
-    if (data) {
-      setClipLikes(data?.likes.length);
-    }
-  }, [data]);
 
   const isLiked =
     data?.likes?.find((user: any) => user.id === session?.user.id) !==
     undefined; //check current video is already liked by current user?
-  useEffect(() => {
-    if (data) {
-      setIsLikeIsRed(isLiked);
-    }
-  }, [data]);
+
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef?.current?.pause();
@@ -83,7 +72,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
   //creating new notification
   const handleCreatNotification = async () => {
     const response = await axios.post(
-      `https://yokeplay.vercel.app/api/notifications`,
+      `http://localhost:3000/api/notifications`,
       {
         message: `${session?.user.name} like your clip`,
         type: "like",
@@ -99,13 +88,13 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
   };
 
   //adding like or remove like
-  console.log(` isLiked value for ${data?.title} is :`, isLiked);
+  // console.log(` isLiked value for ${data?.title} is :`, isLiked);
 
   const handleLike = async () => {
     const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
     console.log(`type for ${data?.title} is : `, type);
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
+      `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
     );
     if (response.status === 200) {
       toast.success(response.data);
@@ -118,24 +107,27 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
   const mutation = useMutation({
     mutationFn: handleLike,
     onMutate: async () => {
-      // await queryClient.cancelQueries(["clips"]);
-      if (isLiked) {
-        setIsLikeIsRed(false);
-        return setClipLikes((preLike) => preLike - 1);
-      } else {
-        setIsLikeIsRed(true);
-        return setClipLikes((preLike) => preLike + 1);
-      }
-    },
-    onError: () => {
-      toast.error("you can't like a clip due to error");
+      await queryClient.cancelQueries(["clip", id]);
+      const previousClip: any = queryClient.getQueryData<any>(["clip", id]);
       if (!isLiked) {
-        setIsLikeIsRed(false);
-        return setClipLikes((preLike) => preLike - 1);
+        queryClient.setQueryData(["clip", id], {
+          ...previousClip,
+          likes: [...previousClip.likes, session?.user],
+        });
       } else {
-        setIsLikeIsRed(true);
-        return setClipLikes((preLike) => preLike + 1);
+        queryClient.setQueryData(["clip", id], {
+          ...previousClip,
+          likes: previousClip.likes.filter(
+            (user: any) => user.id !== session?.user.id
+          ),
+        });
       }
+      console.log("is current clip", previousClip);
+
+      return previousClip;
+    },
+    onError: (_, context: any) => {
+      queryClient.setQueryData(["clip", id], () => context.previousClip);
     },
     onSettled: () => {
       queryClient.invalidateQueries(["clip", id]);
@@ -221,15 +213,15 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
             <div className=" m-4 flex justify-center items-center">
               <FontAwesomeIcon
                 onClick={() => {
-                  mutation.mutate();
+                  mutation.mutate(data);
                 }}
                 icon={faHeart}
                 className={
                   " text-2xl p-1 cursor-pointer " +
-                  (isLikeIsRed ? " text-red-600" : " text-white")
+                  (isLiked ? " text-red-600" : " text-white")
                 }
               />
-              <span className=" text-white">{clipLikes}</span>
+              <span className=" text-white">{data?.likes.length}</span>
             </div>
             <button className="flex justify-center m-4 items-center">
               <FontAwesomeIcon

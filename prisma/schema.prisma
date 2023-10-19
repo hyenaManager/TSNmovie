@@ -53,6 +53,7 @@ model User {
   accounts          Account[]
   sessions          Session[]
   Page              Page?
+  Like              Likes[]         @relation("likes")
   Notifications     Notifications[] @relation("notificationOwner")
   NotificationsMade Notifications[] @relation("notificationMaker")
   Replied           Comment[]       @relation("replied")
@@ -127,6 +128,15 @@ model Clips {
   updateAt    DateTime  @updatedAt
   createdBy   Page      @relation(fields: [pageOwnerId], references: [id])
   pageOwnerId String
+}
+
+model Likes {
+  id        String   @id @default(uuid())
+  likedBy   User[]   @relation("likes")
+  totalLike Int
+  holderId  String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Series {
