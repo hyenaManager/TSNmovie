@@ -16,13 +16,18 @@ export default function ClipNoti() {
   const [selectedClip, setSelectedClip] = useState<{
     clipTitle: string;
     clipId: number;
+    adminId: string;
   } | null>(null); //{clipTitle:title,clipId:id}
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
   const clipId = searchParams.get("holderId") as string;
   const notiId = searchParams.get("notificationId") as string;
   const notiWatched = searchParams.get("notiWatched") as string;
-  const handleComment = (clip: { clipTitle: string; clipId: number }) => {
+  const handleComment = (clip: {
+    clipTitle: string;
+    clipId: number;
+    adminId: string;
+  }) => {
     setSelectedClip(clip);
     setOnComment(true);
   };
