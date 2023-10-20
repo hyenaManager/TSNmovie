@@ -31,7 +31,7 @@ export default function NotiFications() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
+          `https://yokeplay.vercel.app/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
         );
         const data = response.data;
         return data;
@@ -48,7 +48,7 @@ export default function NotiFications() {
   };
   const mutation = useMutation(async () => {
     const response = await axios.delete(
-      `http://localhost:3000/api/notifications/${selectedNotiId}`
+      `https://yokeplay.vercel.app/api/notifications/${selectedNotiId}`
     );
     if (response.status === 200) {
       queryClient.invalidateQueries(["notifications"]);
