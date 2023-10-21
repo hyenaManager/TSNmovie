@@ -15,8 +15,8 @@ export function getTimeAgo(then: Date): string {
       // If it's been more than 1 minute, display minutes
       return `${Math.floor(minutesAgo)} minutes ago`;
     } else {
-      // If it's less than a minute, display seconds
-      return `${Math.floor(secondsAgo)} seconds ago`;
+      // If it's less than a minute, display just now
+      return `just now`;
     }
   }
 

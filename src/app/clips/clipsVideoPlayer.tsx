@@ -1,5 +1,10 @@
 "use client";
-import { faComment, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
+import {
+  faComment,
+  faHeart,
+  faPlay,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -15,6 +20,8 @@ import toast from "react-hot-toast";
 
 import MoreOption from "../components/clips/moreOption";
 import SkeletonClip from "../skeletons/skeletonClip";
+import { catchingError } from "../utility/catchingError";
+import { error } from "console";
 type videoProps = {
   id: string;
   title: string | null;
@@ -36,19 +43,21 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
   const queryClient = useQueryClient();
   const [readMore, setReadMore] = useState(false);
   const [ref, inView] = useInView({ threshold: 0.3 });
-  const { data, status } = useQuery({
+  const { data, status, error } = useQuery({
     queryKey: ["clip", id],
     queryFn: async () => {
-      const response = await axios.get(
-        `https://yokeplay.vercel.app/api/clips/oneClip?clipId=${id}`
-      );
-      if (response.status === 200) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/clips/oneClip?clipId=${id}`
+        );
         return response.data;
-      } else {
-        return toast.error(response.statusText);
+      } catch (error: any) {
+        const errorMessage = catchingError(error.response.status);
+        toast.error(errorMessage as string);
       }
     },
   });
+  console.log("this is error:", error);
 
   const isLiked =
     data?.likes?.find((user: any) => user.id === session?.user.id) !==
@@ -72,7 +81,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
   //creating new notification
   const handleCreatNotification = async () => {
     const response = await axios.post(
-      `https://yokeplay.vercel.app/api/notifications`,
+      `http://localhost:3000/api/notifications`,
       {
         message: `${session?.user.name} like your clip`,
         type: "like",
@@ -94,14 +103,11 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
     const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
     console.log(`type for ${data?.title} is : `, type);
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
+      `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
     );
     if (response.status === 200) {
       toast.success(response.data);
       type === "addLike" && handleCreatNotification();
-    }
-    if (response.status === 500) {
-      toast.error(`${response.statusText}`);
     }
   };
   const mutation = useMutation({
@@ -126,15 +132,17 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
 
       return previousClip;
     },
-    onError: (_, context: any) => {
+    onError: (_error: any, context: any) => {
       queryClient.setQueryData(["clip", id], () => context.previousClip);
+      // console.log(_error, "is error");
+      const errorMessage = catchingError(_error.response.status as number);
+      toast.error(errorMessage as string);
     },
     onSettled: () => {
       queryClient.invalidateQueries(["clip", id]);
     },
   });
-
-  if (status === "loading") return <SkeletonClip />;
+  if (error) if (status === "loading") return <SkeletonClip />;
 
   return (
     <article
@@ -150,6 +158,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
         onClick={handlePlayPause}
         key={data?.video}
       />
+
       {/* cover video with purble bars, disabled only when the use play the video */}
       {!isPlaying && (
         <div className=" absolute top-0 left-0 xsm:w-[100vw] sm:w-full h-full z-10 xsm:rounded-none sm:rounded-xl flex flex-col justify-between items-center ">
@@ -204,11 +213,19 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
               )}
             </pre>
           </section>
-          <FontAwesomeIcon
-            icon={faPlay}
-            onClick={handlePlayPause}
-            className=" text-4xl text-fuchsia-600 cursor-pointer"
-          />
+          {!error ? (
+            <FontAwesomeIcon
+              icon={faPlay}
+              onClick={handlePlayPause}
+              className=" text-4xl text-fuchsia-600 cursor-pointer"
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              className="text-4xl text-fuchsia-600 "
+              spin
+            />
+          )}
           <div className=" h-1hundred w-full bg-fuchsia-600 rounded-b-lg flex justify-between items-center">
             <div className=" m-4 flex justify-center items-center">
               <FontAwesomeIcon

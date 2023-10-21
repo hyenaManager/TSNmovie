@@ -60,10 +60,28 @@ export async function getNotificationByCursor(cursor:number,userId:string) {
 }
 
 export async function createNotification(data:{type:string,message:string,holder:string,userId:string,userEmail:string,holderId:number}){
-   
+   const notiExistCount = await prisma.notifications.findUnique({
+    where:{
+        id:data.holderId+data.userEmail
+    }
+   })
     try {
+        //preventing duplicate notification for each noti
+        if(notiExistCount){
+            const currentTime = new Date();
+            await prisma.notifications.update({
+                where:{
+                    id:data.holderId+data.userEmail 
+                },
+                data:{
+                    createdAt:currentTime
+                }
+            })
+            return "success"
+        }
         await prisma.notifications.create({
             data:{
+                id:data.holderId+data.userEmail,
                 type:data.type,
                 message:data.message,
                 holder:data.holder,
