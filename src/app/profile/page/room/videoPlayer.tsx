@@ -47,7 +47,7 @@ export default function DefaultVideoPlayer({
   // };
   const handleDeleteEpisode = async () => {
     const response = await axios.delete(
-      `http://localhost:3000/api/episodes/${id}`
+      `https://yokeplay.vercel.app/api/episodes/${id}`
     );
     if (response.status === 200) {
       toast.success("delete successfully");
