@@ -114,7 +114,7 @@ function RegisterForm() {
         required
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
-        className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="text"
       />
       <label className=" p-1 text-fuchsia-600  text-lg">last name </label>
@@ -122,7 +122,7 @@ function RegisterForm() {
         required
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
-        className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="text"
       />
 
@@ -131,7 +131,7 @@ function RegisterForm() {
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="email"
       />
       <label className=" p-2 text-fuchsia-600 text-lg ">Password </label>
@@ -139,7 +139,7 @@ function RegisterForm() {
         required
         onChange={(e) => setPassword(e.target.value)}
         value={password}
-        className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="password"
       />
       <label className=" p-2 text-fuchsia-600 text-lg ">confirm password</label>
@@ -147,7 +147,7 @@ function RegisterForm() {
         required
         onChange={(e) => setConfirmPassword(e.target.value)}
         value={confirmPassword}
-        className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+        className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
         type="password"
       />
 
