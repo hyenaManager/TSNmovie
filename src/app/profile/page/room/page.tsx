@@ -128,7 +128,7 @@ export default function Pages() {
               className=" w-[20px] h-[20px] bg-black border-2 border-fuchsia-400 p-2 rounded-full text-fuchsia-400 cursor-pointer"
             />
           </div>
-          <ul className="pageWarper  xsm:w-[94vw] sm:w-[24vw] rounded-b-md  flex xsm:flex-row sm:flex-col w-full items-center overflow-auto mt-12 bg-white sm:h-[80vh] ">
+          <ul className="pageWarper  xsm:w-[94vw] sm:w-[25vw] rounded-b-md  flex xsm:flex-row sm:flex-col w-full items-center overflow-auto mt-12 bg-white sm:h-[80vh] ">
             {episodes?.length !== 0 ? (
               episodes?.map(
                 (Episode: {
