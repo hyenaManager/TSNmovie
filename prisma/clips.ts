@@ -40,7 +40,7 @@ export async function getClipsByCursor(cursor:number) {
             //     id:cursor
             // },
             orderBy:{
-                id:"asc"
+                id:"desc"
             }
         });
       
