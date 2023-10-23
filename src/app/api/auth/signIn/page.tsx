@@ -40,12 +40,9 @@ function LoginForm() {
     await signIn("credentials", {
       email: email,
       password: password,
-      redirect: true,
-      callbackUrl: "/clips",
     }).then((res) => {
-      if (res?.error) {
+      if (res === undefined) {
         setErrorLogin(true);
-        console.log(res.error, "is current error");
         setIsSubmiting(false);
       } else {
         setIsSubmiting(false);
