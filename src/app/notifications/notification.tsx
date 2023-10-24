@@ -1,30 +1,19 @@
 "use client";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
 import React, { useContext, useEffect, useState, useTransition } from "react";
 import { userProvider } from "../context/userContext";
 import Link from "next/link";
 import NotiSkeletonLi from "../skeletons/notiSkeletons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
 import Image from "next/image";
 import { getTimeAgo } from "../utility/timeAgo";
-import { useNotifications } from "../store";
 import { ClipLoading } from "../components/loading";
 import { useInView } from "react-hook-inview";
+import { DeleteAllUserNoti, DeleteOneNotiById } from "./deleteNoti";
 
 export default function NotiFications() {
   const { user }: any = useContext(userProvider);
-  const [selectedNotiId, setSelectedNotiId] = useState<string | null>(null);
-  const [pending, startTransition] = useTransition();
-  const queryClient = useQueryClient();
   const [ref, inView] = useInView();
   const { data, status, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["notifications"],
@@ -42,22 +31,7 @@ export default function NotiFications() {
     keepPreviousData: true,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
-  console.log("noti ..", data);
 
-  const handleDeleteNoti = (notiId: string) => {
-    setSelectedNotiId(notiId); //making sure the noti data is setted first for mutation
-    startTransition(() => mutation.mutate());
-  };
-  const mutation = useMutation(async () => {
-    const response = await axios.delete(
-      `https://yokeplay.vercel.app/api/notifications/${selectedNotiId}`
-    );
-    if (response.status === 200) {
-      queryClient.invalidateQueries(["notifications"]);
-    } else {
-      toast.error(response.statusText);
-    }
-  });
   //when user scroll to the last notification and if there notification left fetch them
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -67,7 +41,10 @@ export default function NotiFications() {
   return (
     <section className=" w-[98%] h-full bg-white p-3 mt-4 rounded-md ">
       {/* <SpinLoading /> */}
-      <h3 className=" text-xl font-bold text-fuchsia-800">Notifications</h3>
+      <div className=" flex justify-between xsm:text-sm sm:text-xl font-bold text-fuchsia-800">
+        <h3>Notifications</h3>
+        <DeleteAllUserNoti />
+      </div>
       <hr className=" border-b-2 border-b-fuchsia-500" />
       <ul className=" w-full p-2 flex justify-center flex-col">
         {status === "loading" &&
@@ -106,11 +83,7 @@ export default function NotiFications() {
                   >
                     check
                   </Link>
-                  <FontAwesomeIcon
-                    onClick={() => handleDeleteNoti(noti.id)}
-                    icon={faTrash}
-                    className=" w-[14px] h-[14px] text-red-500 cursor-pointer p-2 rounded-md"
-                  />
+                  <DeleteOneNotiById notiId={noti?.id as string} />
                 </div>
                 {/* show red dot if the notification is not watched */}
                 {!noti.watched && (

@@ -125,3 +125,17 @@ export async function deleteNotiById(notificationId:string){
         return error
     }
 }
+
+export async function deleteNotiByUserId(userId:string){
+    console.log("reach here all noti");
+    try {
+        await prisma.notifications.deleteMany({
+            where:{
+                userId:userId
+            },
+        })
+        return "success"
+    } catch (error) {
+        return error
+    }
+}
