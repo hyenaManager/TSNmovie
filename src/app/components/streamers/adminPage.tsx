@@ -28,7 +28,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/pages/${pageId}`
+          `http://localhost:3000/api/pages/${pageId}`
         );
         const data = response.data;
         return data;
@@ -40,13 +40,10 @@ export default function AdminPage({ pageId }: { pageId: string }) {
   const { user, userPage }: any = useContext(userProvider); //getting current user from contextprovider
   //add view
   const addNewViewList = async () => {
-    const response = await axios.put(
-      `https://yokeplay.vercel.app/api/pages/viewed`,
-      {
-        pageId: data?.id,
-        viewCount: [...data?.viewedBy, session?.user.email],
-      }
-    );
+    const response = await axios.put(`http://localhost:3000/api/pages/viewed`, {
+      pageId: data?.id,
+      viewCount: [...data?.viewedBy, session?.user.email],
+    });
     if (response.status === 200) {
       queryClient.invalidateQueries(["page"]);
     }
@@ -60,7 +57,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
   };
   //updating follow or unfollow mode
   const handleFollow = async () => {
-    const response = await axios.put(`https://yokeplay.vercel.app/api/pages`, {
+    const response = await axios.put(`http://localhost:3000/api/pages`, {
       userId: session?.user.id,
       pageId: pageId,
       unfollow: checkFollowMode(),
@@ -82,6 +79,8 @@ export default function AdminPage({ pageId }: { pageId: string }) {
       addNewViewList();
     }
   }, [session?.user.email, data]);
+  console.log(data?.contact, "is contact");
+
   if (status === "loading") return <AdminSkeleton />;
 
   return (
@@ -171,30 +170,42 @@ export default function AdminPage({ pageId }: { pageId: string }) {
             Contact
           </span>
           <div className=" flex flex-wrap ">
-            <a
-              href={`${data?.contact && data?.contact.facebook}`}
-              className=" p-2 rounded-md bg-blue-600 hover:bg-blue-400 text-white m-1"
-            >
-              Facebook
-            </a>
-            <a
-              href={`${data?.contact && data?.contact.twitter}`}
-              className=" p-2 rounded-md bg-sky-400 hover:bg-sky-500 text-white m-1"
-            >
-              Twitter
-            </a>
-            <a
-              href={`${data?.contact && data?.contact.telegram}`}
-              className=" p-2 rounded-md bg-black hover:bg-slate-500 text-white m-1"
-            >
-              telegram
-            </a>
-            <a
-              href={`${data?.contact && data?.contact.whatsapp}`}
-              className=" p-2 rounded-md bg-blue-700 hover:bg-blue-900 text-white m-1"
-            >
-              whatsapp
-            </a>
+            {data?.contact.facebook && (
+              <a
+                target="blank"
+                href={`https://${data?.contact.facebook}`}
+                className=" p-2 rounded-md bg-blue-600 hover:bg-blue-400 text-white m-1"
+              >
+                Facebook
+              </a>
+            )}
+            {data?.contact.twitter && (
+              <a
+                target="blank"
+                href={`https://${data?.contact.twitter}`}
+                className=" p-2 rounded-md bg-sky-400 hover:bg-sky-500 text-white m-1"
+              >
+                Twitter
+              </a>
+            )}
+            {data?.contact.telegram && (
+              <a
+                target="blank"
+                href={`https://${data?.contact.telegram}`}
+                className=" p-2 rounded-md bg-black hover:bg-slate-500 text-white m-1"
+              >
+                telegram
+              </a>
+            )}
+            {data?.contact.whatsapp && (
+              <a
+                target="blank"
+                href={`https://${data?.contact.whatsapp}`}
+                className=" p-2 rounded-md bg-blue-700 hover:bg-blue-900 text-white m-1"
+              >
+                whatsapp
+              </a>
+            )}
           </div>
         </section>
       </article>

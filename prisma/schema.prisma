@@ -38,6 +38,11 @@ model Session {
   user         User     @relation(fields: [userId], references: [id])
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id                String          @id @default(uuid())
   firstName         String
@@ -48,6 +53,7 @@ model User {
   image             String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2FdefaultProfile.jpeg?alt=media&token=df272966-58f1-4a2f-bfa4-224d2a08b675")
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
+  role              String          @default("BASIC")
   following         Page[]          @relation("follow") //follow multiple pages m-to-m
   likes             Clips[]         @relation("like") //multiple likes for clips m-to-m
   accounts          Account[]

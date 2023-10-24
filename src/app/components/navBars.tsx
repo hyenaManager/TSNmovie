@@ -12,6 +12,7 @@ export default function NavBar() {
   //checking if the user has page ,if exist push to profile path
   console.log("session image is :", session?.user.image);
   const { user, userPage }: any = useContext(userProvider);
+  console.log("user is:", user);
 
   return (
     <>

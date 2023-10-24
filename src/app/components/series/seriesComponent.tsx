@@ -78,7 +78,9 @@ export default function SeriesImage({
         }}
         className=" flex z-10 flex-col justify-center items-center w-full bg-black border-br-2xl "
       >
-        <h3 className=" text-center text-lg w-full border-br-2xl">{name} </h3>
+        <h3 className=" text-center xsm:text-sm sm:text-lg w-full border-br-2xl">
+          {name}{" "}
+        </h3>
       </button>
     </article>
   );
@@ -97,7 +99,7 @@ export function SeriesOverview({
   //add view
   const addViewSeries = async () => {
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/series/viewed`,
+      `http://localhost:3000/api/series/viewed`,
       {
         seriesId: id,
         viewList: [...viewedBy, user.email],

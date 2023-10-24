@@ -1,31 +1,9 @@
 
-import NextAuth, { Account, DefaultSession, Profile, User } from "next-auth"
+import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import {PrismaAdapter} from "@auth/prisma-adapter"
-import GoogleProvider from "next-auth/providers/google";
-import { AdapterUser } from "next-auth/adapters";
 
 import prisma from "../../../../../prisma/client";
-
-declare module 'next-auth' {
-  interface Session {
-    user: {
-      id:number
-    } & DefaultSession["user"]
-  }
-}
-
-type userProp = {
-    id: string;
-    firstName: string | null;
-    lastName: string | null;
-    email: string | null;
-    password: string;
-    emailVerified: Date | null;
-    image: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-}
 
 const handler = NextAuth(
   
@@ -92,25 +70,32 @@ const handler = NextAuth(
     signOut: "signIn"
   },
   callbacks: {
-    session: async ({ session, token }) => {
-      // console.log("this is toke",token)
-      if (session?.user) {
-        const getUser = await prisma.user.findUnique({
-          where:{
-            id:token.uid as any
-          }
-        })
-        session.user.id = token.uid as number;
-        session.user.name = getUser?.lastName
-        // console.log(session.user.id)
+    session: async ({ session, token }:{session:any,token:any}) => {
+      if(token){
+        session.user.id = token.id
+        session.user.name = token.name
+        session.user.email = token.email
+        session.user.image = token.image
       }
-      return session;
+      return session
     },
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.uid = user.id ;
+    jwt: async ({ user, token }:{user:any,token:any}) => {
+      const dbUser = await prisma.user.findFirst({
+        where:{
+          email:token.email
+        },
+      })
+      //if the user doesnt exist
+      if (!dbUser){
+        token.id = user.id
+        return token
       }
-      return token;
+      return {
+        id:dbUser.id,
+        name:`${dbUser.firstName} ${dbUser.lastName}`,
+        email:dbUser.email,
+        image:dbUser.image,
+      }
     },
   },
   session: {
