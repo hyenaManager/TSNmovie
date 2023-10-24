@@ -12,7 +12,7 @@ export const DeleteAllUserNoti = () => {
   const { user }: any = useContext(userProvider);
   const deleteAllNoti = useMutation(async () => {
     const response = await axios.delete(
-      `http://localhost:3000/api/notifications?userId=${user.id}`
+      `http://yokeplay.vercel.app/api/notifications?userId=${user.id}`
     );
     if (response.status === 200) {
       queryClient.invalidateQueries(["notifications"]);
