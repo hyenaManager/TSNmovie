@@ -1,7 +1,7 @@
 {
   "lighthouseVersion": "9.6.8",
-  "requestedUrl": "https://yokeplay.vercel.app/",
-  "finalUrl": "https://yokeplay.vercel.app/",
+  "requestedUrl": "http://localhost:3000/",
+  "finalUrl": "http://localhost:3000/",
   "fetchTime": "2023-10-25T02:05:59.107Z",
   "gatherMode": "navigation",
   "runWarnings": [],
@@ -216,7 +216,7 @@
             "description": "Failed to load resource: the server responded with a status of 404 ()",
             "sourceLocation": {
               "type": "source-location",
-              "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fclips",
+              "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fclips",
               "urlProvider": "network",
               "line": 0,
               "column": 0
@@ -227,7 +227,7 @@
             "description": "Failed to load resource: the server responded with a status of 404 ()",
             "sourceLocation": {
               "type": "source-location",
-              "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fnotifications",
+              "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fnotifications",
               "urlProvider": "network",
               "line": 0,
               "column": 0
@@ -238,7 +238,7 @@
             "description": "Failed to load resource: the server responded with a status of 404 ()",
             "sourceLocation": {
               "type": "source-location",
-              "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fprofile",
+              "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fprofile",
               "urlProvider": "network",
               "line": 0,
               "column": 0
@@ -249,7 +249,7 @@
             "description": "Failed to load resource: the server responded with a status of 404 ()",
             "sourceLocation": {
               "type": "source-location",
-              "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fstreamers",
+              "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fstreamers",
               "urlProvider": "network",
               "line": 0,
               "column": 0
@@ -305,7 +305,7 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/",
+            "url": "http://localhost:3000/",
             "responseTime": 184.7550000000001
           }
         ],
@@ -346,7 +346,7 @@
         "chains": {
           "6B80FCFF2491A45CCBAAFE9BADB2FD03": {
             "request": {
-              "url": "https://yokeplay.vercel.app/",
+              "url": "http://localhost:3000/",
               "startTime": 650690.264915,
               "endTime": 650692.936031,
               "responseReceivedTime": 650692.931658,
@@ -355,7 +355,7 @@
             "children": {
               "13580.3": {
                 "request": {
-                  "url": "https://yokeplay.vercel.app/_next/static/css/197e87abcee2a731.css",
+                  "url": "http://localhost:3000/_next/static/css/197e87abcee2a731.css",
                   "startTime": 650692.950611,
                   "endTime": 650693.210111,
                   "responseReceivedTime": 650693.2037579999,
@@ -420,7 +420,7 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fmycon.png&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fmycon.png&w=256&q=75",
             "node": {
               "type": "node",
               "lhId": "page-0-IMG",
@@ -571,13 +571,13 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/472-005fe9c4dbc3597f.js",
+            "url": "http://localhost:3000/_next/static/chunks/472-005fe9c4dbc3597f.js",
             "total": 329.17599999999965,
             "scripting": 314.0019999999996,
             "scriptParseCompile": 3.837
           },
           {
-            "url": "https://yokeplay.vercel.app/",
+            "url": "http://localhost:3000/",
             "total": 282.7529999999999,
             "scripting": 11.246999999999993,
             "scriptParseCompile": 3.2119999999999997
@@ -747,7 +747,7 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/",
+            "url": "http://localhost:3000/",
             "protocol": "h2",
             "rendererStartTime": 0,
             "startTime": 8.631999953649938,
@@ -762,7 +762,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/media/2d141e1a38819612-s.p.woff2",
+            "url": "http://localhost:3000/_next/static/media/2d141e1a38819612-s.p.woff2",
             "protocol": "h2",
             "rendererStartTime": 2693.1120000081137,
             "startTime": 2693.8370000571012,
@@ -778,7 +778,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/css/197e87abcee2a731.css",
+            "url": "http://localhost:3000/_next/static/css/197e87abcee2a731.css",
             "protocol": "h2",
             "rendererStartTime": 2693.675999995321,
             "startTime": 2694.327999954112,
@@ -793,7 +793,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/webpack-bd50194ebab13a65.js",
+            "url": "http://localhost:3000/_next/static/chunks/webpack-bd50194ebab13a65.js",
             "protocol": "h2",
             "rendererStartTime": 2694.021000061184,
             "startTime": 2708.0550000537187,
@@ -809,7 +809,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/fd9d1056-bc60e68b4825a668.js",
+            "url": "http://localhost:3000/_next/static/chunks/fd9d1056-bc60e68b4825a668.js",
             "protocol": "h2",
             "rendererStartTime": 2694.389999960549,
             "startTime": 2709.3480000039563,
@@ -824,7 +824,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/472-005fe9c4dbc3597f.js",
+            "url": "http://localhost:3000/_next/static/chunks/472-005fe9c4dbc3597f.js",
             "protocol": "h2",
             "rendererStartTime": 2694.709000061266,
             "startTime": 2710.1630000397563,
@@ -839,7 +839,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/main-app-892c3dff08e9cd4c.js",
+            "url": "http://localhost:3000/_next/static/chunks/main-app-892c3dff08e9cd4c.js",
             "protocol": "h2",
             "rendererStartTime": 2695.056000025943,
             "startTime": 2710.6020000064746,
@@ -854,7 +854,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/870fdd6f-65e809f40aaad3dd.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/870fdd6f-65e809f40aaad3dd.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2695.3389999689534,
             "startTime": 2711.22599998489,
@@ -869,7 +869,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/326-801684c046461c4b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/326-801684c046461c4b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2695.603000000119,
             "startTime": 2711.721000028774,
@@ -884,7 +884,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/413-effd172502a83a99.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/413-effd172502a83a99.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2695.9170000627637,
             "startTime": 2712.158999987878,
@@ -899,7 +899,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/82-63e9119e82ee5187.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/82-63e9119e82ee5187.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2696.204000036232,
             "startTime": 2712.6570000546053,
@@ -914,7 +914,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2696.490000002086,
             "startTime": 2713.5049999924377,
@@ -929,7 +929,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2696.8120000092313,
             "startTime": 2714.122000033967,
@@ -944,7 +944,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/285-da57ab4f9621beaa.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/285-da57ab4f9621beaa.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2697.1129999728873,
             "startTime": 2714.574999990873,
@@ -959,7 +959,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/465-8c8f6c8523577551.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/465-8c8f6c8523577551.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2697.370999958366,
             "startTime": 2715.0909999618307,
@@ -974,7 +974,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/app/layout-885ccd2db0b1bbbb.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/app/layout-885ccd2db0b1bbbb.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2697.5689999526367,
             "startTime": 2719.8100000387058,
@@ -989,7 +989,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/app/not-found-dd2a794a2f259638.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/app/not-found-dd2a794a2f259638.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2697.699000011198,
             "startTime": 2720.2860000543296,
@@ -1004,7 +1004,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/app/page-fb83df37747ac44b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/app/page-fb83df37747ac44b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "protocol": "h2",
             "rendererStartTime": 2697.8710000403225,
             "startTime": 2720.856999978423,
@@ -1034,7 +1034,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fmycon.png&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fmycon.png&w=256&q=75",
             "protocol": "h2",
             "rendererStartTime": 3045.7219999516383,
             "startTime": 3055.960000026971,
@@ -1049,7 +1049,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fsvgs%2Fclips.svg&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fsvgs%2Fclips.svg&w=256&q=75",
             "protocol": "h2",
             "rendererStartTime": 3046.500000054948,
             "startTime": 3056.3659999752417,
@@ -1064,7 +1064,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fsvgs%2Fnoti.svg&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fsvgs%2Fnoti.svg&w=256&q=75",
             "protocol": "h2",
             "rendererStartTime": 3047.050000051968,
             "startTime": 3056.6660000476986,
@@ -1079,7 +1079,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fsvgs%2Fstreamers.svg&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fsvgs%2Fstreamers.svg&w=256&q=75",
             "protocol": "h2",
             "rendererStartTime": 3047.4410000024363,
             "startTime": 3056.961999973282,
@@ -1094,7 +1094,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2FdefaultProfile.jpeg&w=828&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2FdefaultProfile.jpeg&w=828&q=75",
             "protocol": "h2",
             "rendererStartTime": 3047.9129999876022,
             "startTime": 3057.236999971792,
@@ -1109,7 +1109,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
             "protocol": "h2",
             "rendererStartTime": 3049.0630000131205,
             "startTime": 3057.522000046447,
@@ -1124,7 +1124,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/api/users/undefined",
+            "url": "http://localhost:3000/api/users/undefined",
             "protocol": "h2",
             "rendererStartTime": 3447.9150000261143,
             "startTime": 3463.80400005728,
@@ -1139,7 +1139,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/api/auth/session",
+            "url": "http://localhost:3000/api/auth/session",
             "protocol": "h2",
             "rendererStartTime": 3454.9450000049546,
             "startTime": 3573.7029999727383,
@@ -1184,7 +1184,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/?_rsc=acgkz",
+            "url": "http://localhost:3000/?_rsc=acgkz",
             "protocol": "h2",
             "rendererStartTime": 3504.192000022158,
             "startTime": 3579.894999973476,
@@ -1199,7 +1199,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/clips?_rsc=acgkz",
+            "url": "http://localhost:3000/clips?_rsc=acgkz",
             "protocol": "h2",
             "rendererStartTime": 3506.2509999843314,
             "startTime": 3580.316000035964,
@@ -1213,7 +1213,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/notifications?_rsc=acgkz",
+            "url": "http://localhost:3000/notifications?_rsc=acgkz",
             "protocol": "h2",
             "rendererStartTime": 3508.468999993056,
             "startTime": 3581.1049999902025,
@@ -1227,7 +1227,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/streamers?_rsc=acgkz",
+            "url": "http://localhost:3000/streamers?_rsc=acgkz",
             "protocol": "h2",
             "rendererStartTime": 3510.6099999975413,
             "startTime": 3654.5700000133365,
@@ -1241,7 +1241,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/profile?_rsc=acgkz",
+            "url": "http://localhost:3000/profile?_rsc=acgkz",
             "protocol": "h2",
             "rendererStartTime": 3514.51700006146,
             "startTime": 3655.2920000394806,
@@ -1255,7 +1255,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fstreamers",
+            "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fstreamers",
             "protocol": "h2",
             "rendererStartTime": 3876.858999952674,
             "startTime": 3881.563000031747,
@@ -1270,7 +1270,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fnotifications",
+            "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fnotifications",
             "protocol": "h2",
             "rendererStartTime": 3877.835000050254,
             "startTime": 3885.3120000567287,
@@ -1285,7 +1285,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fclips",
+            "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fclips",
             "protocol": "h2",
             "rendererStartTime": 3878.9810000453144,
             "startTime": 3885.4859999846667,
@@ -1300,7 +1300,7 @@
             "experimentalFromMainFrame": true
           },
           {
-            "url": "https://yokeplay.vercel.app/api/auth/signin?callbackUrl=%2Fprofile",
+            "url": "http://localhost:3000/api/auth/signin?callbackUrl=%2Fprofile",
             "protocol": "h2",
             "rendererStartTime": 3880.098000052385,
             "startTime": 3885.6170000508428,
@@ -1375,7 +1375,7 @@
         ],
         "items": [
           {
-            "origin": "https://yokeplay.vercel.app",
+            "origin": "http://localhost:3000",
             "rtt": 46.50799999999981
           },
           {
@@ -1411,7 +1411,7 @@
         ],
         "items": [
           {
-            "origin": "https://yokeplay.vercel.app",
+            "origin": "http://localhost:3000",
             "serverResponseTime": 170.68700000000018
           },
           {
@@ -1759,7 +1759,7 @@
                 "width": 200,
                 "height": 283
               },
-              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
+              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
               "nodeLabel": "imageSource"
             }
           }
@@ -1796,7 +1796,7 @@
                 "width": 200,
                 "height": 283
               },
-              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
+              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
               "nodeLabel": "imageSource"
             }
           }
@@ -1878,7 +1878,7 @@
                 "width": 200,
                 "height": 283
               },
-              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
+              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
               "nodeLabel": "imageSource"
             },
             "score": 0.015594245713920254
@@ -1954,7 +1954,7 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/",
+            "url": "http://localhost:3000/",
             "duration": 113.138,
             "startTime": 3089.409
           },
@@ -1964,17 +1964,17 @@
             "startTime": 5082.709
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/472-005fe9c4dbc3597f.js",
+            "url": "http://localhost:3000/_next/static/chunks/472-005fe9c4dbc3597f.js",
             "duration": 95.385,
             "startTime": 3211.439
           },
           {
-            "url": "https://yokeplay.vercel.app/",
+            "url": "http://localhost:3000/",
             "duration": 94.832,
             "startTime": 2959.19
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/472-005fe9c4dbc3597f.js",
+            "url": "http://localhost:3000/_next/static/chunks/472-005fe9c4dbc3597f.js",
             "duration": 50.248,
             "startTime": 3421.227
           }
@@ -2067,10 +2067,10 @@
                 "width": 200,
                 "height": 283
               },
-              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
+              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
               "nodeLabel": "imageSource"
             },
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
             "wastedMs": 0
           }
         ],
@@ -2079,11 +2079,11 @@
           "type": "debugdata",
           "initiatorPath": [
             {
-              "url": "https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
+              "url": "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
               "initiatorType": "parser"
             },
             {
-              "url": "https://yokeplay.vercel.app/",
+              "url": "http://localhost:3000/",
               "initiatorType": "other"
             }
           ],
@@ -2632,85 +2632,85 @@
         "type": "treemap-data",
         "nodes": [
           {
-            "name": "https://yokeplay.vercel.app/",
+            "name": "http://localhost:3000/",
             "resourceBytes": 12018
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/fd9d1056-bc60e68b4825a668.js",
+            "name": "http://localhost:3000/_next/static/chunks/fd9d1056-bc60e68b4825a668.js",
             "resourceBytes": 163906,
             "unusedBytes": 51295
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/472-005fe9c4dbc3597f.js",
+            "name": "http://localhost:3000/_next/static/chunks/472-005fe9c4dbc3597f.js",
             "resourceBytes": 119332,
             "unusedBytes": 41509
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/main-app-892c3dff08e9cd4c.js",
+            "name": "http://localhost:3000/_next/static/chunks/main-app-892c3dff08e9cd4c.js",
             "resourceBytes": 508,
             "unusedBytes": 0
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/870fdd6f-65e809f40aaad3dd.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/870fdd6f-65e809f40aaad3dd.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 13262,
             "unusedBytes": 540
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/326-801684c046461c4b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/326-801684c046461c4b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 21734,
             "unusedBytes": 12733
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/413-effd172502a83a99.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/413-effd172502a83a99.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 13661,
             "unusedBytes": 3117
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/82-63e9119e82ee5187.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/82-63e9119e82ee5187.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 67470,
             "unusedBytes": 36028
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 73447,
             "unusedBytes": 61478
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 51101,
             "unusedBytes": 24031
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/285-da57ab4f9621beaa.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/285-da57ab4f9621beaa.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 10795,
             "unusedBytes": 1426
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/465-8c8f6c8523577551.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/465-8c8f6c8523577551.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 23317,
             "unusedBytes": 14157
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/app/layout-885ccd2db0b1bbbb.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/app/layout-885ccd2db0b1bbbb.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 5518,
             "unusedBytes": 526
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/app/not-found-dd2a794a2f259638.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/app/not-found-dd2a794a2f259638.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 257,
             "unusedBytes": 0
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/app/page-fb83df37747ac44b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "name": "http://localhost:3000/_next/static/chunks/app/page-fb83df37747ac44b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "resourceBytes": 3793,
             "unusedBytes": 1291
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js",
+            "name": "http://localhost:3000/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js",
             "resourceBytes": 0
           },
           {
-            "name": "https://yokeplay.vercel.app/_next/static/chunks/webpack-bd50194ebab13a65.js",
+            "name": "http://localhost:3000/_next/static/chunks/webpack-bd50194ebab13a65.js",
             "resourceBytes": 4829,
             "unusedBytes": 1801
           }
@@ -3280,43 +3280,43 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
             "totalBytes": 87817
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/fd9d1056-bc60e68b4825a668.js",
+            "url": "http://localhost:3000/_next/static/chunks/fd9d1056-bc60e68b4825a668.js",
             "totalBytes": 53137
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/472-005fe9c4dbc3597f.js",
+            "url": "http://localhost:3000/_next/static/chunks/472-005fe9c4dbc3597f.js",
             "totalBytes": 32358
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/82-63e9119e82ee5187.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/82-63e9119e82ee5187.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "totalBytes": 23483
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/media/2d141e1a38819612-s.p.woff2",
+            "url": "http://localhost:3000/_next/static/media/2d141e1a38819612-s.p.woff2",
             "totalBytes": 22535
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "totalBytes": 20630
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "totalBytes": 16482
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fmycon.png&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fmycon.png&w=256&q=75",
             "totalBytes": 8084
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2FdefaultProfile.jpeg&w=828&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2FdefaultProfile.jpeg&w=828&q=75",
             "totalBytes": 8012
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/326-801684c046461c4b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/326-801684c046461c4b.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "totalBytes": 7582
           }
         ]
@@ -3525,10 +3525,10 @@
                 "width": 200,
                 "height": 283
               },
-              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
+              "snippet": "<img alt=\"imageSource\" loading=\"lazy\" width=\"200\" height=\"200\" decoding=\"async\" data-nimg=\"1\" class=\" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover\" style=\"color: transparent;\" sizes=\"(max-width:480px):10vw,(max-width:1020px):400px\" srcset=\"/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&amp;w=16&amp;q=75 …\" src=\"http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flu…\">",
               "nodeLabel": "imageSource"
             },
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fluffy.aae9a220.jpg&w=750&q=75",
             "totalBytes": 87452,
             "wastedBytes": 67648,
             "wastedPercent": 77.35452811454849
@@ -3550,7 +3550,7 @@
               "snippet": "<img alt=\"haih\" loading=\"lazy\" width=\"400\" height=\"400\" decoding=\"async\" data-nimg=\"1\" class=\" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] …\" style=\"color:transparent\" srcset=\"/_next/image?url=%2FdefaultProfile.jpeg&amp;w=640&amp;q=75 1x, /_next/image?url=%2…\" src=\"/_next/image?url=%2FdefaultProfile.jpeg&amp;w=828&amp;q=75\">",
               "nodeLabel": "haih"
             },
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2FdefaultProfile.jpeg&w=828&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2FdefaultProfile.jpeg&w=828&q=75",
             "totalBytes": 7844,
             "wastedBytes": 7818,
             "wastedPercent": 99.67435609640832
@@ -3572,7 +3572,7 @@
               "snippet": "<img alt=\"icon\" loading=\"lazy\" width=\"100\" height=\"100\" decoding=\"async\" data-nimg=\"1\" class=\"w-[40px] h-[40px] \" style=\"color:transparent\" srcset=\"/_next/image?url=%2Fmycon.png&amp;w=128&amp;q=75 1x, /_next/image?url=%2Fmycon.png…\" src=\"/_next/image?url=%2Fmycon.png&amp;w=256&amp;q=75\">",
               "nodeLabel": "icon"
             },
-            "url": "https://yokeplay.vercel.app/_next/image?url=%2Fmycon.png&w=256&q=75",
+            "url": "http://localhost:3000/_next/image?url=%2Fmycon.png&w=256&q=75",
             "totalBytes": 7842,
             "wastedBytes": 6737,
             "wastedPercent": 85.90860725275358
@@ -3653,7 +3653,7 @@
         ],
         "items": [
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "wastedBytes": 54,
             "subItems": {
               "type": "subitems",
@@ -3662,7 +3662,7 @@
                   "signal": "@babel/plugin-transform-classes",
                   "location": {
                     "type": "source-location",
-                    "url": "https://yokeplay.vercel.app/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+                    "url": "http://localhost:3000/_next/static/chunks/245-20b4e45848098a80.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
                     "urlProvider": "network",
                     "line": 0,
                     "column": 25727
@@ -3673,7 +3673,7 @@
             "totalBytes": 0
           },
           {
-            "url": "https://yokeplay.vercel.app/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+            "url": "http://localhost:3000/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
             "wastedBytes": 47,
             "subItems": {
               "type": "subitems",
@@ -3682,7 +3682,7 @@
                   "signal": "@babel/plugin-transform-classes",
                   "location": {
                     "type": "source-location",
-                    "url": "https://yokeplay.vercel.app/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
+                    "url": "http://localhost:3000/_next/static/chunks/161-898e0ee64f0df676.js?dpl=dpl_A6thtbUdkyq8ygtafknWmsv3rL2A",
                     "urlProvider": "network",
                     "line": 0,
                     "column": 36005

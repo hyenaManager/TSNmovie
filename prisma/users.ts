@@ -73,7 +73,7 @@ export async function changeUserName(firstName:string,lastName:string,email:stri
 
 export async function changeUserRoleToAdmin(userId:string){
     try {
-         await prisma.user.update({
+         const user = await prisma.user.update({
             where:{
                 id:userId
             },
@@ -81,7 +81,7 @@ export async function changeUserRoleToAdmin(userId:string){
                 role:"ADMIN"
             }
         })
-        return "success"
+        return user
     } catch (error) {
         return error
     }

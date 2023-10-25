@@ -48,7 +48,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/clips/oneClip?clipId=${id}`
+          `http://localhost:3000/api/clips/oneClip?clipId=${id}`
         );
         return response.data;
       } catch (error: any) {
@@ -80,7 +80,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
   //creating new notification
   const handleCreatNotification = async () => {
     const response = await axios.post(
-      `https://yokeplay.vercel.app/api/notifications`,
+      `http://localhost:3000/api/notifications`,
       {
         message: `${session?.user.firstName} like your clip`,
         type: "like",
@@ -102,7 +102,7 @@ function ClipVideoPlayer({ id, handleComment }: videoProps) {
     const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
     console.log(`type for ${data?.title} is : `, type);
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
+      `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
     );
     if (response.status === 200) {
       toast.success(response.data);

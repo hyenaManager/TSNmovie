@@ -1,22 +1,27 @@
-"use client";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import { userProvider } from "../context/userContext";
-export default function NavBar() {
-  const { data: session } = useSession();
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOption";
+type sessionType = {
+  user: user;
+};
+
+type user = {
+  name: string;
+  email: string;
+  image: string;
+  id: string;
+  role: string;
+};
+
+export default async function NavBar() {
+  const session: sessionType | null = await getServerSession(authOptions);
+
   //checking if the user has page ,if exist push to profile path
-  console.log("session image is :", session?.user.image);
-  const { user, userPage }: any = useContext(userProvider);
-  console.log("user is:", user);
 
   return (
     <>
-      <nav className="pageWarper text-white z-40 flex b justify-between bg-none items-center mainNav fixed right-0 left-0 backdrop-blur-sm top-0">
+      <nav className="pageWarper text-white bg-black z-40 flex b justify-between bg-none items-center mainNav sticky right-0 left-0 top-0">
         <Link href={"/"} className=" font-mono text-fuchsia-600 ml-3">
           <Image
             src={"/mycon.png"}
@@ -76,16 +81,16 @@ export default function NavBar() {
           href={"/profile"}
           className=" flex justify-center p-1 mainNavLink item sm:flex-row xsm:flex-cols-center"
         >
-          {user ? (
+          {session?.user ? (
             <>
               <span className=" text-fuchsia-400 xsm:hidden sm:block text-lg p-1">
-                {user?.firstName + " " + user?.lastName}
+                {session?.user.name}
               </span>
               <Image
                 width={400}
                 height={400}
                 alt="haih"
-                src={`${user?.image as string}`}
+                src={`${session?.user?.image as string}`}
                 className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
               />
             </>

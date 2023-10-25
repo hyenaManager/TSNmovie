@@ -20,7 +20,7 @@ export default function NotiFications() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
+          `http://localhost:3000/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
         );
         const data = response.data;
         return data;
@@ -39,7 +39,7 @@ export default function NotiFications() {
     }
   }, [inView, hasNextPage]);
   return (
-    <section className=" w-[98%] h-full bg-white p-3 mt-4 rounded-md ">
+    <section className=" w-[98%] min-h-[90vh] bg-white p-3 mt-1 rounded-md ">
       {/* <SpinLoading /> */}
       <div className=" flex justify-between xsm:text-sm sm:text-xl font-bold text-fuchsia-800">
         <h3>Notifications</h3>
@@ -56,7 +56,7 @@ export default function NotiFications() {
                 key={index}
                 className=" w-[98%] text-sm text-fuchsia-700 p-1 m-1 grid grid-cols-3 items-center justify-between relative "
               >
-                <div className="mainNoti w-full flex justify-start items-center cursor-pointer">
+                <div className="mainNoti w-full flex justify-start items-center ">
                   <Image
                     src={noti.notiBy.image}
                     alt="noti"

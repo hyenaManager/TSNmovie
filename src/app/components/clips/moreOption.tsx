@@ -25,7 +25,7 @@ export default function MoreOption({
   const handleDeleteClip = async () => {
     try {
       const response = await axios.delete(
-        `https://yokeplay.vercel.app/api/clips/${clipId}`
+        `http://localhost:3000/api/clips/${clipId}`
       );
       const data = response.data;
       toast.success(data);
