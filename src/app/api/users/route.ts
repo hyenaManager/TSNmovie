@@ -1,4 +1,4 @@
-import { createUser, getAllUsers } from "../../../../prisma/users";
+import { changeUserRoleToAdmin, createUser, getAllUsers } from "../../../../prisma/users";
 
 export async function GET(request:Request) {
     try {
@@ -34,6 +34,20 @@ export async function POST(request:Request) {
         return  new Response(JSON.stringify(statusError),{
             status:500,
             statusText:statusError
+        })
+    }
+}
+
+export async function PUT(request:Request){
+    const body = await request.json()
+    try {
+        const respone = await changeUserRoleToAdmin(body.userId)
+        return new Response(JSON.stringify(respone),{
+            status:200
+        })
+    } catch (error) {
+        return new Response(JSON.stringify(error),{
+            status:500
         })
     }
 }

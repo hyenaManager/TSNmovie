@@ -67,6 +67,22 @@ export async function changeUserName(firstName:string,lastName:string,email:stri
         })
         return respone
     } catch (error) {
-        throw error
+        return error
+    }
+}
+
+export async function changeUserRoleToAdmin(userId:string){
+    try {
+         await prisma.user.update({
+            where:{
+                id:userId
+            },
+            data:{
+                role:"ADMIN"
+            }
+        })
+        return "success"
+    } catch (error) {
+        return error
     }
 }

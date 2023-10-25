@@ -9,29 +9,6 @@ const handler = NextAuth(
   
   {adapter: PrismaAdapter(prisma),
     providers: [
- 
-  // GoogleProvider({
-  //   clientId: process.env.GOOGLE_CLIENT_ID ,
-  //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  //   authorization: {
-  //     params: {
-  //         prompt: "consent",
-  //         access_type: "offline",
-  //         response_type: "code"
-  //     }
-  // },
-  // async profile(profile) {
-
-  //     return {
-  //         id: profile.sub,
-  //         name: profile.name,
-  //         firstname: profile.given_name,
-  //         lastname: profile.family_name,
-  //         email: profile.email,
-  //         image: profile.picture,
-  //     }
-  // },
-  // }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
@@ -95,6 +72,7 @@ const handler = NextAuth(
         name:`${dbUser.firstName} ${dbUser.lastName}`,
         email:dbUser.email,
         image:dbUser.image,
+        role:dbUser.role
       }
     },
   },

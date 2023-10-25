@@ -8,10 +8,6 @@ import Loading from "@/app/components/loading";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
-type AuthenticateProp = {
-  handleIsLogin: () => void;
-};
-
 export default function AuthenticationForm() {
   return (
     <main
@@ -37,26 +33,27 @@ function LoginForm() {
   const router = useRouter();
   let loginStatus: string = "username or password is wrong 🤔";
   async function handleSubmit() {
-    await signIn("credentials", {
+    const response = await signIn("credentials", {
       email: email,
       password: password,
-    }).then((res) => {
-      if (res === undefined) {
-        setErrorLogin(true);
-        setIsSubmiting(false);
-      } else {
-        setIsSubmiting(false);
-        toast("login success ", {
-          style: {
-            fontSize: "20px",
-            color: "green",
-          },
-          icon: "🗝️",
-          duration: 3000,
-        });
-        router.push("/clips");
-      }
+      redirect: false,
     });
+    if (!response?.error) {
+      setErrorLogin(false);
+      toast("login success ", {
+        style: {
+          fontSize: "20px",
+          color: "green",
+        },
+        icon: "🗝️",
+        duration: 3000,
+      });
+      router.push("/clips");
+    } else {
+      toast.error("password or email incorrect");
+      setErrorLogin(true);
+      setIsSubmiting(false);
+    }
   }
 
   return (
