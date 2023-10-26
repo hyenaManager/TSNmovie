@@ -50,9 +50,10 @@ model User {
   email             String?         @unique
   password          String?
   emailVerified     DateTime?
-  image             String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2FdefaultProfile.jpeg?alt=media&token=df272966-58f1-4a2f-bfa4-224d2a08b675")
+  image             String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2F1.svg?alt=media&token=a6d8ef94-0696-401c-b5d1-24a03bd521d3&_gl=1*1x2c3qd*_ga*MTUwMzg0NTkxMS4xNjg0ODU2NzUw*_ga_CW55HF8NVT*MTY5ODMzMzIxMC40OS4xLjE2OTgzMzMyMjcuNDMuMC4w")
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
+  suspended         Suspended?      @relation("suspended")
   role              UserRole        @default(USER)
   following         Page[]          @relation("follow") //follow multiple pages m-to-m
   likes             Clips[]         @relation("like") //multiple likes for clips m-to-m
@@ -64,6 +65,15 @@ model User {
   NotificationsMade Notifications[] @relation("notificationMaker")
   Replied           Comment[]       @relation("replied")
   Comment           Comment[]
+}
+
+model Suspended {
+  id                 String   @id @default(uuid())
+  suspendedUser      User     @relation("suspended", fields: [suspendedUserEmail], references: [email])
+  suspendedUserEmail String   @unique
+  startDate          DateTime
+  endDate            DateTime
+  message            String
 }
 
 model VerificationRequest {
