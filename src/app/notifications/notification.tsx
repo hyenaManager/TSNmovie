@@ -46,7 +46,7 @@ export default function NotiFications() {
         <DeleteAllUserNoti />
       </div>
       <hr className=" border-b-2 border-b-fuchsia-500" />
-      <ul className=" w-full p-2 flex justify-center flex-col">
+      <ul className=" w-full p-2 flex justify-start flex-col overflow-auto h-[81vh]">
         {status === "loading" &&
           [1, 2, 3, 4, 5].map((number) => <NotiSkeletonLi key={number} />)}
         {data?.pages?.map((page) => (

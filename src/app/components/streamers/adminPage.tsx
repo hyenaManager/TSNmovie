@@ -87,7 +87,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
     <>
       <article
         className={
-          "pageWarper w-full xsm:h-full flex xsm:flex-col sm:flex-row sm:h-4hundred bg-black items-center mt-16 "
+          "pageWarper w-full xsm:h-full flex xsm:flex-col sm:flex-row sm:h-4hundred bg-black items-center "
         }
       >
         {/* user profile section */}
@@ -123,7 +123,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
         {/* user trophy section */}
         <section className="pageWarper xsm:w-full xsm:h-full p-2 xsm:overflow-auto sm:overflow-hidden sm:w-[50%] sm:h-full flex xsm:flex-row xsm:flex-wrap sm:flex-col ">
           {/* user's bounty or followers */}
-          <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
+          <div className=" xsm:m-1 sm:m-2 xsm:text-sm  sm:text-lg md:text-xl lg:text-3xl flex items-center p-2 bg-black w-full justify-start ">
             <FontAwesomeIcon
               icon={faPeopleGroup}
               className="shadow-[0_0_20px_green] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-green-600 p-4 border-2 border-white rounded-full"
@@ -154,7 +154,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
             <span className=" mr-2 font-mono text-white">Seek : un</span>
           </div> */}
           {/* user trophy */}
-          <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
+          <div className=" xsm:m-1 sm:m-2 xsm:text-sm  sm:text-lg md:text-xl lg:text-3xl flex items-center p-2 bg-black w-full justify-start ">
             <FontAwesomeIcon
               icon={faEye}
               className="shadow-[0_0_20px_blue] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-blue-600 p-4 border-2 border-white rounded-full"

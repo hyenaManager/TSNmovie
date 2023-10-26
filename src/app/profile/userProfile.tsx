@@ -22,7 +22,7 @@ export default function UserProfile() {
   console.log("userImage is :", user?.image);
 
   return (
-    <section className="xsm:w-[100vw] sm:w-[30vw] bg-slate-800 xsm:h-[30vh] sm:h-[100vh] flex xsm:flex-row sm:flex-col justify-center relative items-center">
+    <section className="xsm:w-[100vw] sm:w-[30vw] bg-slate-800 xsm:h-[30vh] sm:h-[92vh] flex xsm:flex-row sm:flex-col justify-center relative items-center">
       <div className=" relative flex xsm:mt-4 sm:mt-0 p-2 justify-center items-center">
         <Image
           src={user?.image ? user?.image : "/defaultProfile.jpeg"}
