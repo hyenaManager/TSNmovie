@@ -30,7 +30,7 @@ export default function RootLayout({
             <UserProvider>
               <NavBar />
               <CurrentUploading />
-              <div className="pageWarper min-h-[100vh] bg-black">
+              <div className="pageWarper min-h-[92vh] bg-black first-letter:">
                 {children}
               </div>
               <Toaster />

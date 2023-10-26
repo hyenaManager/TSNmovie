@@ -40,7 +40,7 @@ export default function Main() {
   return (
     <>
       <GetPageByItsUnique changeUnique={handleGetPageType} />
-      <main className=" flex flex-col items-center min-h-[100vh] xsm:pt-2 sm:pt-14 w-full bg-black ">
+      <main className=" flex flex-col items-center min-h-[92vh] xsm:pt-2 sm:pt-2 w-full bg-black ">
         <PageSearchBar />
         {status === "error" && (
           <div className=" w-full h-full flex justify-center items-center ">

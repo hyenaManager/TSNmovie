@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import {
   useInfiniteQuery,
   useQuery,
@@ -9,13 +9,13 @@ import SkeletonClip from "../skeletons/skeletonClip";
 
 import axios from "axios";
 
-import CreateClips from "../components/clips/createClips";
+const CreateClips = lazy(() => import("../components/clips/createClips"));
 import CreateButton from "../components/floatingCreateBtn";
 import { ClipLoading } from "../components/loading";
 import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
-import ClipComment from "../components/comment";
+const ClipComment = lazy(() => import("../components/comment"));
 import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 

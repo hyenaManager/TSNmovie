@@ -2,7 +2,7 @@ export default function AdminSkeleton() {
   return (
     <article
       className={
-        "streamer-adminPage w-full h-4hundred bg-black flex items-center mt-16 "
+        "streamer-adminPage w-full h-4hundred bg-black flex items-center"
       }
     >
       {/* user profile section */}

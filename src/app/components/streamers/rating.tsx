@@ -25,7 +25,7 @@ export default function RatePage({
   }/5 (${raterList?.length} ${raterList?.length > 1 ? "users" : "user"})`;
 
   return (
-    <div className=" xsm:m-1 sm:m-2 xsm:text-lg sm:text-2xl flex items-center p-2 bg-black w-full justify-start ">
+    <div className=" xsm:m-1 sm:m-2 xsm:text-sm  sm:text-lg md:text-xl lg:text-3xl flex items-center p-2 bg-black w-full justify-start ">
       <FontAwesomeIcon
         icon={faStar}
         className="shadow-[0_0_20px_yellow] xsm:w-[14px] xsm:h-[14px] sm:w-[20px] sm:h-[20px] mr-3 text-yellow-600 p-4 border-2 border-white rounded-full"
