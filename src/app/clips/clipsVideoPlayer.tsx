@@ -19,7 +19,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import MoreOption from "../components/clips/moreOption";
-import SkeletonClip, { SkeletonClipError } from "../skeletons/skeletonClip";
+import SkeletonClip from "../skeletons/skeletonClip";
 import { catchingError } from "../utility/catchingError";
 type videoProps = {
   id: string;

@@ -20,7 +20,7 @@ type seriesOverview = {
   pageOwnerId: string;
   handleVisibility: () => void;
 };
-export function CreateSeries({
+export default function CreateSeries({
   handleVisibility,
   pageOwnerId,
 }: seriesOverview) {

@@ -1,7 +1,6 @@
 "use client";
 import CatagoryNavbar from "../../components/streamers/catagoryOfMovie";
 import { Suspense, lazy, useContext, useState } from "react";
-import CreateClips from "@/app/components/clips/createClips";
 import {
   CreateSomethingButton,
   EditProfileButton,
@@ -9,7 +8,8 @@ import {
 import AdminPage from "@/app/components/streamers/adminPage";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { userProvider } from "@/app/context/userContext";
-import { CreateSeries } from "@/app/components/series/createSeries";
+const CreateClips = lazy(() => import("@/app/components/clips/createClips"));
+const CreateSeries = lazy(() => import("@/app/components/series/createSeries"));
 import { useCatagory } from "@/app/store";
 
 const ClipList = lazy(() => import("../../components/streamers/clipList"));
