@@ -21,7 +21,7 @@ export default async function NavBar() {
 
   return (
     <>
-      <nav className="pageWarper text-white bg-black z-40 flex b justify-between bg-none items-center mainNav sticky right-0 left-0 top-0">
+      <nav className="pageWarper h-[8vh] border text-white bg-black z-40 flex b justify-between bg-none items-center mainNav sticky right-0 left-0 top-0">
         <Link href={"/"} className=" font-mono text-fuchsia-600 ml-3">
           <Image
             src={"/mycon.png"}
