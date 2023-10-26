@@ -21,7 +21,6 @@ import toast from "react-hot-toast";
 import MoreOption from "../components/clips/moreOption";
 import SkeletonClip, { SkeletonClipError } from "../skeletons/skeletonClip";
 import { catchingError } from "../utility/catchingError";
-import { error } from "console";
 type videoProps = {
   id: string;
   title: string | null;
