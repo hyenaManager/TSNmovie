@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { changeUserImage, getUserByMail } from "../../../../../prisma/users";
+import { changeUserImage, deleteUserByEmail, getUserByMail } from "../../../../../prisma/users";
 
 export async function GET(request:Request,{params}:{params:{email:string}}) {
     const email = params.email
@@ -28,6 +28,20 @@ export async function PUT(request:NextRequest,{params}:{params:{email:string}}){
             status:200
         })
     }catch(error){
+        return new Response(JSON.stringify(error),{
+            status:500
+        })
+    }
+}
+
+export async function DELETE(request:NextRequest,{params}:{params:{email:string}}){
+    const email = params.email
+    try {
+        const respone = await deleteUserByEmail(email);
+        return new Response(JSON.stringify(respone),{
+            status:200
+        })
+    } catch (error) {
         return new Response(JSON.stringify(error),{
             status:500
         })

@@ -1,10 +1,6 @@
 "use client";
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import axios from "axios";
@@ -32,7 +28,6 @@ type videoPageProp = {
 };
 
 export default function VideoComponent() {
-  const queryClient = useQueryClient();
   const [ref, inView] = useInView();
   const [isCreating, setIsCreating] = useState(false);
   const [onComment, setOnComment] = useState(false); //on click comment button

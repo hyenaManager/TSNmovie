@@ -86,3 +86,16 @@ export async function changeUserRoleToAdmin(userId:string){
         return error
     }
 }
+
+export async function deleteUserByEmail(userEmail:string){
+    try {
+        await prisma.user.delete({
+            where:{
+                email:userEmail
+            }
+        })
+        return "deleted successfully"
+    } catch (error) {
+        return error
+    }
+}
