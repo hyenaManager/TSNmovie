@@ -50,6 +50,7 @@ model User {
   email             String?         @unique
   password          String?
   emailVerified     DateTime?
+  bio               String          @default("no bio")
   image             String          @default("https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2F1.svg?alt=media&token=a6d8ef94-0696-401c-b5d1-24a03bd521d3&_gl=1*1x2c3qd*_ga*MTUwMzg0NTkxMS4xNjg0ODU2NzUw*_ga_CW55HF8NVT*MTY5ODMzMzIxMC40OS4xLjE2OTgzMzMyMjcuNDMuMC4w")
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt

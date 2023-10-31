@@ -1,5 +1,9 @@
 import Link from "next/link";
-import UserImage, { UserEditButton, UserName } from "./userProfileComponents";
+import UserImage, {
+  LogoutButton,
+  UserEditButton,
+  UserName,
+} from "./userProfileComponents";
 type userType = {
   image: string;
   firstName: string;
@@ -9,7 +13,7 @@ type userType = {
 
 export default function UserProfileWidget() {
   return (
-    <div className="pageWarper shadow-lg overflow-hidden xsm:w-[100vw] sm:w-[30vw] bg-white dark:bg-zinc-800">
+    <div className="pageWarper relative shadow-lg overflow-hidden xsm:w-[100vw] sm:w-[30vw] bg-white dark:bg-zinc-800">
       <header className="pageWarper bg-[#f8fafc] dark:bg-zinc-900 px-6 py-4 border-b border-zinc-200 dark:border-zinc-700">
         <div className="flex justify-center items-center">
           <UserName />
@@ -77,6 +81,7 @@ export default function UserProfileWidget() {
         </nav>
         <UserEditButton />
       </footer>
+      <LogoutButton />
     </div>
   );
 }

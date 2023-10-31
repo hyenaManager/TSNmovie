@@ -17,6 +17,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { signOut } from "next-auth/react";
 
 export default function UserImage() {
   const { user }: any = useContext(userProvider);
@@ -65,6 +66,17 @@ export function UserEditButton() {
         <EditUserData setIsEditing={() => setIsEditing(false)} />
       ) : null}
     </>
+  );
+}
+
+export function LogoutButton() {
+  return (
+    <button
+      onClick={() => signOut()}
+      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-red-400 hover:bg-red-800 rounded-lg absolute bottom-3 right-3"
+    >
+      Logout
+    </button>
   );
 }
 
