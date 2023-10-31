@@ -6,7 +6,7 @@ export default function HomeArticles() {
       <article className="pageWarper flex xsm:justify-center justify-start rounded xsm:p-1 sm:p-8">
         <HomeImage imageSource={"/luffy.jpg"} />
         <div className=" flex flex-col text-white text-center p-3">
-          <h2 className=" text-4xl  p-2 text-fuchsia-600 font-mono">
+          <h2 className=" p-2 text-fuchsia-600 font-mono xsm:text-lg sm:text-4xl">
             Anime collections
           </h2>
           <p className=" text-slate-200">
@@ -18,7 +18,7 @@ export default function HomeArticles() {
       </article>
       <article className="pageWarper flex xsm:justify-center justify-start rounded xsm:p-1 sm:p-8">
         <div className=" flex flex-col text-white text-center p-3">
-          <h2 className=" text-4xl  p-2 text-fuchsia-600 font-mono">
+          <h2 className=" p-2 text-fuchsia-600 font-mono xsm:text-lg sm:text-4xl">
             Kdrama collections
           </h2>
           <p className=" text-slate-200">
@@ -34,7 +34,7 @@ export default function HomeArticles() {
         <HomeImage imageSource={"/Maleficent.jpg"} />
 
         <div className=" flex flex-col text-white text-center p-3">
-          <h2 className=" text-4xl  p-2 text-fuchsia-600 font-mono">
+          <h2 className=" p-2 text-fuchsia-600 font-mono xsm:text-lg sm:text-4xl">
             Hollywood collections
           </h2>
           <p className=" text-slate-200">

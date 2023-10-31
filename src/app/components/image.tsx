@@ -17,18 +17,14 @@ type pagesProps = {
 };
 
 export default function HomeImage({ imageSource }: homeImageProps) {
-  const image = useRef<HTMLImageElement | null>(null);
-
   return (
     <Image
       src={luffy}
-      ref={image}
       alt="imageSource"
-      width={200}
-      height={200}
+      width={100}
+      height={100}
       placeholder="blur"
-      sizes="(max-width:480px):10vw,(max-width:1020px):400px"
-      className=" shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 bg-cover"
+      className=" xsm:w-[130px] sm:w-[200px] shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 object-cover"
     />
   );
 }
