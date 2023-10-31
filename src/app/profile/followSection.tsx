@@ -16,7 +16,7 @@ export default function FollowAndVistPageSection() {
   console.log(user);
 
   return (
-    <section className=" sm:w-[70vw] bg-black xsm:w-[100vw] xsm:min-h-[70vh] sm:min-h-[92vh] xsm:pt-2 sm:pt-2 flex flex-col ">
+    <section className=" sm:w-[70vw] bg-black xsm:w-[100vw] xsm:min-h-[70vh] sm:min-h-[92vh] flex flex-col ">
       {!userPage ? (
         userPage === null ? (
           <Link
