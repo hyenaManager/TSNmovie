@@ -29,7 +29,7 @@ export default function FollowAndVistPageSection() {
           <ProfileNavSkeleton />
         )
       ) : (
-        <nav className=" flex p-2 justify-between items-center border-b-2 border-fuchsia-500">
+        <nav className=" flex p-2 justify-between items-center border-b-2 bg-slate-800 border-fuchsia-500">
           <Link
             href={`profile/page`}
             className=" flex justify-center items-center"
