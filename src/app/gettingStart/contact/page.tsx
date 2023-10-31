@@ -16,13 +16,16 @@ export default function Contact() {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const { userPage }: any = useContext(userProvider);
   async function createContact() {
-    const response = await axios.post("http://localhost:3000/api/contact", {
-      facebook: facebookLink,
-      twitter: twitterLink,
-      whatsapp: whatsappLink,
-      telegram: telegramLink,
-      pageId: userPage?.id,
-    });
+    const response = await axios.post(
+      "https://yokeplay.vercel.app/api/contact",
+      {
+        facebook: facebookLink,
+        twitter: twitterLink,
+        whatsapp: whatsappLink,
+        telegram: telegramLink,
+        pageId: userPage?.id,
+      }
+    );
     if (response.status === 200) {
       toast.success("working.....");
     } else {

@@ -88,7 +88,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
   const changeUserDatas = useMutation(
     async () => {
       const response = await axios.put(
-        `http://localhost:3000/api/users/updateUser`,
+        `https://yokeplay.vercel.app/api/users/updateUser`,
         {
           firstName: firstName,
           lastName: lastName,
@@ -255,7 +255,10 @@ function UserImageSelection({
       </button>
       <div className="grid grid-cols-4 gap-4 max-w-xl mx-auto p-4">
         {profiles.map((profile) => (
-          <div className="border border-zinc-200 rounded-full overflow-hidden dark:border-zinc-800">
+          <div
+            key={profile.id}
+            className="border border-zinc-200 rounded-full overflow-hidden dark:border-zinc-800"
+          >
             <input
               className="sr-only"
               id="image-1"

@@ -11,7 +11,9 @@ export default function Reports() {
   const { data, status } = useQuery({
     queryKey: ["allReports"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:3000/api/reports");
+      const response = await axios.get(
+        "https://yokeplay.vercel.app/api/reports"
+      );
       if (response.status === 200) {
         return response.data;
       } else {
@@ -22,7 +24,7 @@ export default function Reports() {
   const deleteReport = useMutation(
     async (id: string) => {
       const response = await axios.delete(
-        `http://localhost:3000/api/reports?reportId=${id}`
+        `https://yokeplay.vercel.app/api/reports?reportId=${id}`
       );
       if (response.status === 200) {
         return toast.success(response.data);
@@ -45,7 +47,7 @@ export default function Reports() {
     <ul className=" w-full h-full flex flex-col justify-start text-lg items-center">
       {data?.length === 0 && <p>No reports yet</p>}
       {data?.map((report: any) => (
-        <li className=" w-full flex justify-between">
+        <li key={report?.id} className=" w-full flex justify-between">
           <div className="mainNoti w-full flex justify-start items-center ">
             <Image
               src={report?.postOwner.image}

@@ -10,7 +10,7 @@ export default function AllUsers() {
   const { data, status } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:3000/api/users");
+      const response = await axios.get("https://yokeplay.vercel.app/api/users");
       if (response.status === 200) {
         return response.data;
       } else {

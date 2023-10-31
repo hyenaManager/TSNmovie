@@ -35,7 +35,7 @@ export default function ClipNoti() {
     queryKey: ["clip", parseInt(clipId)],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/api/clips/oneClip?clipId=${clipId}`
+        `https://yokeplay.vercel.app/api/clips/oneClip?clipId=${clipId}`
       );
       if (response.status === 200) {
         return response.data;

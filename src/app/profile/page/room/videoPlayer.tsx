@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import ReportSomething from "@/app/components/reportComponent";
+// import ReportSomething from "@/app/components/reportComponent";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -47,7 +47,7 @@ export default function DefaultVideoPlayer({
   // };
   const handleDeleteEpisode = async () => {
     const response = await axios.delete(
-      `http://localhost:3000/api/episodes/${id}`
+      `https://yokeplay.vercel.app/api/episodes/${id}`
     );
     if (response.status === 200) {
       toast.success("delete successfully");
@@ -166,9 +166,9 @@ export default function DefaultVideoPlayer({
           <h3 className="text-white text-4xl">Deleting....</h3>
         </div>
       )}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {!hide && <ReportSomething handleVisibillity={() => setHide(true)} />}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </>
   );
 }

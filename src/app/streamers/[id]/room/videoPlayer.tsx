@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import ReportSomething from "@/app/components/reportComponent";
+// import ReportSomething from "@/app/components/reportComponent";
 type videoProps = {
   videoSource: string;
   episode: number;
@@ -136,9 +136,9 @@ export default function DefaultVideoPlayer({
           </>
         )}
       </div>
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {!hide && <ReportSomething handleVisibillity={() => setHide(true)} />}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </>
   );
 }
