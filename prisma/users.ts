@@ -2,14 +2,21 @@ import prisma from "./client";
 type userType = {
     firstName: string;
     lastName: string ;
-    email: string ;
-    password: string;
+    email: string  ;
+    password: string|null;
     image: string ;
 }
 
 export async function getAllUsers(){
-    const users = await prisma.user.findMany()
+    try {
+        const users = await prisma.user.findMany()
+    
+        
     return users
+    } catch (error) {
+
+        return error
+    }
 }
 
 export async function getUserByMail(email:string){
@@ -21,6 +28,7 @@ export async function getUserByMail(email:string){
             include:{
                 Page:true,
                 following:true,
+                suspended:true
             }
         })
         return user
@@ -95,6 +103,53 @@ export async function deleteUserByEmail(userEmail:string){
             }
         })
         return "deleted successfully"
+    } catch (error) {
+        return error
+    }
+}
+
+export async function suspendUserByEmail(userEmail:string){
+    //check if the user is suspended before
+    const currentTime = new Date()
+    const suspendExpireTime = new Date()
+    const suspendedBefore = await prisma.suspended.findUnique({
+        where:{
+            suspendedUserEmail:userEmail
+        }
+    })
+    if (suspendedBefore){
+        await prisma.suspended.delete({
+            where:{
+                suspendedUserEmail:userEmail
+            }
+        })
+    }
+    suspendExpireTime.setMinutes(suspendExpireTime.getMinutes()+1)
+    const message = `you are suspended for a minute`
+    try {
+        await prisma.suspended.create({
+            data:{
+                suspendedUserEmail:userEmail,
+                startDate:currentTime,
+                endDate:suspendExpireTime,
+                message:message
+            }
+        })
+        return "suspened successfully"
+    } catch (error) {
+        return error
+    }
+}
+
+export async function updateUserData(data:userType){
+    try {
+        await prisma.user.update({
+            where:{
+                email:data.email
+            },
+            data:data
+        })
+        return "success"
     } catch (error) {
         return error
     }

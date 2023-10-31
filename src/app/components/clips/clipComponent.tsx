@@ -1,22 +1,15 @@
 "use client";
-import {
-  faComment,
-  faEllipsisVertical,
-  faHeart,
-  faPause,
-  faPlay,
-  faVolumeHigh,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, useRef, useState } from "react";
+import { lazy, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 import Link from "next/link";
 
 import Image from "next/image";
-import ReportSomething from "@/app/components/reportComponent";
-import { motion, spring } from "framer-motion";
+const ReportSomething = lazy(() => import("@/app/components/reportComponent"));
+import { motion } from "framer-motion";
 import MoreOption from "./moreOption";
 
 type videoProps = {
@@ -29,6 +22,7 @@ type videoProps = {
   updateAt: Date;
   pageImage: string;
   pageOwnerId: string;
+  createBy: any;
 };
 
 function VideoPlayer({
@@ -38,6 +32,7 @@ function VideoPlayer({
   likes,
   id,
   pageOwnerId,
+  createBy,
 }: videoProps) {
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
@@ -149,11 +144,13 @@ function VideoPlayer({
           </div>
         </div>
       )}
-      {/* <CreateButton isCreating={() => setIsCreating(!isCreating)} />
-      {isCreating && (
-        <CreateMovie isCreating={() => setIsCreating(!isCreating)} />
-      )} */}
-      {!hide && <ReportSomething handleVisibillity={() => setHide(!hide)} />}
+      {!hide && (
+        <ReportSomething
+          handleVisibillity={() => setHide(!hide)}
+          userId={createBy?.adminId}
+          postId={parseInt(id)}
+        />
+      )}
     </motion.article>
   );
 }

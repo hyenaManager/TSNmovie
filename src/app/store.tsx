@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { create } from "zustand";
 
 type CatagoryState = {
@@ -78,5 +79,16 @@ export const useNotifications = create<notiType>((set) => ({
   setUnSeenNotifications: (notiCount) =>
     set(() => ({
       unSeenNotifications: notiCount,
+    })),
+}));
+type currentNav = {
+  currentData: string | null;
+  setCurrentNav: (newData: string) => void;
+};
+export const useAdminCurrentData = create<currentNav>((set) => ({
+  currentData: "users",
+  setCurrentNav: (newData: string) =>
+    set(() => ({
+      currentData: newData,
     })),
 }));

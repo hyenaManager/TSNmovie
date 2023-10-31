@@ -20,9 +20,7 @@ export default function ClipNoti() {
   } | null>(null); //{clipTitle:title,clipId:id}
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const clipId = searchParams.get("holderId") as string;
-  const notiId = searchParams.get("notificationId") as string;
-  const notiWatched = searchParams.get("notiWatched") as string;
+  const clipId = searchParams.get("clipId") as string;
   const handleComment = (clip: {
     clipTitle: string;
     clipId: number;
@@ -42,38 +40,12 @@ export default function ClipNoti() {
       if (response.status === 200) {
         return response.data;
       }
-      if (response.status === 500) {
-        toast.error(response.statusText);
-      }
     },
   });
-
-  const mutation = useMutation(
-    async () => {
-      const response = await axios.put(
-        "http://localhost:3000/api/notifications",
-        {
-          notificationId: notiId,
-        }
-      );
-      if (response.status === 500) {
-        toast.error(response.statusText);
-      }
-    },
-    {
-      onSuccess: () => queryClient.invalidateQueries(["notifications"]),
-    }
-  );
-
-  useEffect(() => {
-    if (notiWatched === "false") {
-      mutation.mutate();
-    }
-  }, []);
   return (
     <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-black flex flex-col justify-center items-center">
       <ClipVideoPlayer {...data} handleComment={handleComment} />
-      <Link href="/notifications">
+      <Link href="/adminSite">
         <FontAwesomeIcon
           icon={faArrowLeft}
           className=" p-2 fixed top-1 left-1 w-[20px] h-[20px] text-yellow-400 rounded-full border-2 border-yellow-500"

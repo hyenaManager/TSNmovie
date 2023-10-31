@@ -25,7 +25,7 @@ export default function ClipList({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/pages/${pageId}`
+          `http://localhost:3000/api/pages/${pageId}`
         );
 
         return response.data;
@@ -56,7 +56,12 @@ export default function ClipList({ pageId }: { pageId: string }) {
           [1, 2, 3, 4].map((number) => <SkeletonSmClip key={number} />)}
         {clips?.map((clip: videoProps) => (
           <Suspense fallback={<SkeletonSmClip />} key={clip?.id}>
-            <VideoPlayer {...clip} key={clip?.id} pageImage={data?.image} />
+            <VideoPlayer
+              {...clip}
+              key={clip?.id}
+              pageImage={data?.image}
+              createBy={clip?.createdBy}
+            />
           </Suspense>
         ))}
       </section>

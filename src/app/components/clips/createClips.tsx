@@ -19,20 +19,20 @@ import { faCircleCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { userProvider } from "@/app/context/userContext";
+import { isSuspended } from "@/app/utility/suspendedCheck";
 
 export default function CreateClips({
   isCreating,
 }: {
   isCreating: () => void;
 }) {
-  const router = useRouter();
-  const { data: session } = useSession(); //get user data from session avaiable - {name,image,email,id...}
+  // const { data: session } = useSession(); //get user data from session avaiable - {name,image,email,id...}
   const [clipName, setclipName] = useState(""); //name of the clip that a user give
   const [isSubmiting, setIsSubmiting] = useState(false); //is user is start creating a clip or not
   const [clipVideo, setClipVideo] = useState<File | undefined>(undefined); //choose a video from user
   const queryClient = useQueryClient();
   const uploadRef = useRef<HTMLInputElement | null>(null); //to upload video file
-  const { userPage }: any = useContext(userProvider); //current userPage
+  const { userPage, user }: any = useContext(userProvider); //current userPage
   //make a click to the hidden input(video file uploader)
   const handleUpload = () => {
     uploadRef.current?.click();
@@ -63,7 +63,7 @@ export default function CreateClips({
   };
 
   async function postMovie(url: string) {
-    const response = await axios.post("https://yokeplay.vercel.app/api/clips", {
+    const response = await axios.post("http://localhost:3000/api/clips", {
       title: clipName, //title of clip name
       pageOwnerId: userPage?.id, //current user's page id , value from user context provider
       video: url, //url is link from firebase video that has been uploaded
@@ -112,20 +112,29 @@ export default function CreateClips({
         queryClient.invalidateQueries(["clips"]),
     }
   );
+  const handleSubmit = async () => {
+    const checkSuspend = await isSuspended(user.suspended);
+    if (checkSuspend?.suspended === true) {
+      return toast.error(checkSuspend.message, {
+        duration: 5000,
+      });
+    }
+    setIsSubmiting(true);
+    mutation.mutate();
+  };
   //if the clips is start uploading or creating, show the uploading progressing bar
   if (isSubmiting) return <Uploading />;
 
   return (
     <>
-      <div
-        onSubmit={(e) => {
-          e.preventDefault();
-          setIsSubmiting(true);
-          mutation.mutate();
-        }}
-        className="top-0 z-30 left-0 h-full w-full flex justify-center items-center fixed bg-white "
-      >
-        <form className=" bg-white shadow-xl flex flex-col justify-start relative xsm:w-[99%]  sm:w-[50%] rounded-lg ">
+      <div className="top-0 z-30 left-0 h-full w-full flex justify-center items-center fixed bg-white ">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+          className=" bg-white shadow-xl flex flex-col justify-start relative xsm:w-[99%]  sm:w-[50%] rounded-lg "
+        >
           <label
             className=" text-slate-500 p-2 ml-2 text-xl "
             style={{ textShadow: "2px 2px 8px purple" }}

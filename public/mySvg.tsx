@@ -38,17 +38,11 @@ export const myUserProfiles = [
   {
     id: 6,
     source:
-      "https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2F6.svg?alt=media&token=6a037495-dc4d-4dc0-b7aa-cd086cd62c4c&_gl=1*nhcv29*_ga*MTUwMzg0NTkxMS4xNjg0ODU2NzUw*_ga_CW55HF8NVT*MTY5NjU4MTE2MC40MS4xLjE2OTY1ODE5ODEuMzIuMC4w",
-    name: "seven",
-  },
-  {
-    id: 7,
-    source:
       "https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2F7.svg?alt=media&token=0f47e8bc-2a19-46f6-82db-c831341ff88c&_gl=1*1ctwtc4*_ga*MTUwMzg0NTkxMS4xNjg0ODU2NzUw*_ga_CW55HF8NVT*MTY5NjU4MTE2MC40MS4xLjE2OTY1ODIwMDkuNC4wLjA",
     name: "eight",
   },
   {
-    id: 8,
+    id: 7,
     source:
       "https://firebasestorage.googleapis.com/v0/b/tsnproject-4c406.appspot.com/o/users%2F8.svg?alt=media&token=42aa183e-7ab4-4368-87cf-49f326300c76&_gl=1*172rvtt*_ga*MTUwMzg0NTkxMS4xNjg0ODU2NzUw*_ga_CW55HF8NVT*MTY5NjU4MTE2MC40MS4xLjE2OTY1ODIwMzIuNDcuMC4w",
     name: "nine",

@@ -65,6 +65,7 @@ model User {
   NotificationsMade Notifications[] @relation("notificationMaker")
   Replied           Comment[]       @relation("replied")
   Comment           Comment[]
+  reports           Reports[]       @relation("report")
 }
 
 model Suspended {
@@ -139,6 +140,7 @@ model Clips {
   video       String
   comment     Comment[]
   likes       User[]    @relation("like")
+  reports     Reports[] @relation("report")
   link        String?
   createAt    DateTime  @default(now())
   updateAt    DateTime  @updatedAt
@@ -221,4 +223,16 @@ model Comment {
   parent          Comment?  @relation("childComments", fields: [parentId], references: [id])
   // one-to-many relationship between Comment and its child Comments for reply
   childComments   Comment[] @relation("childComments")
+}
+
+model Reports {
+  id        String   @id @default(uuid())
+  post      Clips    @relation("report", fields: [postId], references: [id])
+  postId    Int
+  postOwner User     @relation("report", fields: [userId], references: [id])
+  userId    String
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  message   String
 }

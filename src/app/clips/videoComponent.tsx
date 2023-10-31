@@ -14,6 +14,7 @@ import ClipVideoPlayer from "./clipsVideoPlayer";
 const ClipComment = lazy(() => import("../components/comment"));
 import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Loading from "../loading";
 
 type videoPageProp = {
   id: string;
@@ -52,7 +53,7 @@ export default function VideoComponent() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/clips/cursor?cursor=${pageParam}`
+          `http://localhost:3000/api/clips/cursor?cursor=${pageParam}`
         );
         const data = response.data;
         return data;
@@ -71,17 +72,7 @@ export default function VideoComponent() {
   return (
     <>
       <main className="pageWarper flex flex-col justify-center items-center pt-14  min-h-[100vh] ">
-        {status === "loading" && (
-          <div className=" animate-pulse ">
-            <Image
-              width={100}
-              height={100}
-              alt="loading"
-              src={"/mycon.png"}
-              className=" w-[100px] h-[100px]"
-            />
-          </div>
-        )}
+        {status === "loading" && <Loading />}
         {data?.pages?.map((page) => (
           <React.Fragment key={page.nextCursor}>
             {page?.clips?.map((video: videoPageProp, index: number) => (

@@ -6,7 +6,7 @@ export default function Loading() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className=" absolute h-full border-red-600 top-0 right-0  flex justify-center backdrop-brightness-50 items-center z-20 w-full"
+        className=" absolute h-full border-red-600 top-0 right-0  flex justify-center backdrop-brightness-50 items-center z-40 w-full"
       >
         <motion.div
           initial={{ opacity: 1 }}

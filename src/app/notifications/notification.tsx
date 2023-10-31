@@ -1,8 +1,7 @@
 "use client";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-
 import axios from "axios";
-import React, { useContext, useEffect, useState, useTransition } from "react";
+import React, { useContext, useEffect } from "react";
 import { userProvider } from "../context/userContext";
 import Link from "next/link";
 import NotiSkeletonLi from "../skeletons/notiSkeletons";
@@ -20,7 +19,7 @@ export default function NotiFications() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
+          `http://localhost:3000/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
         );
         const data = response.data;
         return data;
@@ -70,19 +69,21 @@ export default function NotiFications() {
                   {getTimeAgo(new Date(noti.createdAt))}
                 </small>
                 <div className="actions flex justify-end w-full items-center">
-                  <Link
-                    href={{
-                      pathname: `/notifications/${noti?.holder}`,
-                      query: {
-                        notificationId: noti?.id,
-                        holderId: noti?.holderId,
-                        notiWatched: noti?.watched, //if the noti is already watched or not
-                      },
-                    }}
-                    className=" p-1 text-end cursor-pointer"
-                  >
-                    check
-                  </Link>
+                  {noti.type != "suspend" && (
+                    <Link
+                      href={{
+                        pathname: `/notifications/${noti?.holder}`,
+                        query: {
+                          notificationId: noti?.id,
+                          holderId: noti?.holderId,
+                          notiWatched: noti?.watched, //if the noti is already watched or not
+                        },
+                      }}
+                      className=" p-1 text-end cursor-pointer"
+                    >
+                      check
+                    </Link>
+                  )}
                   <DeleteOneNotiById notiId={noti?.id as string} />
                 </div>
                 {/* show red dot if the notification is not watched */}
@@ -93,12 +94,12 @@ export default function NotiFications() {
             ))}
           </React.Fragment>
         ))}
+        {hasNextPage && (
+          <div ref={ref}>
+            <ClipLoading />
+          </div>
+        )}
       </ul>
-      {hasNextPage && (
-        <div ref={ref}>
-          <ClipLoading />
-        </div>
-      )}
     </section>
   );
 }
