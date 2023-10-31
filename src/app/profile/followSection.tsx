@@ -36,11 +36,8 @@ export default function FollowAndVistPageSection() {
           >
             <Image
               src={userPage?.image}
-              width={40}
-              height={40}
-              style={{
-                objectFit: "cover",
-              }}
+              width={100}
+              height={100}
               className=" w-[50px] h-[50px] object-cover rounded-full"
               alt="page"
             />
