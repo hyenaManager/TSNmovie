@@ -99,7 +99,16 @@ export default function NavBar() {
               />
             </>
           ) : (
-            <LognInButton />
+            <>
+              <LognInButton />
+              <Image
+                width={400}
+                height={400}
+                alt="haih"
+                src={"/defaultProfile.jpeg"}
+                className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
+              />
+            </>
           )}
         </Link>
       </nav>

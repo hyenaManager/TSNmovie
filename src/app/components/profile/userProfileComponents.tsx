@@ -73,7 +73,7 @@ export function LognInButton() {
   return (
     <button
       onClick={() => signIn()}
-      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-green-400 hover:bg-green-800 rounded-lg "
+      className="xsm:text-sm sm:text-xl p-2 xsm:px-2 sm:px-3 text-white bg-green-400 hover:bg-green-800 rounded-lg "
     >
       Logout
     </button>
