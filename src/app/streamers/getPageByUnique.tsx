@@ -3,6 +3,7 @@
 import {
   faCoins,
   faEye,
+  faSearch,
   faStar,
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
@@ -63,9 +64,9 @@ export default function GetPageByItsUnique() {
             (currentSortedType === "mostLiked" ? " bg-fuchsia-500" : " ")
           }
         >
-          <span>Most Liked</span>
+          <span>Search</span>
           <FontAwesomeIcon
-            icon={faThumbsUp}
+            icon={faSearch}
             className=" w-[20px] h-[20px] text-green-400"
           />
         </li>

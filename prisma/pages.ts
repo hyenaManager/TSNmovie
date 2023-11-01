@@ -23,7 +23,14 @@ export async function getPageByMostRated(){
 }
 
 export async function getPageBySearchText(searchText:string){
-    const pages = await prisma.page.findMany()
+    const pages = await prisma.page.findMany({
+        where:{
+            search:{
+                contains:searchText.toLowerCase(),
+            }
+        },
+    })
+    return pages
 }
 
 export async function getPageByMostFollowed(){
@@ -214,6 +221,25 @@ export async function ratePage(newRaterList:string[],pageId:string,newRating:num
         
         return error
     }
+}
+
+export async function updateSearch(){
+   try {
+    const allPages = await prisma.page.findMany();
+    allPages.forEach( async(page)=>
+        await prisma.page.update({
+            where:{
+                id:page.id
+            },
+            data:{
+                search:page.name.toLowerCase()
+            }
+        })   
+    )
+    return "success"
+   } catch (error) {
+    return error
+   }
 }
 
 

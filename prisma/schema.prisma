@@ -95,6 +95,7 @@ model Page {
   name        String
   admin       User     @relation(fields: [adminId], references: [id])
   followers   User[]   @relation("follow")
+  search      String?
   adminId     String   @unique
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
