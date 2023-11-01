@@ -22,6 +22,21 @@ export async function getPageByMostRated(){
     return pages
 }
 
+export async function getPageBySearchText(searchText:string){
+    const pages = await prisma.page.findMany()
+}
+
+export async function getPageByMostFollowed(){
+    const pages = await prisma.page.findMany({
+        include:{
+            followers:true
+        }
+    });
+    //sort page by its followers
+    const sortedPages = pages.sort((a:any,b:any)=>b.followers.length-a.followers.length)
+    return sortedPages
+}
+
 export async function createPage(data:any){
     try{
         await prisma.page.create({

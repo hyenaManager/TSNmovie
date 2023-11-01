@@ -92,3 +92,15 @@ export const useAdminCurrentData = create<currentNav>((set) => ({
       currentData: newData,
     })),
 }));
+
+type sortedPageType = {
+  sortedBy: string | null;
+  sortPages: (newType: string) => void;
+};
+export const useSortedPage = create<sortedPageType>((set) => ({
+  sortedBy: "mostViewed",
+  sortPages: (newType: string) =>
+    set(() => ({
+      sortedBy: newType,
+    })),
+}));

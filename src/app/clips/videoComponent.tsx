@@ -4,17 +4,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import axios from "axios";
-
-const CreateClips = lazy(() => import("../components/clips/createClips"));
 import CreateButton from "../components/floatingCreateBtn";
 import { ClipLoading } from "../components/loading";
 import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
-const ClipComment = lazy(() => import("../components/comment"));
 import { AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import Loading from "../loading";
+import CreateClips from "../components/clips/createClips";
+import ClipComment from "../components/comment";
 
 type videoPageProp = {
   id: string;
@@ -53,7 +51,7 @@ export default function VideoComponent() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/clips/cursor?cursor=${pageParam}`
+          `http://localhost:3000/api/clips/cursor?cursor=${pageParam}`
         );
         const data = response.data;
         return data;

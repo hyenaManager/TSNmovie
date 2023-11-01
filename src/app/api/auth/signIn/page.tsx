@@ -50,7 +50,7 @@ function LoginForm() {
       });
       router.push("/clips");
     } else {
-      toast.error("password or email incorrect");
+      toast.error("there is an error");
       setErrorLogin(true);
       setIsSubmiting(false);
     }

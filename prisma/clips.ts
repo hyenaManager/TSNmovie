@@ -96,7 +96,9 @@ export async function deleteAClip(clipId:number){
         })
         return "burn it successfully 🔥"
     } catch (error) {
-        throw error
+        console.log("error",error);
+        
+        return  error
     }
 }
 

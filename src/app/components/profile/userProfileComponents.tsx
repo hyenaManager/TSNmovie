@@ -5,7 +5,6 @@ type userType = {
   lastName: string;
   email: string;
 };
-import Image from "next/image";
 import { userProvider } from "@/app/context/userContext";
 import { useContext, useEffect, useState } from "react";
 import { myUserProfiles } from "../../../../public/mySvg";
@@ -18,6 +17,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function UserImage() {
   const { user }: any = useContext(userProvider);
@@ -30,9 +30,7 @@ export default function UserImage() {
           src={user ? user.image : "/defaultProfile.jpeg"}
         />
       </div>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        How you defined life by
-      </p>
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">{user?.bio}</p>
       <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400">
         {user ? user.email : "....."}
       </p>
@@ -43,7 +41,7 @@ export default function UserImage() {
 export function UserName() {
   const { user }: any = useContext(userProvider);
   return (
-    <h3 className="text-lg font-semibold uppercase">
+    <h3 className=" xsm:text-lg sm:text-4xl font-semibold uppercase text-fuchsia-800">
       {user?.firstName} {user?.lastName}
     </h3>
   );
@@ -73,7 +71,7 @@ export function LognInButton() {
   return (
     <button
       onClick={() => signIn()}
-      className="xsm:text-sm sm:text-xl p-2 text-white hover:bg-green-400 rounded-md  "
+      className="xsm:text-sm sm:text-xl p-2 text-fuchsia-500 hover:text-white rounded-md "
     >
       LognIn
     </button>
@@ -88,6 +86,17 @@ export function LogoutButton() {
     >
       Logout
     </button>
+  );
+}
+
+export function AdminSiteButton() {
+  return (
+    <Link
+      href={"/adminSite"}
+      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-green-500 hover:bg-green-800 hover:text-white rounded-lg absolute top-2 left-3"
+    >
+      Admin
+    </Link>
   );
 }
 
@@ -111,7 +120,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
   const changeUserDatas = useMutation(
     async () => {
       const response = await axios.put(
-        `https://yokeplay.vercel.app/api/users/updateUser`,
+        `http://localhost:3000/api/users/updateUser`,
         {
           firstName: firstName,
           lastName: lastName,

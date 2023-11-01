@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HomeArticles from "./components/movieShow";
+import { LognInButton } from "./components/profile/userProfileComponents";
 
 export default function Home() {
   return (
@@ -9,9 +10,12 @@ export default function Home() {
       </h1>
       <hr className="border-t-2 border-fuchsia-500" />
       <HomeArticles />
-      <button className=" hover:text-white ease-in-out transition text-xl max-w-fit rounded-md text-fuchsia-600 p-3 flex justify-end  m-3">
-        <Link href={"/api/auth/register"}>Getting Start </Link>
-      </button>
+      <section className=" flex justify-between items-center">
+        <button className=" hover:text-white ease-in-out transition text-xl max-w-fit rounded-md text-fuchsia-600 p-3 flex justify-end  m-3">
+          <Link href={"/api/auth/register"}>Getting Start </Link>
+        </button>
+        <LognInButton />
+      </section>
     </div>
   );
 }

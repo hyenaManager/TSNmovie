@@ -9,7 +9,7 @@ export default function PageSearchBar() {
       <div className=" flex z-30 justify-end items-center fixed top-12 text-fuchsia-500 opacity-80  right-4">
         <input
           type="text"
-          className=" p-1 border-b-2 border-white bg-black m-2 outline-none"
+          className=" p-1 border-b-2 border-white bg-black opacity-50 m-2 outline-none"
         />
         <FontAwesomeIcon
           icon={faSearch}

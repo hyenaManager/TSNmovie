@@ -7,16 +7,24 @@ import SuspendUser from "./suspendUser";
 import toast from "react-hot-toast";
 
 export default function AllUsers() {
-  const { data, status } = useQuery({
+  const {
+    data,
+    status,
+    refetch,
+    error,
+  }: { error: any; data: any; status: any; refetch: any } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const response = await axios.get("https://yokeplay.vercel.app/api/users");
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        toast.error("error", {
-          duration: 5000,
+      try {
+        const response = await axios.get("http://localhost:3000/api/users", {
+          timeout: 10000,
+          timeoutErrorMessage: "fetching timeout check connection",
         });
+        if (response.status === 200) {
+          return response.data;
+        }
+      } catch (error: any) {
+        toast.error(error.message);
       }
     },
   });
@@ -25,7 +33,12 @@ export default function AllUsers() {
   }
 
   if (status === "error" || !data) {
-    return <p>Error: {"error.message"}</p>;
+    return (
+      <div>
+        <h4>Error: {error.message}</h4>
+        <button onClick={() => refetch()}>refetch</button>
+      </div>
+    );
   }
 
   return (

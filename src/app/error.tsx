@@ -19,7 +19,7 @@ export default function Error({
       <div className="max-w-md w-full space-y-8">
         <div>
           <svg
-            className=" mx-auto h-12 w-auto text-red-500"
+            className=" mx-auto h-[50px] w-[50px] text-red-500"
             fill="none"
             height="24"
             stroke="currentColor"
@@ -34,9 +34,9 @@ export default function Error({
             <line x1="12" x2="12" y1="8" y2="12" />
             <line x1="12" x2="12.01" y1="16" y2="16" />
           </svg>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Error: {error.message}
-          </h2>
+          <div className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Error: <h3 className=" text-red-500">{error.message}</h3>
+          </div>
           <div className="flex justify-center mt-6">
             <button
               onClick={
