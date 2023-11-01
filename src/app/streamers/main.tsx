@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { UserPageProfile } from "../components/image";
 import GetPageByItsUnique from "./getPageByUnique";
+import { useSortedPage } from "../store";
 
 type pagesProps = {
   id: string;
@@ -17,29 +18,26 @@ type pagesProps = {
 };
 export default function Main() {
   //fetch pages by its view rank,most viewed page will be rendered on top,(most like,most rated.etc...)
-  const [getPageBy, setGetPageBy] = useState("mostViewed");
+  const sortedBy = useSortedPage((state) => state.sortedBy);
   const getPagess = async () => {
     try {
       const res = await axios.get(
-        `https://yokeplay.vercel.app/api/pages?getBy=${getPageBy}`
+        `http://localhost:3000/api/pages?getBy=${sortedBy}`
       );
       return res.data;
     } catch (error) {
       console.log(error);
     }
   };
-  const handleGetPageType = (type: string) => {
-    setGetPageBy(type);
-  };
   const { data, status, error } = useQuery({
-    queryKey: ["pages", getPageBy],
+    queryKey: ["pages", sortedBy],
     queryFn: getPagess,
   });
   // console.log("this is data.... ", data);
 
   return (
     <>
-      <GetPageByItsUnique changeUnique={handleGetPageType} />
+      <GetPageByItsUnique />
       <main className=" flex flex-col items-center min-h-[92vh] xsm:pt-2 sm:pt-2 w-full bg-black ">
         <PageSearchBar />
         {status === "error" && (

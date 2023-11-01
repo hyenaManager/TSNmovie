@@ -9,7 +9,6 @@ import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 export default function ClipNoti() {
   const [onComment, setOnComment] = useState(false); //on click comment button
@@ -35,7 +34,7 @@ export default function ClipNoti() {
     queryKey: ["clip", parseInt(clipId)],
     queryFn: async () => {
       const response = await axios.get(
-        `https://yokeplay.vercel.app/api/clips/oneClip?clipId=${clipId}`
+        `http://localhost:3000/api/clips/oneClip?clipId=${clipId}`
       );
       if (response.status === 200) {
         return response.data;

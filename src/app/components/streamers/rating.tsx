@@ -66,7 +66,7 @@ function Rating({
   const mutation = useMutation(
     async () => {
       const response = await axios.put(
-        `https://yokeplay.vercel.app/api/pages/rating`,
+        `http://localhost:3000/api/pages/rating`,
         {
           newRaterList: [...raterList, user?.email],
           newRating: rating,

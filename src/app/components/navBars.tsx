@@ -100,7 +100,6 @@ export default function NavBar() {
             </>
           ) : (
             <>
-              <LognInButton />
               <Image
                 width={400}
                 height={400}

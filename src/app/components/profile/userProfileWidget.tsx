@@ -1,5 +1,6 @@
 import Link from "next/link";
 import UserImage, {
+  AdminSiteButton,
   LogoutButton,
   UserEditButton,
   UserName,
@@ -43,6 +44,7 @@ export default function UserProfileWidget() {
           </Link>
           <Link href="#">
             <svg
+              key="0"
               className=" h-5 w-5 text-zinc-500 dark:text-zinc-400"
               fill="none"
               height="24"
@@ -54,11 +56,9 @@ export default function UserProfileWidget() {
               width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-              <rect height="12" width="4" x="2" y="9" />
-              <circle cx="4" cy="4" r="2" />
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
             </svg>
-            <span className="sr-only">LinkedIn</span>
+            <span className="sr-only">face book</span>
           </Link>
           <Link href="#">
             <svg
@@ -82,6 +82,7 @@ export default function UserProfileWidget() {
         <UserEditButton />
       </footer>
       <LogoutButton />
+      <AdminSiteButton />
     </div>
   );
 }

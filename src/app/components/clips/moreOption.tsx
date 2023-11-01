@@ -19,31 +19,41 @@ export default function MoreOption({
   pageOwnerId: string;
   video: string;
 }) {
-  const { userPage }: any = useContext(userProvider);
+  const { userPage, user }: any = useContext(userProvider);
   const [moreOption, setMoreOption] = useState<boolean>(false); //is user click moreoption or not, for toggling more option
   const queryClient = useQueryClient();
   const handleDeleteClip = async () => {
     try {
       const response = await axios.delete(
-        `https://yokeplay.vercel.app/api/clips/${clipId}`
+        `http://localhost:3000/api/clips/${clipId}`
       );
       const data = response.data;
       toast.success(data);
     } catch (error) {
       toast.error("oh there is error check logs");
-      console.log(error);
+      console.log(error, clipId);
       return error;
     }
   };
+  console.log("clip id :", clipId);
+
+  // const mutation = useMutation(
+  //   async () => {
+  //     const videoRef = ref(storage, video);
+  //     deleteObject(videoRef)
+  //       .then(() => handleDeleteClip())
+  //       .catch((error) => {
+  //         toast.error(error);
+  //         console.log(error);
+  //       });
+  //   },
+  //   {
+  //     onSuccess: () => queryClient.invalidateQueries(["clips"]),
+  //   }
+  // );
   const mutation = useMutation(
     async () => {
-      const videoRef = ref(storage, video);
-      deleteObject(videoRef)
-        .then(() => handleDeleteClip())
-        .catch((error) => {
-          toast.error(error);
-          console.log(error);
-        });
+      handleDeleteClip();
     },
     {
       onSuccess: () => queryClient.invalidateQueries(["clips"]),
@@ -61,7 +71,7 @@ export default function MoreOption({
       />
       {moreOption && (
         <ul className=" absolute origin-top-right right-1 top-[50px] flex flex-col bg-white divide-y divide-fuchsia-600">
-          {userPage.id === pageOwnerId && (
+          {(userPage.id === pageOwnerId || user?.role === "ADMIN") && (
             <li
               onClick={(e) => {
                 setMoreOption(!moreOption);

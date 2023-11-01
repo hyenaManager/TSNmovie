@@ -5,20 +5,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function PageSearchBar() {
   return (
-    <>
-      <div className=" flex z-30 justify-end items-center fixed top-12 text-fuchsia-500 opacity-80  right-4">
-        <input
-          type="text"
-          className=" p-1 border-b-2 border-white bg-black m-2 outline-none"
-        />
-        <FontAwesomeIcon
-          icon={faSearch}
-          className=" p-2 w-[20px] h-[20px] text-white m-1 rounded-md fixed"
-        />
-      </div>
-    </>
+    <button className=" flex z-30 justify-end p-3 bg-white items-center rounded-lg relative text-fuchsia-600 ">
+      <input type="text" className=" border-black outline-none" />
+      <FontAwesomeIcon
+        icon={faSearch}
+        className=" w-[20px] h-[20px] text-black "
+      />
+    </button>
   );
 }
+
 export function MovieSearchBar() {
   return (
     <>
