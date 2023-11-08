@@ -1,7 +1,5 @@
 "use client";
 import Image from "next/image";
-
-import { UserPageProfile } from "../components/image";
 import Link from "next/link";
 import {
   HalfSkeleton,
@@ -10,6 +8,7 @@ import {
 } from "../skeletons/skeletonStreamer";
 import { useContext } from "react";
 import { userProvider } from "../context/userContext";
+import UserPageProfile from "../streamers/pageLinkImage";
 
 export default function FollowAndVistPageSection() {
   const { user, userPage }: any = useContext(userProvider);
