@@ -82,7 +82,7 @@ export function LogoutButton() {
   return (
     <button
       onClick={() => signOut()}
-      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-red-400 hover:bg-red-800 rounded-lg absolute top-2 right-3"
+      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-red-400 hover:bg-red-800 rounded-lg absolute bottom-2 right-3"
     >
       Logout
     </button>
@@ -93,7 +93,7 @@ export function AdminSiteButton() {
   return (
     <Link
       href={"/adminSite"}
-      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-green-500 hover:bg-green-800 hover:text-white rounded-lg absolute top-2 left-3"
+      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-green-500 hover:bg-green-800 hover:text-white rounded-lg absolute bottom-2 left-3"
     >
       Admin
     </Link>
