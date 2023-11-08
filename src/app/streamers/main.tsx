@@ -1,12 +1,12 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import React, { Suspense } from "react";
 import PageSearchBar from "../components/searchBar";
 import { NormalSkeleton, HalfSkeleton } from "../skeletons/skeletonStreamer";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { UserPageProfile } from "../components/image";
 import GetPageByItsUnique from "./getPageByUnique";
 import { useSortedPage } from "../store";
+import UserPageProfile from "./pageLinkImage";
 
 type pagesProps = {
   id: string;

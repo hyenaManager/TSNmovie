@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import { create } from "zustand";
 
 type CatagoryState = {
@@ -23,38 +22,11 @@ type CurrentLoading = {
   updateCurrentUploading: (newUploading: any) => void;
 };
 
-//for show current uploading processes
-// export const useCurrentUploadings = create<CurrentLoading>((set) => ({
-//   currentUploading: [],
-//   updateCurrentUploading: (newUploading) =>
-//     set(() => ({
-//       currentUploading: newUploading,
-//     })),
-//   // setNewUploading: (newUploading) =>
-//   //   set((state) => ({
-//   //     currentUploading: [...state.currentUploading, newUploading],
-//   //   })),
-// }));
-
 export const useCurrentUploadings = create<CurrentLoading>((set) => ({
   currentUploading: [],
   updateCurrentUploading: (newUploading) =>
     set((state) => ({
       currentUploading: mySwitchMode(newUploading, state.currentUploading),
-      // state.currentUploading?.map((obj) => {
-      //     if (obj.percent == 100) {
-      //       console.log("it should be removed");
-      //     } else if (obj.id === newUploading.id) {
-      //       console.log("add new");
-
-      //       return newUploading;
-      //     } else {
-      //       console.log("just return it");
-
-      //       return obj;
-      //     }
-      //   })
-      // myStoreUpdater(state.currentUploading, newUploading)
     })),
 }));
 
