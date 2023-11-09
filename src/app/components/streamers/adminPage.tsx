@@ -14,13 +14,15 @@ import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { userProvider } from "@/app/context/userContext";
 import RatePage from "./rating";
 
 export default function AdminPage({ pageId }: { pageId: string }) {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+  const [fullCoverImage, setFullCoverImage] = useState(false);
+  const [fullProfileImage, setFullProfileImage] = useState(false);
 
   //fetch page
   const { data, status, error } = useQuery({
@@ -95,25 +97,80 @@ export default function AdminPage({ pageId }: { pageId: string }) {
       >
         {/* user profile section */}
         <section className="pageWarper relative rounded-md xsm:h-3hundred sm:h-full xsm:w-full sm:w-5hundred flex flex-col bg-cover bg-no-repeat bg-center justify-end items-center text-xl p-7 bg-slate-600 ">
-          <Image
-            width={130}
-            height={130}
-            alt="luffy"
-            style={{
-              objectFit: "cover",
-            }}
-            src={data?.image || "/defaultProfile.jpeg"}
-            className=" w-[130px] h-[130px] rounded-full z-10 bg-gray-400 border-4 border-white"
-          />
-          <Image
-            fill
-            alt={"bg image"}
-            style={{
-              objectFit: "cover",
-            }}
-            quality={100}
-            src={data?.coverImage || "/defaultProfile.jpeg"}
-          />
+          {fullProfileImage ? (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setFullProfileImage(!fullProfileImage);
+              }}
+              className="fixed top-0 left-0 z-40 w-full h-full bg-black flex justify-center items-center"
+            >
+              <Image
+                width={400}
+                height={400}
+                alt="luffy"
+                onClick={(e) => {
+                  e.stopPropagation(), setFullProfileImage(!fullProfileImage);
+                }}
+                style={{
+                  objectFit: "cover",
+                }}
+                src={data?.image || "/defaultProfile.jpeg"}
+              />
+            </div>
+          ) : (
+            <Image
+              onClick={(e) => {
+                e.stopPropagation(), setFullProfileImage(!fullProfileImage);
+              }}
+              width={130}
+              height={130}
+              alt="luffy"
+              style={{
+                objectFit: "cover",
+              }}
+              src={data?.image || "/defaultProfile.jpeg"}
+              className=" w-[130px] h-[130px] rounded-full z-10 bg-gray-400 border-4 border-white"
+            />
+          )}
+          {fullCoverImage ? (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setFullCoverImage(!fullCoverImage);
+              }}
+              className="fixed top-0 left-0 z-40 w-full h-full bg-black flex justify-center items-center"
+            >
+              <Image
+                width={400}
+                height={400}
+                alt={"bg image"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFullCoverImage(!fullCoverImage);
+                }}
+                style={{
+                  objectFit: "cover",
+                }}
+                quality={100}
+                src={data?.coverImage || "/defaultProfile.jpeg"}
+              />
+            </div>
+          ) : (
+            <Image
+              fill
+              alt={"bg image"}
+              onClick={(e) => {
+                e.stopPropagation();
+                setFullCoverImage(!fullCoverImage);
+              }}
+              style={{
+                objectFit: "cover",
+              }}
+              quality={100}
+              src={data?.coverImage || "/defaultProfile.jpeg"}
+            />
+          )}
 
           <h1
             className=" text-4xl font-bold font-mono text-white z-10 rounded-md"
