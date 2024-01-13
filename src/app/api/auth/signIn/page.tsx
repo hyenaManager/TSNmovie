@@ -102,6 +102,7 @@ function LoginForm() {
         </p>
         <button
           onClick={() => router.push("/api/auth/register")}
+          type="button"
           className="text-white bg-fuchsia-600 text-lg drop-shadow-md p-1  rounded-md m-1"
         >
           register now
