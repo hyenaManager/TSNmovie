@@ -8,7 +8,7 @@ import Loading from "@/app/components/loading";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function AuthenticationForm() {
+export default function AuthenticationLogin() {
   return (
     <main
       className="pageWarper min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
