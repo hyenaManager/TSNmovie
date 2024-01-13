@@ -79,7 +79,7 @@ function LoginForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+          className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
           type="email"
         />
         <label className=" p-2 text-fuchsia-600 text-2xl w-4hundred xsm:text-center sm:text-start ">
@@ -89,7 +89,7 @@ function LoginForm() {
           required
           onChange={(e) => setPassword(e.target.value)}
           value={password}
-          className=" flex flex-start xsm:w-[70%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
+          className=" flex flex-start xsm:w-[90%] sm:w-4hundred ml-2 mr-2 text-lg rounded-md p-2 text-fuchsia-800 font-bold outline-fuchsia-600"
           type="password"
         />
         <button className=" text-white hover:bg-fuchsia-400 p-2 w-[90px] h-[50px] bg-fuchsia-600 rounded-md m-3">
@@ -102,7 +102,7 @@ function LoginForm() {
         </p>
         <Link
           href={"/api/auth/register"}
-          className="text-fuchsia-600 hover:text-white hover:bg-fuchsia-600 text-lg drop-shadow-md p-1  rounded-md bg-black m-1"
+          className="text-white bg-fuchsia-600 text-lg drop-shadow-md p-1  rounded-md m-1"
         >
           register now
         </Link>

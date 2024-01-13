@@ -23,7 +23,6 @@ export async function POST(request:Request) {
         const response = await createUser(body)
         // console.log("this is creating User...",body);
         const data = JSON.stringify(response)
-        
         return new Response(data,{
             status:200
         })

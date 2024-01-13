@@ -90,23 +90,25 @@ export default function NavBar() {
               <span className=" text-fuchsia-400 xsm:hidden sm:block text-lg p-1">
                 {user.firstName} {user.lastName}
               </span>
-              <Image
-                width={400}
-                height={400}
-                alt="haih"
-                src={`${user?.image as string}`}
-                className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
-              />
+              {user?.image && (
+                <Image
+                  width={400}
+                  height={400}
+                  alt="haih"
+                  src={`${user?.image as string}`}
+                  className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
+                />
+              )}
             </>
           ) : (
             <>
-              <Image
+              {/* <Image
                 width={400}
                 height={400}
                 alt="haih"
                 src={"/defaultProfile.jpeg"}
                 className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
-              />
+              /> */}
             </>
           )}
         </Link>
