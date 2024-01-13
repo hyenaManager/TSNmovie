@@ -13,12 +13,7 @@ export default function UserProvider({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { data: session } = useSession({
-    required: true,
-    // onUnauthenticated() {
-    //   router.push("/api/auth/signIn");
-    // },
-  });
+  const { data: session } = useSession();
   const { data, status } = useQuery({
     queryKey: ["user", session?.user.email],
     queryFn: async () => {
