@@ -100,12 +100,12 @@ function LoginForm() {
         <p className=" drop-shadow-md text-white">
           {`Still haven't account?`}{" "}
         </p>
-        <Link
-          href={"/api/auth/register"}
+        <button
+          onClick={() => router.push("/api/auth/register")}
           className="text-white bg-fuchsia-600 text-lg drop-shadow-md p-1  rounded-md m-1"
         >
           register now
-        </Link>
+        </button>
         {isSubmiting && <Loading />}
       </div>
     </>
