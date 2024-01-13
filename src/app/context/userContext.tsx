@@ -15,9 +15,9 @@ export default function UserProvider({
   const router = useRouter();
   const { data: session } = useSession({
     required: true,
-    onUnauthenticated() {
-      router.push("/api/auth/signIn");
-    },
+    // onUnauthenticated() {
+    //   router.push("/api/auth/signIn");
+    // },
   });
   const { data, status } = useQuery({
     queryKey: ["user", session?.user.email],
