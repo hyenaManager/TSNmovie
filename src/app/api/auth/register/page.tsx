@@ -6,20 +6,24 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import bgImage from "public/bruh.png";
+import Image from "next/image";
 
 export default function AuthenticationRegister() {
   return (
-    <main
-      className="pageWarper min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
-      style={{
-        backgroundImage: "url(/bruh.png)",
-      }}
-    >
-      <h2 className=" font-mono text-4xl p-2 text-start xsm:w-[50%] sm:w-5hundred font-bold text-fuchsia-700">
+    <main className="pageWarper min-w-full relative min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center">
+      <h2 className=" font-mono text-4xl p-2 text-start xsm:w-[50%] sm:w-5hundred font-bold z-10 text-fuchsia-700">
         YOKEPLAY
       </h2>
       <Toaster />
       <RegisterForm />
+      <Image
+        src={bgImage}
+        placeholder="blur"
+        alt="bgImage"
+        fill
+        className=" bg-cover z-0"
+      />
     </main>
   );
 }
@@ -38,7 +42,7 @@ function RegisterForm() {
 
   async function handleSubmit() {
     const response = await axios.post(
-      "https://yokeplay.vercel.app/api/users",
+      "http://localhost:3000/api/users",
       {
         firstName: firstName,
         lastName: lastName,
@@ -107,7 +111,7 @@ function RegisterForm() {
         e.preventDefault();
         mutation.mutate();
       }}
-      className="pageWarper xsm:w-[96vw] sm:w-[60vw] shadow-[0_0_20px_purple] flex justify-center relative flex-col xsm:p-3 sm:p-4 rounded-lg m-0 bg-black font-mono "
+      className="pageWarper xsm:w-[96vw] sm:w-[60vw] z-10 shadow-[0_0_20px_purple] flex justify-center relative flex-col xsm:p-3 sm:p-4 rounded-lg m-0 bg-black font-mono "
     >
       <label className=" p-1 text-fuchsia-600  text-lg">first name </label>
       <input

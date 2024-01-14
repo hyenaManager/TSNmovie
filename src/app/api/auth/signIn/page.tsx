@@ -7,20 +7,24 @@ import { useMutation } from "@tanstack/react-query";
 import Loading from "@/app/components/loading";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
+import bgImage from "public/bruh.png";
 
 export default function AuthenticationLogin() {
   return (
-    <main
-      className="pageWarper min-w-full min-h-[100vh] bg-gray-200 flex flex-col justify-center items-center bg-cover"
-      style={{
-        backgroundImage: "url(/bruh.png)",
-      }}
-    >
-      <h2 className=" font-mono text-4xl p-2 text-start xsm:w-[50%] sm:w-5hundred font-bold text-fuchsia-700">
+    <main className="pageWarper min-w-full h-[100vh] bg-gray-200 flex flex-col justify-center items-center relative">
+      <h2 className=" z-10 font-mono text-4xl p-2 text-start xsm:w-[50%] sm:w-5hundred font-bold text-fuchsia-700">
         YOKEPLAY
       </h2>
       <Toaster />
       <LoginForm />
+      <Image
+        src={bgImage}
+        placeholder="blur"
+        alt="bgImage"
+        fill
+        className=" bg-cover z-0"
+      />
     </main>
   );
 }
@@ -59,7 +63,7 @@ function LoginForm() {
   return (
     <>
       {errorLogin && (
-        <p className=" text-red-400 text-lg text-center p-2 bg-black m-1 rounded-md">
+        <p className=" text-red-400 text-lg text-center p-2 bg-black m-1 z-10 rounded-md">
           {loginStatus}
         </p>
       )}
@@ -70,7 +74,7 @@ function LoginForm() {
           setIsSubmiting(true);
           handleSubmit();
         }}
-        className="pageWarper xsm:w-[96vw] sm:w-[60vw] relative shadow-[0_0_20px_purple] flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black w-5hundred h-4hundred font-mono "
+        className="pageWarper xsm:w-[96vw] sm:w-[50vw] relative shadow-[0_0_20px_purple] z-10 flex justify-center items-center flex-col p-4 rounded-lg m-0 bg-black h-3hundred font-mono "
       >
         <label className=" p-2 text-fuchsia-600  text-2xl  w-4hundred xsm:text-center sm:text-start ">
           Email
@@ -96,14 +100,14 @@ function LoginForm() {
           Login
         </button>
       </form>
-      <div className=" flex items-center justify-between p-2 ">
+      <div className=" flex items-center z-10 justify-between p-2 ">
         <p className=" drop-shadow-md text-white">
           {`Still haven't account?`}{" "}
         </p>
         <button
           onClick={() => router.push("/api/auth/register")}
           type="button"
-          className="text-white bg-fuchsia-600 text-lg drop-shadow-md p-1  rounded-md m-1"
+          className="text-white bg-fuchsia-600 text-sm drop-shadow-md p-1  rounded-md m-1"
         >
           register now
         </button>

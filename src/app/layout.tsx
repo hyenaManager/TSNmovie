@@ -8,6 +8,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import UserProvider from "./context/userContext";
 import { Toaster } from "react-hot-toast";
 import CurrentUploading from "./components/currentLoadingProcess";
+import { Suspense } from "react";
+import { NavigationEvents } from "./components/routerEvent";
 
 const space_gro = Space_Grotesk({ subsets: ["latin"] });
 
@@ -37,6 +39,9 @@ export default function RootLayout({
             </UserProvider>
           </AuthProvider>
           {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <Suspense fallback={null}>
+            <NavigationEvents />
+          </Suspense>
         </QueryProvider>
       </body>
     </html>

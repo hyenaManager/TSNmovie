@@ -120,7 +120,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
   const changeUserDatas = useMutation(
     async () => {
       const response = await axios.put(
-        `https://yokeplay.vercel.app/api/users/updateUser`,
+        `http://localhost:3000/api/users/updateUser`,
         {
           firstName: firstName,
           lastName: lastName,
