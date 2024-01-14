@@ -17,7 +17,7 @@ export default function DeleteUser({
   const deleteUser = useMutation(
     async () => {
       const response = await axios.delete(
-        `http://localhost:3000/api/users/${userEmail}`
+        `https://yokeplay.vercel.app/api/users/${userEmail}`
       );
       if (response.status === 200) {
         return toast.success(response.data);
