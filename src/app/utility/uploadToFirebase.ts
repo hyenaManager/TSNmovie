@@ -3,7 +3,8 @@ import { storage } from "../firebase";
 import { v4 } from "uuid";
 import toast from "react-hot-toast";
 
-export const uploadFileToFirebase =async (file:File,myFunction:(url:string)=>void,fileDirectory:string)=>{
+export const uploadFileToFirebase =async (file:File,fileDirectory:string,setUrl:(url:string)=>void)=>{
+  let imgUrl = "";
     const fileName = `${fileDirectory}/${file.name + v4()}`;
     const imageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(imageRef, file);
@@ -21,7 +22,9 @@ export const uploadFileToFirebase =async (file:File,myFunction:(url:string)=>voi
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           toast.success("uploaded successfully!");
-          return myFunction(url) //url is the actual path for a video that anyone can access in browser
+          console.log("work somehow and url:::",url);
+          
+          setUrl(url)
         });
       }
     );

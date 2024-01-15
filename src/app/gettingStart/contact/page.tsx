@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import { useCreatingPage } from "@/app/store";
 
 export default function Contact() {
   const [facebookLink, setFacebookLink] = useState(""); //
@@ -14,18 +15,15 @@ export default function Contact() {
   const [telegramLink, setTelegramLink] = useState("");
   const [isFinish, setIsFinish] = useState(false);
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const { userPage }: any = useContext(userProvider);
+  const pageId = useCreatingPage((state) => state.createdPageId);
   async function createContact() {
-    const response = await axios.post(
-      "https://yokeplay.vercel.app/api/contact",
-      {
-        facebook: facebookLink,
-        twitter: twitterLink,
-        whatsapp: whatsappLink,
-        telegram: telegramLink,
-        pageId: userPage?.id,
-      }
-    );
+    const response = await axios.post("http://localhost:3000/api/contact", {
+      facebook: facebookLink,
+      twitter: twitterLink,
+      whatsapp: whatsappLink,
+      telegram: telegramLink,
+      pageId: pageId,
+    });
     if (response.status === 200) {
       toast.success("working.....");
     } else {
@@ -43,7 +41,7 @@ export default function Contact() {
   });
   useEffect(() => {
     mutation.mutate();
-  }, [userPage]);
+  }, [pageId]);
 
   return (
     <div className="fixed pageWarper z-50 top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center ">

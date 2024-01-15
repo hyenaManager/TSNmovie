@@ -61,6 +61,7 @@ export default function CreateClips({
       videoElement.src = objectURL;
     }
   };
+  console.log(user, "is currrent id>.........................");
 
   async function postMovie(url: string) {
     const response = await axios.post("https://yokeplay.vercel.app/api/clips", {
@@ -113,12 +114,12 @@ export default function CreateClips({
     }
   );
   const handleSubmit = async () => {
-    const checkSuspend = await isSuspended(user.suspended);
-    if (checkSuspend?.suspended === true) {
-      return toast.error(checkSuspend.message, {
-        duration: 5000,
-      });
-    }
+    //const checkSuspend = await isSuspended(user.suspended);
+    // if (checkSuspend?.suspended === true) {
+    //   return toast.error(checkSuspend.message, {
+    //     duration: 5000,
+    //   });
+    // }
     setIsSubmiting(true);
     mutation.mutate();
   };

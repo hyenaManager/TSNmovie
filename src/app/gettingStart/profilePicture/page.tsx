@@ -23,74 +23,107 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { storage } from "@/app/firebase";
+import { useCreatingPage } from "@/app/store";
+import { uploadFileToFirebase } from "@/app/utility/uploadToFirebase";
+import Uploading from "@/app/components/uploading";
 export default function GettingStart() {
-  const searchParams = useSearchParams();
-  const pageCoverImage = searchParams.get("coverImage");
+  const pageCoverImage = useCreatingPage((state) => state.coverImage);
   const { data: session } = useSession();
-  const pageNameRef = useRef("");
+  const [pageName, setPageName] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const [profileImageUrl, setProfileImageUrl] = useState(""); //link of profile image to firebase
+  const [profileImage, setProfileImage] = useState<File | null>(null); //link of profile image to firebase
   const uploadProfilePic = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
+  const setCreatedPageId = useCreatingPage((state) => state.setPageId);
+  const [profileImgUrl, setProfileImgUrl] = useState("");
+  const [coverImgUrl, setCoverImgUrl] = useState("");
 
   //when the user click on the edit button invoke input element to select pictures
   const handleUploadProfilePic = () => {
     uploadProfilePic.current?.click();
   };
-  //change current value everytime the user name change
-  const handleUserPageName = (name: string) => {
-    pageNameRef.current = name;
-  };
+  console.log("profileUrl", profileImgUrl);
+  console.log("coverUrl", coverImgUrl);
 
   //create new page
-  async function createPage() {
-    const response = await axios.post("https://yokeplay.vercel.app/api/pages", {
-      name: pageNameRef.current,
+  async function createPage(coverImgUrl: string, profileImgUrl: string) {
+    const finalForm = {
+      name: pageName,
       adminId: session?.user.id,
-      image: profileImageUrl,
-      coverImage: pageCoverImage,
+      image: profileImgUrl,
+      coverImage: coverImgUrl,
+    };
+    console.log("final form of creating page:", finalForm);
+
+    const response = await axios.post("http://localhost:3000/api/pages", {
+      name: pageName,
+      adminId: session?.user.id,
+      image: profileImgUrl,
+      coverImage: coverImgUrl,
     });
     if (response.status === 200) {
       toast.success("creating page success !!");
-      //if creating page sucess ,create contact
+      setCreatedPageId(response.data.id);
+      toast.success("page is created successfully 👌");
+      router.push("/gettingStart/contact");
     } else {
       setIsSubmiting(false);
       toast.error(`error - ${response.data}`);
     }
   }
 
-  async function handleUploadPicToFirebase(image: File) {
-    if (profileImageUrl !== "") {
-      const coverImageRef = ref(storage, profileImageUrl);
-      deleteObject(coverImageRef)
-        .then(() => {
-          toast.success("deleted the previous picture");
-        })
-        .catch((error) => {
-          toast.error(error);
-        });
-    }
-    const fileName = `pages/${image?.name + v4()}`;
-    const imageRef = ref(storage, fileName);
-    // console.log(fileName, " is file name....");
-    const snapshot = await uploadBytes(imageRef, image as any);
-    const url = await getDownloadURL(snapshot.ref);
-    toast.success("success ");
-    setProfileImageUrl(url);
-  }
-  const mutation = useMutation(createPage, {
-    onSuccess: () => {
-      toast.success("page is created successfully 👌");
-      router.push("/gettingStart/contact");
-    },
-    onError: () => toast.error("Opps there is error in page creation "),
-  });
-  console.log("cover imagess: ", pageCoverImage);
-  console.log("profile imagess: ", profileImageUrl);
+  const handleUploadPictures = async () => {
+    //for coverImage
+    await uploadFileToFirebase(pageCoverImage!, "page", setCoverImgUrl);
+    //for profileImage
+    await uploadFileToFirebase(profileImage!, "page", setProfileImgUrl);
+  };
+  // async function handleUploadPicToFirebase(image: File) {
+  //   if (profileImageUrl !== "") {
+  //     const coverImageRef = ref(storage, profileImageUrl);
+  //     deleteObject(coverImageRef)
+  //       .then(() => {
+  //         toast.success("deleted the previous picture");
+  //       })
+  //       .catch((error) => {
+  //         toast.error(error);
+  //       });
+  //   }
+  //   const fileName = `pages/${image?.name + v4()}`;
+  //   const imageRef = ref(storage, fileName);
+  //   // console.log(fileName, " is file name....");
+  //   const snapshot = await uploadBytes(imageRef, image as any);
+  //   const url = await getDownloadURL(snapshot.ref);
+  //   toast.success("success ");
+  //   setProfileImageUrl(url);
+  // }
+  // const mutation = useMutation(
+  //   async () => {
+  //     setIsSubmiting(true);
+  //     await handleUploadPictures();
+  //   },
+  //   {
+  //     onSettled: () => {
+  //       toast.success("page is created successfully 👌");
+  //       router.push("/gettingStart/contact");
+  //     },
+  //     onError: () => toast.error("Opps there is error in page creation "),
+  //   }
+  // );
 
+  useEffect(() => {
+    if (profileImgUrl && coverImgUrl) {
+      createPage(profileImgUrl, coverImgUrl);
+    }
+  }, [profileImgUrl, coverImgUrl]);
   return (
     <>
       <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
+        {!profileImage && (
+          <h2 className="text-red-400 text-xl">
+            * please choose profile picture and page name
+          </h2>
+        )}
         <div className=" flex flex-col border bg-center rounded-t-xl justify-center xsm:h-[50vh] sm:h-[70vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
           <Image
             fill
@@ -99,8 +132,8 @@ export default function GettingStart() {
               objectFit: "cover",
             }}
             quality={100}
-            className=" rounded-t-xl"
-            src={pageCoverImage || "/defaultProfile.jpeg"}
+            className=" rounded-t-xl object-cover"
+            src={URL.createObjectURL(pageCoverImage!) || "/defaultProfile.jpeg"}
           />
 
           {/* coverImage edit button */}
@@ -112,14 +145,18 @@ export default function GettingStart() {
               accept="image/*"
               ref={uploadProfilePic}
               onChange={(e) => {
-                handleUploadPicToFirebase(e?.target?.files?.[0] as File);
+                setProfileImage(e?.target?.files?.[0] as File);
               }}
               hidden
             />
 
             <Image
               //if uploaded image exist? the user can preview the image
-              src={profileImageUrl || "/defaultProfile.jpeg"}
+              src={
+                profileImage
+                  ? URL.createObjectURL(profileImage)
+                  : "/defaultProfile.jpeg"
+              }
               width={200}
               height={200}
               alt="hat"
@@ -133,19 +170,28 @@ export default function GettingStart() {
             />
           </div>
           <input
-            onChange={(e) => handleUserPageName(e.target.value)}
+            onChange={(e) => setPageName(e.target.value)}
             placeholder="page name"
             className=" outline-none p-2 z-50 border-2 rounded-lg text-lg text-fuchsia-500"
             type="text"
           />
+        </div>
+        {profileImage && pageName && (
           <button
-            onClick={() => mutation.mutate()}
-            className=" p-2 rounded-lg top-1 left-1 absolute bg-green-400 hover:bg-green-600  text-white"
+            onClick={() => handleUploadPictures()}
+            className=" p-2 rounded-lg bg-green-400 hover:bg-green-600  text-white"
           >
             Create page now
           </button>
-        </div>
+        )}
+        <button
+          className=" p-2 rounded-lg fixed top-1 left-1 bg-black text-white"
+          onClick={() => router.back()}
+        >
+          go back
+        </button>
       </div>
+      {isSubmiting && <Uploading />}
     </>
   );
 }
