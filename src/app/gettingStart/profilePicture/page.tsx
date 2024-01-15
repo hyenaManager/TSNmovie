@@ -133,7 +133,11 @@ export default function GettingStart() {
             }}
             quality={100}
             className=" rounded-t-xl object-cover"
-            src={URL.createObjectURL(pageCoverImage!) || "/defaultProfile.jpeg"}
+            src={
+              pageCoverImage
+                ? URL.createObjectURL(pageCoverImage)
+                : "/defaultProfile.jpeg"
+            }
           />
 
           {/* coverImage edit button */}
