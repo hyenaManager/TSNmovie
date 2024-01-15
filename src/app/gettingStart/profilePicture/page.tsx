@@ -46,6 +46,7 @@ export default function GettingStart() {
   console.log("coverUrl", coverImgUrl);
 
   //create new page
+
   async function createPage(coverImgUrl: string, profileImgUrl: string) {
     const finalForm = {
       name: pageName,
