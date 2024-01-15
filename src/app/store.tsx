@@ -76,3 +76,43 @@ export const useSortedPage = create<sortedPageType>((set) => ({
       sortedBy: newType,
     })),
 }));
+
+type creatingPageType = {
+  coverImage: File | null;
+  profileImage: File | null;
+  coverImageUrl: string | "";
+  profileImageUrl: string | "";
+  createdPageId: string | "";
+  setCoverImage: (coverImage: File) => void;
+  setProfileImage: (profileImage: File) => void;
+  setCoverImageUrl: (coverImageUrl: string) => void;
+  setProfileImageUrl: (profileImageUrl: string) => void;
+  setPageId: (pageId: string) => void;
+};
+export const useCreatingPage = create<creatingPageType>((set) => ({
+  coverImage: null,
+  profileImage: null,
+  coverImageUrl: "",
+  profileImageUrl: "",
+  createdPageId: "",
+  setCoverImage: (coverImage: File) =>
+    set(() => ({
+      coverImage: coverImage,
+    })),
+  setProfileImage: (profileImage: File) =>
+    set(() => ({
+      profileImage: profileImage,
+    })),
+  setCoverImageUrl: (coverImageUrl: string) =>
+    set(() => ({
+      coverImageUrl: coverImageUrl,
+    })),
+  setProfileImageUrl: (profileImageUrl: string) =>
+    set(() => ({
+      profileImageUrl: profileImageUrl,
+    })),
+  setPageId: (pageId: string) =>
+    set(() => ({
+      createdPageId: pageId,
+    })),
+}));

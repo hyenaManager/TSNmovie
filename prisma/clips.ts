@@ -74,7 +74,9 @@ export async function createClip(data:clipType) {
         })
         return createClip
     }catch(error){
-        throw error
+        console.log(error,"creating error");
+        
+        return error
     }
 }
 
