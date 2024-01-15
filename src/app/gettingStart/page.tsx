@@ -34,6 +34,12 @@ export default function GettingStart() {
             Create your own page
           </Link>
         </div>
+        <button
+          className=" border rounded-md p-2 text-white bg-black fixed top-4 left-4"
+          onClick={() => router.back()}
+        >
+          go back
+        </button>
       </div>
     </>
   );
