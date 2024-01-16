@@ -106,7 +106,7 @@ export function SeriesOverview({
       }
     );
     if (response.status === 200) {
-      queryClient.invalidateQueries(["page", pageOwnerId]);
+      queryClient.invalidateQueries({ queryKey: ["page", pageOwnerId] });
     }
   };
   useEffect(() => {
