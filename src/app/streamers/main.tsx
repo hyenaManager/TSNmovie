@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import PageSearchBar from "../components/searchBar";
+import PageSearchBar from "../../components/searchBar";
 import { NormalSkeleton, HalfSkeleton } from "../skeletons/skeletonStreamer";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -56,7 +56,7 @@ export default function Main() {
           </div>
         )}
         <section className="pageWarper mt-3 w-full h-full p-2  grid gap-2 xsm:grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 max-h-[86vh] overflow-auto">
-          {status === "loading" ? (
+          {status === "pending" ? (
             <>
               <NormalSkeleton />
               <HalfSkeleton />

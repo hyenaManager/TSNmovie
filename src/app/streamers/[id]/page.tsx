@@ -1,5 +1,5 @@
-import AdminPage from "../../components/streamers/adminPage";
-import CatagoryNavbar from "../../components/streamers/catagoryOfMovie";
+import AdminPage from "../../../components/streamers/adminPage";
+import CatagoryNavbar from "../../../components/streamers/catagoryOfMovie";
 import { Suspense } from "react";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { NormalSkeleton } from "@/app/skeletons/skeletonStreamer";

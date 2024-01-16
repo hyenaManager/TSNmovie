@@ -15,7 +15,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Image from "next/image";
-import Loading from "@/app/components/loading";
+import Loading from "../../../../components/loading";
 
 export default function ProfilePictureSection() {
   const { user, userPage }: any = useContext(userProvider);

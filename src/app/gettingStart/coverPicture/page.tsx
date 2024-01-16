@@ -1,19 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { v4 } from "uuid";
-import toast from "react-hot-toast";
+import { useRef, useState } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { storage } from "@/app/firebase";
 import Link from "next/link";
 import { useCreatingPage } from "@/app/store";
 import { useRouter } from "next/navigation";

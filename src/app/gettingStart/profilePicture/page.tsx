@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 import { useCreatingPage } from "@/app/store";
 import { uploadFileToFirebase } from "@/app/utility/uploadToFirebase";
-import Uploading from "@/app/components/uploading";
+import Uploading from "../../../components/uploading";
 import Link from "next/link";
 export default function GettingStart() {
   const pageCoverImage = useCreatingPage((state) => state.coverImage);

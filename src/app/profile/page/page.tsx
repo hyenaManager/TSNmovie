@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import MainList from "./main";
 import { Toaster } from "react-hot-toast";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
-import { EditProfileButton } from "@/app/components/floatingCreateBtn";
+import { EditProfileButton } from "../../../components/floatingCreateBtn";
 
 export default function ProfilePage() {
   return (

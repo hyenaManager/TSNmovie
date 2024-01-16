@@ -1,4 +1,4 @@
-import UserProfileWidget from "../components/profile/userProfileWidget";
+import UserProfileWidget from "../../components/profile/userProfileWidget";
 import FollowAndVistPageSection from "./followSection";
 export default function Profile() {
   return (

@@ -1,19 +1,23 @@
 "use client";
-import CatagoryNavbar from "../../components/streamers/catagoryOfMovie";
+import CatagoryNavbar from "../../../components/streamers/catagoryOfMovie";
 import { Suspense, lazy, useContext, useState } from "react";
 import {
   CreateSomethingButton,
   EditProfileButton,
-} from "@/app/components/floatingCreateBtn";
-import AdminPage from "@/app/components/streamers/adminPage";
+} from "../../../components/floatingCreateBtn";
+import AdminPage from "../../../components/streamers/adminPage";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { userProvider } from "@/app/context/userContext";
-const CreateClips = lazy(() => import("@/app/components/clips/createClips"));
-const CreateSeries = lazy(() => import("@/app/components/series/createSeries"));
+const CreateClips = lazy(() => import("../../../components/clips/createClips"));
+const CreateSeries = lazy(
+  () => import("../../../components/series/createSeries")
+);
 import { useCatagory } from "@/app/store";
 
-const ClipList = lazy(() => import("../../components/streamers/clipList"));
-const SeriesList = lazy(() => import("../../components/streamers/seriesList"));
+const ClipList = lazy(() => import("../../../components/streamers/clipList"));
+const SeriesList = lazy(
+  () => import("../../../components/streamers/seriesList")
+);
 
 export default function MainList() {
   const { userPage }: any = useContext(userProvider);

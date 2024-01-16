@@ -7,7 +7,7 @@ import Link from "next/link";
 import NotiSkeletonLi from "../skeletons/notiSkeletons";
 import Image from "next/image";
 import { getTimeAgo } from "../utility/timeAgo";
-import { ClipLoading } from "../components/loading";
+import { ClipLoading } from "../../components/loading";
 import { useInView } from "react-hook-inview";
 import { DeleteAllUserNoti, DeleteOneNotiById } from "./deleteNoti";
 

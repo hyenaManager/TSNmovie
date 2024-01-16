@@ -1,5 +1,4 @@
 import React from "react";
-import GetPageByItsUnique from "./getPageByUnique";
 import Main from "./main";
 
 export default function Pages() {

@@ -1,15 +1,15 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
-import NavBar from "./components/navBars";
+import NavBar from "../components/navBars";
 import AuthProvider from "./context/authProvider";
 import QueryProvider from "./context/reactQeueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import UserProvider from "./context/userContext";
 import { Toaster } from "react-hot-toast";
-import CurrentUploading from "./components/currentLoadingProcess";
+import CurrentUploading from "../components/currentLoadingProcess";
 import { Suspense } from "react";
-import { NavigationEvents } from "./components/routerEvent";
+import { NavigationEvents } from "../components/routerEvent";
 
 const space_gro = Space_Grotesk({ subsets: ["latin"] });
 

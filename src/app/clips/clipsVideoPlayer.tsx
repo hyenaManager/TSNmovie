@@ -12,13 +12,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 
 import Image from "next/image";
-const ReportSomething = lazy(() => import("../components/reportComponent"));
+const ReportSomething = lazy(() => import("../../components/reportComponent"));
 import { useInView } from "react-hook-inview";
 
 import axios from "axios";
 import toast from "react-hot-toast";
 
-import MoreOption from "../components/clips/moreOption";
+import MoreOption from "../../components/clips/moreOption";
 import SkeletonClip from "../skeletons/skeletonClip";
 import { catchingError } from "../utility/catchingError";
 import { userProvider } from "../context/userContext";

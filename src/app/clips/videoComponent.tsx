@@ -4,15 +4,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import axios from "axios";
-import CreateButton from "../components/floatingCreateBtn";
-import { ClipLoading } from "../components/loading";
+import CreateButton from "../../components/floatingCreateBtn";
+import { ClipLoading } from "../../components/loading";
 import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
 import { AnimatePresence } from "framer-motion";
 import Loading from "../loading";
-import CreateClips from "../components/clips/createClips";
-import ClipComment from "../components/comment";
+import CreateClips from "../../components/clips/createClips";
+import ClipComment from "../../components/comment";
 
 type videoPageProp = {
   id: string;

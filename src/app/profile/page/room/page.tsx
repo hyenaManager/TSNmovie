@@ -15,7 +15,7 @@ import Link from "next/link";
 import RoomVideoSkeleton, {
   RoomEpisodeSkeleton,
 } from "@/app/skeletons/roomSkeletons";
-import CreateEpisode from "@/app/components/episode/createEpisode";
+import CreateEpisode from "../../../../components/episode/createEpisode";
 
 export default function Pages() {
   const [episode, setEpisode] = useState({
