@@ -57,7 +57,8 @@ function RegisterForm() {
     );
   }
 
-  const mutation = useMutation(handleSubmit, {
+  const mutation = useMutation({
+    mutationFn: handleSubmit,
     onSuccess: async () => {
       try {
         const response = await signIn("credentials", {

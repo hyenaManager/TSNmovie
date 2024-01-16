@@ -59,6 +59,7 @@ export default function VideoComponent() {
         return error;
       }
     },
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
 
@@ -67,10 +68,12 @@ export default function VideoComponent() {
       fetchNextPage();
     }
   }, [inView]);
+  console.log(data, " is data for all clips...........");
+
   return (
     <>
       <main className="pageWarper flex flex-col justify-center items-center pt-14  min-h-[100vh] ">
-        {status === "loading" && <Loading />}
+        {status === "pending" && <Loading />}
         {data?.pages?.map((page) => (
           <React.Fragment key={page.nextCursor}>
             {page?.clips?.map((video: videoPageProp, index: number) => (

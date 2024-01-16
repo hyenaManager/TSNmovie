@@ -10,15 +10,17 @@ import { userProvider } from "../context/userContext";
 export const DeleteAllUserNoti = () => {
   const queryClient = useQueryClient();
   const { user }: any = useContext(userProvider);
-  const deleteAllNoti = useMutation(async () => {
-    const response = await axios.delete(
-      `http://yokeplay.vercel.app/api/notifications?userId=${user.id}`
-    );
-    if (response.status === 200) {
-      queryClient.invalidateQueries(["notifications"]);
-    } else {
-      toast.error(response.statusText);
-    }
+  const deleteAllNoti = useMutation({
+    mutationFn: async () => {
+      const response = await axios.delete(
+        `http://yokeplay.vercel.app/api/notifications?userId=${user.id}`
+      );
+      if (response.status === 200) {
+        queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      } else {
+        toast.error(response.statusText);
+      }
+    },
   });
   return (
     <button onClick={() => deleteAllNoti.mutate()}>
@@ -29,15 +31,17 @@ export const DeleteAllUserNoti = () => {
 
 export const DeleteOneNotiById = ({ notiId }: { notiId: string }) => {
   const queryClient = useQueryClient();
-  const deleteANoti = useMutation(async () => {
-    const response = await axios.delete(
-      `http://localhost:3000/api/notifications/${notiId}`
-    );
-    if (response.status === 200) {
-      queryClient.invalidateQueries(["notifications"]);
-    } else {
-      toast.error(response.statusText);
-    }
+  const deleteANoti = useMutation({
+    mutationFn: async () => {
+      const response = await axios.delete(
+        `http://localhost:3000/api/notifications/${notiId}`
+      );
+      if (response.status === 200) {
+        queryClient.invalidateQueries({ queryKey: ["notifications"] });
+      } else {
+        toast.error(response.statusText);
+      }
+    },
   });
   return (
     <button>

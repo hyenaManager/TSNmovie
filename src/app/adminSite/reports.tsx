@@ -19,8 +19,8 @@ export default function Reports() {
       }
     },
   });
-  const deleteReport = useMutation(
-    async (id: string) => {
+  const deleteReport = useMutation({
+    mutationFn: async (id: string) => {
       const response = await axios.delete(
         `http://localhost:3000/api/reports?reportId=${id}`
       );
@@ -30,11 +30,10 @@ export default function Reports() {
         toast.error(response.statusText);
       }
     },
-    {
-      onSettled: () => queryClient.invalidateQueries(["allReports"]),
-    }
-  );
-  if (status === "loading") {
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["allReports"] }),
+  });
+  if (status === "pending") {
     return <p>Loading...</p>;
   }
 

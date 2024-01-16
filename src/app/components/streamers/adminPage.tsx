@@ -47,7 +47,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
       viewCount: [...data?.viewedBy, session?.user.email],
     });
     if (response.status === 200) {
-      queryClient.invalidateQueries(["page"]);
+      queryClient.invalidateQueries({ queryKey: ["page"] });
     }
   };
   //check whether the user already exist in the followers,
@@ -70,10 +70,11 @@ export default function AdminPage({ pageId }: { pageId: string }) {
       return "there's been some error";
     }
   };
-  const mutation = useMutation(handleFollow, {
+  const mutation = useMutation({
+    mutationFn: handleFollow,
     onSuccess: () => {
-      queryClient.invalidateQueries(["user", user.email]);
-      queryClient.invalidateQueries(["page", pageId]);
+      queryClient.invalidateQueries({ queryKey: ["user", user.email] });
+      queryClient.invalidateQueries({ queryKey: ["page", pageId] });
     },
   });
   useEffect(() => {
@@ -83,7 +84,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
   }, [session?.user.email, data]);
   console.log(data?.contact, "is contact");
 
-  if (status === "loading") return <AdminSkeleton />;
+  if (status === "pending") return <AdminSkeleton />;
 
   return (
     <>

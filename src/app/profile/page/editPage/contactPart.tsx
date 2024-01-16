@@ -67,8 +67,10 @@ export function ChangePageContact() {
         .catch((error) => toast.error(error.message));
     }
   };
-  const mutation = useMutation(handleChangeOrCreateContact, {
-    onSuccess: () => queryClient.invalidateQueries(["page", userPage?.id]),
+  const mutation = useMutation({
+    mutationFn: handleChangeOrCreateContact,
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["page", userPage?.id] }),
   });
   //reset edit in contact
   const handleCancelEdit = () => {

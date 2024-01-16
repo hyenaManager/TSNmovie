@@ -14,8 +14,8 @@ export default function DeleteUser({
   name: string;
 }) {
   const queryClient = useQueryClient();
-  const deleteUser = useMutation(
-    async () => {
+  const deleteUser = useMutation({
+    mutationFn: async () => {
       const response = await axios.delete(
         `http://localhost:3000/api/users/${userEmail}`
       );
@@ -25,10 +25,8 @@ export default function DeleteUser({
         return toast.error(" error in deleting user");
       }
     },
-    {
-      onSettled: () => queryClient.invalidateQueries(["allUsers"]),
-    }
-  );
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ["allUsers"] }),
+  });
   return (
     <button
       onClick={() => deleteUser.mutate()}

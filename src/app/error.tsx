@@ -35,7 +35,10 @@ export default function Error({
             <line x1="12" x2="12.01" y1="16" y2="16" />
           </svg>
           <div className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Error: <h3 className=" text-red-500">{error.message}</h3>
+            <h3 className=" text-red-500">
+              Seem like there is a problem please check you internet connection
+              and try again
+            </h3>
           </div>
           <div className="flex justify-center mt-6">
             <button

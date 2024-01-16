@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import DefaultVideoPlayer from "./videoPlayer";
 import { useSearchParams } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import RoomVideoSkeleton, {
@@ -82,7 +82,7 @@ export default function Pages() {
   return (
     <div className="flex xsm:flex-col sm:flex-row xsm:justify-start sm:justify-center min-h-[100vh]  text-white pageWarper sm:ml-3 sm:mr-3 xsm:ml-1 xsm:mr-1">
       <main className=" flex flex-col items-center xsm:pt-10 sm:pt-14 xsm:w-[97vw] sm:w-[95%] bg-black ">
-        {status === "loading" ? (
+        {status === "pending" ? (
           <RoomVideoSkeleton />
         ) : (
           <DefaultVideoPlayer
@@ -98,7 +98,7 @@ export default function Pages() {
         )}
       </main>
 
-      {status === "loading" ? (
+      {status === "pending" ? (
         <RoomEpisodeSkeleton />
       ) : (
         <aside

@@ -63,8 +63,8 @@ function Rating({
   const { user, userPage }: any = useContext(userProvider);
   const queryClient = useQueryClient();
   const [rating, setRating] = useState(0);
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       const response = await axios.put(
         `http://localhost:3000/api/pages/rating`,
         {
@@ -80,12 +80,10 @@ function Rating({
         toast.error(response.statusText);
       }
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["page"]);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["page"] });
+    },
+  });
 
   return (
     <div className="pageWarper fixed top-0 left-0 backdrop-brightness-50 z-50 w-full h-full flex justify-center items-center">

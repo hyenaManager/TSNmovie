@@ -51,17 +51,19 @@ export default function DefaultVideoPlayer({
     );
     if (response.status === 200) {
       toast.success("delete successfully");
-      queryClient.invalidateQueries(["series"]);
+      queryClient.invalidateQueries({ queryKey: ["series"] });
     }
   };
-  const { mutate, status } = useMutation(async () => {
-    const videoRef = ref(storage, videoSource);
-    deleteObject(videoRef)
-      .then(() => handleDeleteEpisode())
-      .catch((error) => {
-        toast.error(error.message);
-        console.log(error);
-      });
+  const { mutate, status } = useMutation({
+    mutationFn: async () => {
+      const videoRef = ref(storage, videoSource);
+      deleteObject(videoRef)
+        .then(() => handleDeleteEpisode())
+        .catch((error) => {
+          toast.error(error.message);
+          console.log(error);
+        });
+    },
   });
   return (
     <>
@@ -161,7 +163,7 @@ export default function DefaultVideoPlayer({
           </>
         )}
       </div>
-      {status === "loading" && (
+      {status === "pending" && (
         <div className=" fixed top-0 left-0 w-full h-full backdrop-blur-sm z-50 flex justify-center items-center">
           <h3 className="text-white text-4xl">Deleting....</h3>
         </div>

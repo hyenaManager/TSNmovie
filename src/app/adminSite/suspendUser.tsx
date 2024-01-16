@@ -13,35 +13,39 @@ export default function SuspendUser({
   userId: string;
 }) {
   const { user }: any = useContext(userProvider);
-  const notifyUser = useMutation(async () => {
-    const response = await axios.post(
-      `http://localhost:3000/api/notifications`,
-      {
-        message: "you are suspended by code number 1",
-        type: "suspend",
-        holder: "clip",
-        userEmail: user.email,
-        userId: userId,
-        holderId: 1001,
+  const notifyUser = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post(
+        `http://localhost:3000/api/notifications`,
+        {
+          message: "you are suspended by code number 1",
+          type: "suspend",
+          holder: "clip",
+          userEmail: user.email,
+          userId: userId,
+          holderId: 1001,
+        }
+      );
+      if (response.status === 200) {
+        return toast.success(response.data);
       }
-    );
-    if (response.status === 200) {
-      return toast.success(response.data);
-    }
-    if (response.status === 500) {
-      return toast.error(response.statusText);
-    }
+      if (response.status === 500) {
+        return toast.error(response.statusText);
+      }
+    },
   });
-  const suspendUser = useMutation(async () => {
-    const response = await axios.post(
-      `http://localhost:3000/api/users/suspendUser`,
-      {
-        userEmail: userEmail,
+  const suspendUser = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post(
+        `http://localhost:3000/api/users/suspendUser`,
+        {
+          userEmail: userEmail,
+        }
+      );
+      if (response.status === 200) {
+        return toast.success(response.data as string);
       }
-    );
-    if (response.status === 200) {
-      return toast.success(response.data as string);
-    }
+    },
   });
   return (
     <button

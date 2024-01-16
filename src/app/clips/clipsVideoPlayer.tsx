@@ -113,7 +113,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
   const mutation = useMutation({
     mutationFn: handleLike,
     onMutate: async () => {
-      await queryClient.cancelQueries(["clip", id]);
+      await queryClient.cancelQueries({ queryKey: ["clip", id] });
       const previousClip: any = queryClient.getQueryData<any>(["clip", id]);
       if (!isLiked) {
         queryClient.setQueryData(["clip", id], {
@@ -136,10 +136,10 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
       queryClient.setQueryData(["clip", id], () => context.previousClip);
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["clip", id]);
+      queryClient.invalidateQueries({ queryKey: ["clip", id] });
     },
   });
-  if (status === "loading") return <SkeletonClip />;
+  if (status === "pending") return <SkeletonClip />;
 
   return (
     <article

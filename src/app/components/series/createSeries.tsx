@@ -70,12 +70,13 @@ export default function CreateSeries({
       }
     );
   }
-  const mutation = useMutation(handleUploadImageToFirebase, {
+  const mutation = useMutation({
+    mutationFn: handleUploadImageToFirebase,
     onSuccess: () => {
       setIsSubmiting(false);
       toast.success("series created successfully ");
       handleVisibility();
-      queryClient.invalidateQueries(["page"]);
+      queryClient.invalidateQueries({ queryKey: ["page"] });
     },
     onError: (error: any) => {
       toast.error(error.message);

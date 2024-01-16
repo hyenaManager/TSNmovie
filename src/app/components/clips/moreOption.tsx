@@ -51,14 +51,12 @@ export default function MoreOption({
   //     onSuccess: () => queryClient.invalidateQueries(["clips"]),
   //   }
   // );
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       handleDeleteClip();
     },
-    {
-      onSuccess: () => queryClient.invalidateQueries(["clips"]),
-    }
-  );
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["clips"] }),
+  });
   return (
     <div className=" moreOption z-30 flex flex-col p-2">
       <FontAwesomeIcon

@@ -66,8 +66,8 @@ export default function ProfilePictureSection() {
   };
 
   //upload and save changes
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       let targetImg: any = null;
       //if cover pic is already exist, delete the existing cover picture
       if (typeOfPicture === "cover" && userPage.coverImage) {
@@ -122,24 +122,22 @@ export default function ProfilePictureSection() {
         }
       );
     },
-    {
-      onSuccess: () => {
-        // Invalidate and refetch
-        setUploadedCoverImg(undefined);
-        setUploadedProfileImg(undefined);
-        queryClient.invalidateQueries(["page"]);
-        queryClient.invalidateQueries(["user", user?.email]);
-        toast.success("saved successfully 👍", {
-          duration: 4000,
-        });
-      },
-      onError: (error: any) => {
-        setUploadedCoverImg(undefined);
-        setUploadedProfileImg(undefined);
-        toast.error(error.message);
-      },
-    }
-  );
+    onSuccess: () => {
+      // Invalidate and refetch
+      setUploadedCoverImg(undefined);
+      setUploadedProfileImg(undefined);
+      queryClient.invalidateQueries({ queryKey: ["page"] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.email] });
+      toast.success("saved successfully 👍", {
+        duration: 4000,
+      });
+    },
+    onError: (error: any) => {
+      setUploadedCoverImg(undefined);
+      setUploadedProfileImg(undefined);
+      toast.error(error.message);
+    },
+  });
 
   return (
     <div className=" flex flex-col border bg-center rounded-t-xl justify-center h-[35vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
@@ -252,8 +250,8 @@ function ChangProfileName() {
   const [pageName, setPageName] = useState("");
   const [editingProfileName, setEditingProfileName] = useState(false);
   const queryClient = useQueryClient();
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       const response = await axios.put(
         `http://localhost:3000/api/pages/${userPage?.id}`,
         {
@@ -265,18 +263,16 @@ function ChangProfileName() {
       );
       return response.data;
     },
-    {
-      onSuccess: () => {
-        toast.success("page's name changed successfully ");
-        queryClient.invalidateQueries(["page"]);
-      },
-      onError: (error: any) => {
-        toast.error(`error-${error.message}`, {
-          duration: 5000,
-        });
-      },
-    }
-  );
+    onSuccess: () => {
+      toast.success("page's name changed successfully ");
+      queryClient.invalidateQueries({ queryKey: ["page"] });
+    },
+    onError: (error: any) => {
+      toast.error(`error-${error.message}`, {
+        duration: 5000,
+      });
+    },
+  });
 
   useEffect(() => setPageName(userPage?.name), [userPage]);
   return (

@@ -47,6 +47,7 @@ export default function ChildrenComment({
         toast.error(response.statusText);
       }
     },
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
 

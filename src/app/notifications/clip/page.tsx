@@ -48,8 +48,8 @@ export default function ClipNoti() {
     },
   });
 
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       const response = await axios.put(
         "http://localhost:3000/api/notifications",
         {
@@ -60,10 +60,9 @@ export default function ClipNoti() {
         toast.error(response.statusText);
       }
     },
-    {
-      onSuccess: () => queryClient.invalidateQueries(["notifications"]),
-    }
-  );
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["notifications"] }),
+  });
 
   useEffect(() => {
     if (notiWatched === "false") {

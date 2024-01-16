@@ -33,7 +33,8 @@ export default function Contact() {
       toast.error(response.statusText);
     }
   }
-  const mutation = useMutation(createContact, {
+  const mutation = useMutation({
+    mutationFn: createContact,
     onSuccess: () => {
       toast.success("congratulation you just made a page ", {
         duration: 5000,
@@ -47,7 +48,7 @@ export default function Contact() {
 
   return (
     <div className="fixed pageWarper z-50 top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center ">
-      {mutation.isLoading && (
+      {mutation.isPending && (
         <h1 className=" text-4xl text-black text-center">
           Creating contact....
         </h1>

@@ -79,8 +79,8 @@ export default function CreateClips({
     }
   }
 
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       if (clipVideo == null) return setIsSubmiting(false);
       const fileName = `clips/${clipVideo?.name + v4()}`; //making a file path name for video ,v4 is random string generator something like (11lj-l4lj-23;j-faaf)
       const imageRef = ref(storage, fileName);
@@ -107,12 +107,10 @@ export default function CreateClips({
         }
       );
     },
-    {
-      onSuccess: () =>
-        // Invalidate and refetch
-        queryClient.invalidateQueries(["clips"]),
-    }
-  );
+    onSuccess: () =>
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["clips"] }),
+  });
   const handleSubmit = async () => {
     //const checkSuspend = await isSuspended(user.suspended);
     // if (checkSuspend?.suspended === true) {

@@ -54,17 +54,6 @@ export function UserPic() {
       }
     );
   }
-  // const changeProfilePic = async ()=>{
-  //   const response = await axios.put(`http://localhost:300/api/users/${user?.email}`,{
-
-  //   })
-  // }
-  // const mutation = useMutation(changeProfilePic, {
-  //   onSuccess: () => {
-  //     toast.success("pic changed successfully");
-  //     queryClient.invalidateQueries(["user"]);
-  //   },
-  // });
   return (
     <div className=" relative flex p-2 justify-center items-center">
       <Image

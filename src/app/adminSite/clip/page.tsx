@@ -3,7 +3,7 @@ import ClipVideoPlayer from "@/app/clips/clipsVideoPlayer";
 import ClipComment from "@/app/components/comment";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
 import Link from "next/link";

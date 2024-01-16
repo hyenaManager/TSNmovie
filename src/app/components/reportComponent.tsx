@@ -19,8 +19,8 @@ export default function ReportSomething({
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
-  const report = useMutation(
-    async () => {
+  const report = useMutation({
+    mutationFn: async () => {
       try {
         const response = await axios.post("http://localhost:3000/api/reports", {
           postId: postId,
@@ -35,13 +35,11 @@ export default function ReportSomething({
         toast.error(error.message as string);
       }
     },
-    {
-      onSettled: () => {
-        setIsSubmiting(false);
-        handleVisibillity();
-      },
-    }
-  );
+    onSettled: () => {
+      setIsSubmiting(false);
+      handleVisibillity();
+    },
+  });
   return (
     <>
       <motion.div

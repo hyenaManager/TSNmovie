@@ -17,6 +17,7 @@ import { CommentSkeleton } from "../skeletons/commentSkeleton";
 import Image from "next/image";
 import ChildrenComment from "./childComment";
 import DeleteComment from "./deleteComment";
+import PendingComment from "./pendingComment";
 interface CommentParent {
   parentId: string;
   replyingToUser: {
@@ -49,6 +50,8 @@ export default function ClipComment({
   const [commentParent, setCommentParent] = useState<CommentParent | null>(
     null
   ); //get a comment parentData for replying
+  /// is creating comment pending
+  const [isCommentPending, setIsCommentPending] = useState(false);
   const commentTextRef = useRef<HTMLTextAreaElement | null>(null);
   const queryClient = useQueryClient();
   const { data, status } = useQuery({
@@ -109,10 +112,10 @@ export default function ClipComment({
       mode: "comment",
     });
     if (response.status === 200) {
-      queryClient.invalidateQueries(["comments", clip?.clipId]);
+      queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       setCommentParent(null);
       commentTextRef.current = null;
-      queryClient.invalidateQueries(["childComment"]);
+      queryClient.invalidateQueries({ queryKey: ["childComment"] });
       return toast.success("commented");
     } else {
       toast.error(response.statusText);
@@ -130,7 +133,7 @@ export default function ClipComment({
       replyingTo: commentParent?.replyingToUser.id,
     });
     if (response.status === 200) {
-      queryClient.invalidateQueries(["comments", clip?.clipId]);
+      queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       commentTextRef.current = null;
       setCommentParent(null);
       setCommentText("");
@@ -140,21 +143,20 @@ export default function ClipComment({
     }
   };
 
-  const mutation = useMutation(
-    async () => {
+  const { mutate, isPending, variables } = useMutation({
+    mutationFn: async () => {
       if (commentParent) {
         createReplyComment(); //for replying
       } else {
         createComment(); //for creating new comment
       }
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments", clip?.clipId]);
-        queryClient.invalidateQueries(["childComment"]);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
+      queryClient.invalidateQueries({ queryKey: ["childComment"] });
+    },
+    onSettled: () => setIsCommentPending(false),
+  });
   const totalCommentCalculator = () => {
     let totalComments = 0;
     data?.forEach((comment: any) => {
@@ -166,6 +168,7 @@ export default function ClipComment({
     });
     return totalComments;
   };
+  console.log("is mutation pending: ", isPending);
 
   return (
     <motion.div
@@ -180,7 +183,7 @@ export default function ClipComment({
         transition={{ stiffness: 100 }}
         className=" flex justify-center  relative rounded-t-lg h-[88vh] overflow-auto w-[100vw] bg-white"
       >
-        <ul className="xsm:w-[90vw] h-[82%] overflow-auto  sm:w-[50vw] flex flex-col justify-start p-3">
+        <ul className="xsm:w-[90vw] h-[82%] overflow-auto  sm:w-[80vw] md:w-[70vw]   flex flex-col justify-start p-3">
           {!data &&
             [1, 2, 3, 4].map((number) => <CommentSkeleton key={number} />)}
           {data && (
@@ -233,6 +236,13 @@ export default function ClipComment({
               </div>
             </li>
           ))}
+          {isPending && (
+            <PendingComment
+              image={user?.image}
+              variables={variables}
+              comment={commentText}
+            />
+          )}
         </ul>
         {/* comment submit section */}
         <div className=" flex justify-start p-2 xsm:w-[100%] sm:w-[50%] bg-fuchsia-400 rounded-xl items-center border absolute bottom-2 right-50 ">
@@ -272,7 +282,10 @@ export default function ClipComment({
 
           <button>
             <FontAwesomeIcon
-              onClick={() => mutation.mutate()}
+              onClick={() => {
+                mutate();
+                setIsCommentPending(true);
+              }}
               icon={faArrowUp}
               className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
             />

@@ -8,8 +8,8 @@ import toast from "react-hot-toast";
 
 export default function DeleteComment({ commentId }: { commentId: string }) {
   const queryClient = useQueryClient();
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       const response = await axios.delete(
         `http://localhost:3000/api/comments?commentId=${commentId}`
       );
@@ -19,13 +19,11 @@ export default function DeleteComment({ commentId }: { commentId: string }) {
         toast.error(response.statusText);
       }
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-        queryClient.invalidateQueries(["childComment"]);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({ queryKey: ["childComment"] });
+    },
+  });
   return (
     <button
       onClick={() => mutation.mutate()}

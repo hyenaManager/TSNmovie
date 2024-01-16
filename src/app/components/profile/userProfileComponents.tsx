@@ -117,8 +117,8 @@ export function EditUserData({ setIsEditing }: editUserType) {
     setSomethingChange(true);
   };
   const queryClient = useQueryClient();
-  const changeUserDatas = useMutation(
-    async () => {
+  const changeUserDatas = useMutation({
+    mutationFn: async () => {
       const response = await axios.put(
         `http://localhost:3000/api/users/updateUser`,
         {
@@ -134,10 +134,9 @@ export function EditUserData({ setIsEditing }: editUserType) {
         return toast.error(" there is some error!!");
       }
     },
-    {
-      onSettled: () => queryClient.invalidateQueries(["user", user?.email]),
-    }
-  );
+    onSettled: () =>
+      queryClient.invalidateQueries({ queryKey: ["user", user?.email] }),
+  });
   return (
     <div className="fixed top-0 right-0 w-full h-full z-40 justify-center bg-white items-center">
       <section className=" flex flex-col h-screen w-full justify-center mt-2 items-center">

@@ -41,7 +41,7 @@ export default function CreateEpisode({
     });
     if (response.status === 200) {
       toast.success("create successfully");
-      queryClient.invalidateQueries(["series", seriesId]);
+      queryClient.invalidateQueries({ queryKey: ["series", seriesId] });
     }
     if (response.status === 500) {
       toast.error(response.statusText);
@@ -80,7 +80,8 @@ export default function CreateEpisode({
     );
   }
 
-  const mutation = useMutation(handleUploadToFirebase, {
+  const mutation = useMutation({
+    mutationFn: handleUploadToFirebase,
     onError: (error: any) => {
       console.log(error);
       setIsSubmiting(false);
