@@ -1,10 +1,8 @@
 import { userProvider } from "@/app/context/userContext";
-import { storage } from "@/app/firebase";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { deleteObject, ref } from "firebase/storage";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -37,20 +35,6 @@ export default function MoreOption({
   };
   console.log("clip id :", clipId);
 
-  // const mutation = useMutation(
-  //   async () => {
-  //     const videoRef = ref(storage, video);
-  //     deleteObject(videoRef)
-  //       .then(() => handleDeleteClip())
-  //       .catch((error) => {
-  //         toast.error(error);
-  //         console.log(error);
-  //       });
-  //   },
-  //   {
-  //     onSuccess: () => queryClient.invalidateQueries(["clips"]),
-  //   }
-  // );
   const mutation = useMutation({
     mutationFn: async () => {
       handleDeleteClip();
