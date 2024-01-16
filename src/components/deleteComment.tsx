@@ -11,7 +11,7 @@ export default function DeleteComment({ commentId }: { commentId: string }) {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await axios.delete(
-        `https://yokeplay.vercel.app/api/comments?commentId=${commentId}`
+        `http://localhost:3000/api/comments?commentId=${commentId}`
       );
       if (response.status === 200) {
         toast.success("comment deleted");

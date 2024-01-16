@@ -14,7 +14,7 @@ type userType = {
 
 export default function UserProfileWidget() {
   return (
-    <div className="pageWarper relative shadow-lg overflow-hidden xsm:w-[100vw] sm:w-[30vw] bg-white dark:bg-zinc-800">
+    <div className="pageWarper xsm:pb-32 sm:pb-0 relative shadow-lg overflow-hidden xsm:w-[100vw] sm:w-[30vw] bg-white dark:bg-zinc-800">
       <header className="pageWarper bg-[#f8fafc] dark:bg-zinc-900 px-6 py-4 border-b border-zinc-200 dark:border-zinc-700">
         <div className="flex justify-center items-center">
           <UserName />

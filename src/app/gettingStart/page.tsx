@@ -9,7 +9,7 @@ export default function GettingStart() {
       <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
         <div className=" flex flex-col border bg-center shadow-2xl rounded-t-xl justify-center h-[50vh] xsm:w-[95vw] sm:w-[54vw] items-center relative">
           <h2
-            className=" text-center text-[50px] text-white font-mono"
+            className=" text-center xsm:text-[20px] sm:text-[30px] md:text-[40px] lg:text-[45px] text-white font-mono"
             style={{ textShadow: "2px 2px 8px gray" }}
           >
             Hey buddy you starting in our app feel free to contact us

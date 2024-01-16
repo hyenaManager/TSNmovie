@@ -99,7 +99,7 @@ export function SeriesOverview({
   //add view
   const addViewSeries = async () => {
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/series/viewed`,
+      `http://localhost:3000/api/series/viewed`,
       {
         seriesId: id,
         viewList: [...viewedBy, user.email],

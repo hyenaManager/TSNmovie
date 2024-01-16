@@ -47,7 +47,7 @@ export default function GettingStart() {
     };
     console.log("final form of creating page:", finalForm);
 
-    const response = await axios.post("https://yokeplay.vercel.app/api/pages", {
+    const response = await axios.post("http://localhost:3000/api/pages", {
       name: pageName,
       adminId: session?.user.id,
       image: profileImgUrl,

@@ -30,7 +30,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/pages/${pageId}`
+          `http://localhost:3000/api/pages/${pageId}`
         );
         const data = response.data;
         return data;
@@ -42,13 +42,10 @@ export default function AdminPage({ pageId }: { pageId: string }) {
   const { user, userPage }: any = useContext(userProvider); //getting current user from contextprovider
   //add view
   const addNewViewList = async () => {
-    const response = await axios.put(
-      `https://yokeplay.vercel.app/api/pages/viewed`,
-      {
-        pageId: data?.id,
-        viewCount: [...data?.viewedBy, session?.user.email],
-      }
-    );
+    const response = await axios.put(`http://localhost:3000/api/pages/viewed`, {
+      pageId: data?.id,
+      viewCount: [...data?.viewedBy, session?.user.email],
+    });
     if (response.status === 200) {
       queryClient.invalidateQueries({ queryKey: ["page"] });
     }
@@ -62,7 +59,7 @@ export default function AdminPage({ pageId }: { pageId: string }) {
   };
   //updating follow or unfollow mode
   const handleFollow = async () => {
-    const response = await axios.put(`https://yokeplay.vercel.app/api/pages`, {
+    const response = await axios.put(`http://localhost:3000/api/pages`, {
       userId: session?.user.id,
       pageId: pageId,
       unfollow: checkFollowMode(),

@@ -64,7 +64,7 @@ export default function CreateClips({
   console.log(user, "is currrent id>.........................");
 
   async function postMovie(url: string) {
-    const response = await axios.post("https://yokeplay.vercel.app/api/clips", {
+    const response = await axios.post("http://localhost:3000/api/clips", {
       title: clipName, //title of clip name
       pageOwnerId: userPage?.id, //current user's page id , value from user context provider
       video: url, //url is link from firebase video that has been uploaded
@@ -107,7 +107,7 @@ export default function CreateClips({
         }
       );
     },
-    onSuccess: () =>
+    onSettled: () =>
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ["clips"] }),
   });
