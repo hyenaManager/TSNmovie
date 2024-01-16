@@ -34,7 +34,7 @@ export const DeleteOneNotiById = ({ notiId }: { notiId: string }) => {
   const deleteANoti = useMutation({
     mutationFn: async () => {
       const response = await axios.delete(
-        `http://localhost:3000/api/notifications/${notiId}`
+        `https://yokeplay.vercel.app/api/notifications/${notiId}`
       );
       if (response.status === 200) {
         queryClient.invalidateQueries({ queryKey: ["notifications"] });

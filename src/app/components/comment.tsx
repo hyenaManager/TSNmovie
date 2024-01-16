@@ -58,7 +58,7 @@ export default function ClipComment({
     queryKey: ["comments", clip?.clipId],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/api/comments/${clip?.clipId}`
+        `https://yokeplay.vercel.app/api/comments/${clip?.clipId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -84,7 +84,7 @@ export default function ClipComment({
   const createNoti = async (notiTo: string, notiType: string) => {
     const notiMakerUser = `${user.firstName} ${user.lastName}`;
     const response = await axios.post(
-      "http://localhost:3000/api/notifications",
+      "https://yokeplay.vercel.app/api/notifications",
       {
         message:
           notiType === "comment"
@@ -105,12 +105,15 @@ export default function ClipComment({
   //comment mode
   const createComment = async () => {
     createNoti(clip?.adminId as string, "comment");
-    const response = await axios.post(`http://localhost:3000/api/comments`, {
-      text: commentText,
-      userId: user?.id,
-      clipId: clip?.clipId,
-      mode: "comment",
-    });
+    const response = await axios.post(
+      `https://yokeplay.vercel.app/api/comments`,
+      {
+        text: commentText,
+        userId: user?.id,
+        clipId: clip?.clipId,
+        mode: "comment",
+      }
+    );
     if (response.status === 200) {
       queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       setCommentParent(null);
@@ -124,14 +127,17 @@ export default function ClipComment({
   //reply mode
   const createReplyComment = async () => {
     createNoti(commentParent?.replyingToUser.id as string, "reply");
-    const response = await axios.post(`http://localhost:3000/api/comments`, {
-      text: commentText,
-      userId: user.id, //user(current user) who replied parent comment
-      parentId: commentParent?.parentId, //id to connect with parent comment
-      userImage: user.image,
-      mode: "reply",
-      replyingTo: commentParent?.replyingToUser.id,
-    });
+    const response = await axios.post(
+      `https://yokeplay.vercel.app/api/comments`,
+      {
+        text: commentText,
+        userId: user.id, //user(current user) who replied parent comment
+        parentId: commentParent?.parentId, //id to connect with parent comment
+        userImage: user.image,
+        mode: "reply",
+        replyingTo: commentParent?.replyingToUser.id,
+      }
+    );
     if (response.status === 200) {
       queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       commentTextRef.current = null;

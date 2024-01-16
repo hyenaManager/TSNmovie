@@ -42,7 +42,7 @@ function RegisterForm() {
 
   async function handleSubmit() {
     const response = await axios.post(
-      "http://localhost:3000/api/users",
+      "https://yokeplay.vercel.app/api/users",
       {
         firstName: firstName,
         lastName: lastName,

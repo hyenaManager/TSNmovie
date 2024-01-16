@@ -45,7 +45,7 @@ export default function ProfilePictureSection() {
   };
   const changeProfilePicture = async (imageUrl: string) => {
     try {
-      await axios.put(`http://localhost:3000/api/pages/${userPage?.id}`, {
+      await axios.put(`https://yokeplay.vercel.app/api/pages/${userPage?.id}`, {
         image: imageUrl,
         pageId: userPage?.id,
         name: null,
@@ -253,7 +253,7 @@ function ChangProfileName() {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await axios.put(
-        `http://localhost:3000/api/pages/${userPage?.id}`,
+        `https://yokeplay.vercel.app/api/pages/${userPage?.id}`,
         {
           image: null,
           pageId: userPage?.id,
