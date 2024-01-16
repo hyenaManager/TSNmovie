@@ -46,10 +46,10 @@ export async function getPageByMostFollowed(){
 
 export async function createPage(data:any){
     try{
-        await prisma.page.create({
+        const createdPage = await prisma.page.create({
             data:data,
-       
         })
+        return createdPage
     }catch(error){
         throw error
     }

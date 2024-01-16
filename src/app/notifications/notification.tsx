@@ -19,7 +19,7 @@ export default function NotiFications() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
+          `http://localhost:3000/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
         );
         const data = response.data;
         return data;
@@ -37,6 +37,8 @@ export default function NotiFications() {
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
+  console.log(data, " is all data for notifs...");
+
   return (
     <section className=" w-[98%] min-h-[90vh] bg-white p-3 mt-1 rounded-md ">
       {/* <SpinLoading /> */}

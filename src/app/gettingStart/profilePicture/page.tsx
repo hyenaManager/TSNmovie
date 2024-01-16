@@ -2,30 +2,22 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
-import { v4 } from "uuid";
-
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowsRotate,
+  faCircleCheck,
   faEdit,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { storage } from "@/app/firebase";
 import { useCreatingPage } from "@/app/store";
 import { uploadFileToFirebase } from "@/app/utility/uploadToFirebase";
 import Uploading from "@/app/components/uploading";
+import Link from "next/link";
 export default function GettingStart() {
   const pageCoverImage = useCreatingPage((state) => state.coverImage);
   const { data: session } = useSession();
@@ -35,6 +27,8 @@ export default function GettingStart() {
   const uploadProfilePic = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
   const setCreatedPageId = useCreatingPage((state) => state.setPageId);
+  const createdPageId = useCreatingPage((state) => state.createdPageId);
+  const [createSuccess, setCreateSuccess] = useState(false);
   const [profileImgUrl, setProfileImgUrl] = useState("");
   const [coverImgUrl, setCoverImgUrl] = useState("");
 
@@ -42,8 +36,6 @@ export default function GettingStart() {
   const handleUploadProfilePic = () => {
     uploadProfilePic.current?.click();
   };
-  console.log("profileUrl", profileImgUrl);
-  console.log("coverUrl", coverImgUrl);
 
   //create new page
   async function createPage(coverImgUrl: string, profileImgUrl: string) {
@@ -55,7 +47,7 @@ export default function GettingStart() {
     };
     console.log("final form of creating page:", finalForm);
 
-    const response = await axios.post("https://yokeplay.vercel.app/api/pages", {
+    const response = await axios.post("http://localhost:3000/api/pages", {
       name: pageName,
       adminId: session?.user.id,
       image: profileImgUrl,
@@ -63,9 +55,11 @@ export default function GettingStart() {
     });
     if (response.status === 200) {
       toast.success("creating page success !!");
+      console.log(response.data, " is returned data.....");
+
       setCreatedPageId(response.data.id);
       toast.success("page is created successfully 👌");
-      router.push("/gettingStart/contact");
+      setCreateSuccess(true);
     } else {
       setIsSubmiting(false);
       toast.error(`error - ${response.data}`);
@@ -78,44 +72,33 @@ export default function GettingStart() {
     //for profileImage
     await uploadFileToFirebase(profileImage!, "page", setProfileImgUrl);
   };
-  // async function handleUploadPicToFirebase(image: File) {
-  //   if (profileImageUrl !== "") {
-  //     const coverImageRef = ref(storage, profileImageUrl);
-  //     deleteObject(coverImageRef)
-  //       .then(() => {
-  //         toast.success("deleted the previous picture");
-  //       })
-  //       .catch((error) => {
-  //         toast.error(error);
-  //       });
-  //   }
-  //   const fileName = `pages/${image?.name + v4()}`;
-  //   const imageRef = ref(storage, fileName);
-  //   // console.log(fileName, " is file name....");
-  //   const snapshot = await uploadBytes(imageRef, image as any);
-  //   const url = await getDownloadURL(snapshot.ref);
-  //   toast.success("success ");
-  //   setProfileImageUrl(url);
-  // }
-  // const mutation = useMutation(
-  //   async () => {
-  //     setIsSubmiting(true);
-  //     await handleUploadPictures();
-  //   },
-  //   {
-  //     onSettled: () => {
-  //       toast.success("page is created successfully 👌");
-  //       router.push("/gettingStart/contact");
-  //     },
-  //     onError: () => toast.error("Opps there is error in page creation "),
-  //   }
-  // );
 
   useEffect(() => {
-    if (profileImgUrl && coverImgUrl) {
-      createPage(profileImgUrl, coverImgUrl);
+    if (profileImgUrl != "" && coverImgUrl != "") {
+      createPage(coverImgUrl, profileImgUrl);
     }
   }, [profileImgUrl, coverImgUrl]);
+  if (createSuccess)
+    return (
+      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
+        <FontAwesomeIcon
+          icon={faCircleCheck}
+          className="w-[50px] h-[50px] m-2 text-green-400"
+        />
+        <Link
+          href={{
+            pathname: "/gettingStart/contact",
+            query: {
+              pageId: createdPageId,
+            },
+          }}
+          className=" p-2 rounded-lg bg-green-400 hover:bg-green-600  text-white"
+        >
+          Finished
+        </Link>
+      </div>
+    );
+
   return (
     <>
       <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">

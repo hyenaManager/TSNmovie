@@ -6,7 +6,7 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { lazy, useEffect, useRef, useState } from "react";
+import { lazy, useContext, useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import MoreOption from "../components/clips/moreOption";
 import SkeletonClip from "../skeletons/skeletonClip";
 import { catchingError } from "../utility/catchingError";
+import { userProvider } from "../context/userContext";
 type videoProps = {
   id: string;
   title: string | null;
@@ -36,6 +37,7 @@ type videoProps = {
 
 function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
   const { data: session } = useSession();
+  const { user }: any = useContext(userProvider);
   const [isPlaying, setIsPlaying] = useState<boolean>(false); //video is playing or not
   const videoRef = useRef<HTMLVideoElement | null>(null); // for nesting in video dom
   const [hide, setHide] = useState(true); //is report widget or page is hide or not
@@ -47,7 +49,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `https://yokeplay.vercel.app/api/clips/oneClip?clipId=${id}`
+          `http://localhost:3000/api/clips/oneClip?clipId=${id}`
         );
         return response.data;
       } catch (error: any) {
@@ -79,9 +81,9 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
   //creating new notification
   const handleCreatNotification = async () => {
     const response = await axios.post(
-      `https://yokeplay.vercel.app/api/notifications`,
+      `http://localhost:3000/api/notifications`,
       {
-        message: `${session?.user.firstName} like your clip`,
+        message: `${user?.firstName} ${user?.lastName} like your clip`,
         type: "like",
         holder: "clip",
         userEmail: session?.user.email,
@@ -101,7 +103,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
     const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
     console.log(`type for ${data?.title} is : `, type);
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
+      `http://localhost:3000/api/clips/like?clipId=${id}&userId=${session?.user.id}&type=${type}&pageId=${data?.createdBy.id}`
     );
     if (response.status === 200) {
       toast.success(response.data);
@@ -132,9 +134,6 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
     },
     onError: (_error: any, context: any) => {
       queryClient.setQueryData(["clip", id], () => context.previousClip);
-      // console.log(_error, "is error");
-      // const errorMessage = catchingError(_error.response.status as number);
-      // toast.error(errorMessage as string);
     },
     onSettled: () => {
       queryClient.invalidateQueries(["clip", id]);

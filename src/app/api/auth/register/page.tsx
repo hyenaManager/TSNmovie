@@ -42,7 +42,7 @@ function RegisterForm() {
 
   async function handleSubmit() {
     const response = await axios.post(
-      "https://yokeplay.vercel.app/api/users",
+      "http://localhost:3000/api/users",
       {
         firstName: firstName,
         lastName: lastName,
@@ -76,7 +76,7 @@ function RegisterForm() {
               color: "green",
             },
             icon: "🔑",
-            duration: 3000,
+            duration: 4000,
           });
           router.push("/clips");
         }

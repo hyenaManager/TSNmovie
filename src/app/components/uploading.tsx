@@ -49,7 +49,7 @@ export default function Uploading() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className=" fixed top-14 right-10 flex justify-center items-center z-20 max-w-fit"
+        className=" fixed top-14 right-10 flex justify-center items-center z-[999] max-w-fit"
       >
         <h4 className=" text-sm text-green-500 font-mono p-2">uploading </h4>
         <motion.div
