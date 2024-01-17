@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HomeArticles from "../components/movieShow";
-import { LognInButton } from "../components/profile/userProfileComponents";
+import { LognInButton } from "@/components/profile/profileButtons";
 
 export default function Home() {
   return (

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import UserImage, {
+import UserImage, { UserName } from "./userProfileComponents";
+import {
   AdminSiteButton,
   LogoutButton,
   UserEditButton,
-  UserName,
-} from "./userProfileComponents";
+} from "./profileButtons";
 
 export default function UserProfileWidget() {
   return (

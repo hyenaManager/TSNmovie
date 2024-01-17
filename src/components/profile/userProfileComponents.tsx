@@ -1,23 +1,11 @@
 "use client";
-type userType = {
-  image: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-};
 import { userProvider } from "@/app/context/userContext";
 import { useContext, useEffect, useState } from "react";
-import { myUserProfiles } from "../../../public/mySvg";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { signIn, signOut } from "next-auth/react";
-import Link from "next/link";
+import UserImageSelection from "./userImageSelection";
+import { revalidateNavUser } from "@/serverActions/revalidateUserInfo";
 
 export default function UserImage() {
   const { user }: any = useContext(userProvider);
@@ -47,59 +35,6 @@ export function UserName() {
   );
 }
 
-export function UserEditButton() {
-  const [isEditing, setIsEditing] = useState(false);
-  return (
-    <>
-      <button
-        onClick={() => setIsEditing(true)}
-        className="pageWarper bg-fuchsia-500 hover:bg-fuchsia-700 text-white mt-4 w-full rounded-md px-4 py-2"
-      >
-        Edit Profile
-      </button>
-      {/* {isEditing ? (
-        <EditUserProfile setIsEditing={() => setIsEditing(false)} />
-      ) : null} */}
-      {isEditing ? (
-        <EditUserData setIsEditing={() => setIsEditing(false)} />
-      ) : null}
-    </>
-  );
-}
-
-export function LognInButton() {
-  return (
-    <button
-      onClick={() => signIn()}
-      className="xsm:text-sm sm:text-xl p-2 text-fuchsia-500 hover:text-white rounded-md "
-    >
-      LognIn
-    </button>
-  );
-}
-
-export function LogoutButton() {
-  return (
-    <button
-      onClick={() => signOut()}
-      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-red-400 hover:bg-red-800 rounded-lg absolute bottom-2 right-3"
-    >
-      Logout
-    </button>
-  );
-}
-
-export function AdminSiteButton() {
-  return (
-    <Link
-      href={"/adminSite"}
-      className="xsm:text-sm sm:text-xl pl-4 pr-4 p-2 text-white bg-green-500 hover:bg-green-800 hover:text-white rounded-lg absolute bottom-2 left-3"
-    >
-      Admin
-    </Link>
-  );
-}
-
 type editUserType = {
   setIsEditing: () => void;
 };
@@ -120,7 +55,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
   const changeUserDatas = useMutation({
     mutationFn: async () => {
       const response = await axios.put(
-        `https://yokeplay.vercel.app/api/users/updateUser`,
+        `http://localhost:3000/api/users/updateUser`,
         {
           firstName: firstName,
           lastName: lastName,
@@ -129,6 +64,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
         }
       );
       if (response.status === 200) {
+        await revalidateNavUser();
         return toast.success(response.data);
       } else {
         return toast.error(" there is some error!!");
@@ -239,80 +175,5 @@ export function EditUserData({ setIsEditing }: editUserType) {
         </div>
       </section>
     </div>
-  );
-}
-
-function UserImageSelection({
-  setUserImage,
-}: {
-  setUserImage: (image: string) => void;
-}) {
-  const [profiles, setProfiles] = useState(myUserProfiles.slice(0, 4));
-  const [isNext, setIsNext] = useState(true); //for button next slide or back slide
-  useEffect(() => {
-    if (isNext) {
-      setProfiles(myUserProfiles.slice(0, 4));
-    } else {
-      setProfiles(myUserProfiles.slice(4, 7));
-    }
-  }, [isNext]);
-  return (
-    <>
-      <button
-        className="text-blue-500 text-lg flex justify-center items-center w-full"
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsNext(!isNext);
-        }}
-        type="button"
-      >
-        {isNext ? (
-          <>
-            <h4>Next</h4>
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className="w-[20px] h-[20px]"
-            />
-          </>
-        ) : (
-          <>
-            <h4>Previous</h4>
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="w-[20px] h-[20px]"
-            />
-          </>
-        )}
-      </button>
-      <div className="grid grid-cols-4 gap-4 max-w-xl mx-auto p-4">
-        {profiles.map((profile) => (
-          <div
-            key={profile.id}
-            className="border border-zinc-200 rounded-full overflow-hidden dark:border-zinc-800"
-          >
-            <input
-              className="sr-only"
-              id="image-1"
-              name="profileImage"
-              type="radio"
-            />
-            <label htmlFor="image-1">
-              <img
-                alt="Profile Image 1"
-                onClick={() => setUserImage(profile.source)}
-                className="object-cover w-full h-full cursor-pointer"
-                height="200"
-                src={profile.source}
-                style={{
-                  aspectRatio: "200/200",
-                  objectFit: "cover",
-                }}
-                width="100"
-              />
-            </label>
-          </div>
-        ))}
-      </div>
-    </>
   );
 }

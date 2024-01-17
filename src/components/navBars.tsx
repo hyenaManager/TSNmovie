@@ -1,15 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { CustomLink } from "./customLinks";
-import prisma from "../../prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOption";
+import { User } from "@prisma/client";
 
 export default async function NavBar() {
   const session = await getServerSession(authOptions);
-
-  //checking if the user has page ,if exist push to profile path
-  //console.log("this is server session :", session);
+  const userInfo: User = await fetch(
+    `http://localhost:3000/api/users/${session?.user.email}`,
+    { next: { tags: ["navUser"] }, cache: "no-store" }
+  ).then((res) => res.json());
 
   return (
     <>
@@ -82,17 +83,17 @@ export default async function NavBar() {
             href={"/profile"}
             className=" flex justify-center p-1 mainNavLink item sm:flex-row xsm:flex-cols-center"
           >
-            {session ? (
+            {userInfo ? (
               <>
                 <span className=" text-fuchsia-400 xsm:hidden sm:block text-lg p-1">
-                  {session.user.name}
+                  {userInfo.firstName + " " + userInfo.lastName}
                 </span>
-                {session.user.image && (
+                {userInfo.image && (
                   <Image
                     width={400}
                     height={400}
                     alt="haih"
-                    src={`${session.user.image as string}`}
+                    src={`${userInfo.image as string}`}
                     className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
                   />
                 )}
