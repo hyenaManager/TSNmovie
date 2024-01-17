@@ -36,7 +36,7 @@ export default function CreateSeries({
   };
   const queryClient = useQueryClient();
   const createSeries = async (imageUrl: string) => {
-    await axios.post(`http://localhost:3000/api/series`, {
+    await axios.post(`https://yokeplay.vercel.app/api/series`, {
       name: title,
       releasedDate: movieDate,
       content: content,

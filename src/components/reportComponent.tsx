@@ -22,12 +22,15 @@ export default function ReportSomething({
   const report = useMutation({
     mutationFn: async () => {
       try {
-        const response = await axios.post("http://localhost:3000/api/reports", {
-          postId: postId,
-          userId: userId,
-          title: title,
-          message: message,
-        });
+        const response = await axios.post(
+          "https://yokeplay.vercel.app/api/reports",
+          {
+            postId: postId,
+            userId: userId,
+            title: title,
+            message: message,
+          }
+        );
         if (response.status === 200) {
           toast.success(response.data);
         }
