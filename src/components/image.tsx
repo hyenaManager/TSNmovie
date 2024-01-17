@@ -1,22 +1,20 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import luffy from "public/luffy.jpg";
-import Link from "next/link";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 type homeImageProps = {
-  imageSource: string;
+  imageSource: StaticImport;
 };
 
 export default function HomeImage({ imageSource }: homeImageProps) {
   return (
     <Image
-      src={luffy}
+      src={imageSource}
       alt="imageSource"
-      width={100}
-      height={100}
+      width={200}
+      height={200}
+      priority
       placeholder="blur"
-      className=" xsm:w-[130px] sm:w-[200px] shadow-[0_0_20px_purple] m-2 rounded-md opacity-100 object-cover"
+      className=" xsm:w-[130px] sm:w-[200px] m-2 rounded-md opacity-100 object-cover"
     />
   );
 }

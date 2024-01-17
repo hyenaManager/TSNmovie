@@ -22,7 +22,7 @@ export default function Main() {
   const getPagess = async () => {
     try {
       const res = await axios.get(
-        `https://yokeplay.vercel.app/api/pages?getBy=${sortedBy}`
+        `http://localhost:3000/api/pages?getBy=${sortedBy}`
       );
       return res.data;
     } catch (error) {

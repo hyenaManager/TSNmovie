@@ -23,7 +23,7 @@ model Account {
   accessTokenExpires DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
-  user               User      @relation(fields: [userId], references: [id])
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([providerId, providerAccountId])
 }
@@ -36,7 +36,7 @@ model Session {
   accessToken  String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum UserRole {
@@ -93,7 +93,7 @@ model VerificationRequest {
 model Page {
   id          String   @id @unique @default(uuid())
   name        String
-  admin       User     @relation(fields: [adminId], references: [id])
+  admin       User     @relation(fields: [adminId], references: [id], onDelete: Cascade)
   followers   User[]   @relation("follow")
   search      String?
   adminId     String   @unique
@@ -119,7 +119,7 @@ model Contact {
   whatsapp    String?
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
-  relatedPage Page     @relation("contact", fields: [pageId], references: [id])
+  relatedPage Page     @relation("contact", fields: [pageId], references: [id], onDelete: Cascade)
   pageId      String   @unique
 }
 
@@ -133,7 +133,7 @@ model Movies {
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
   image       String?
-  createdBy   Page     @relation(fields: [pageOwnerId], references: [id])
+  createdBy   Page     @relation(fields: [pageOwnerId], references: [id], onDelete: Cascade)
   pageOwnerId String
 }
 
@@ -147,7 +147,7 @@ model Clips {
   link        String?
   createAt    DateTime  @default(now())
   updateAt    DateTime  @updatedAt
-  createdBy   Page      @relation(fields: [pageOwnerId], references: [id])
+  createdBy   Page      @relation(fields: [pageOwnerId], references: [id], onDelete: Cascade)
   pageOwnerId String
 }
 
@@ -174,7 +174,7 @@ model Series {
   image        String
   viewedBy     String[]
   viewedCount  Int        @default(0)
-  createdBy    Page       @relation(fields: [pageOwnerId], references: [id])
+  createdBy    Page       @relation(fields: [pageOwnerId], references: [id], onDelete: Cascade)
   pageOwnerId  String
   episodes     Episodes[]
 }
@@ -190,7 +190,7 @@ model Episodes {
   createAt      DateTime @default(now())
   updateAt      DateTime @updatedAt
   image         String?
-  createdBy     Series   @relation(fields: [seriesId], references: [id])
+  createdBy     Series   @relation(fields: [seriesId], references: [id], onDelete: Cascade)
   seriesId      String
 }
 
@@ -203,24 +203,24 @@ model Notifications {
   watched   Boolean  @default(false)
   createdAt DateTime @default(now())
   link      String?
-  notiTo    User     @relation("notificationOwner", fields: [userId], references: [id])
+  notiTo    User     @relation("notificationOwner", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
-  notiBy    User     @relation("notificationMaker", fields: [userEmail], references: [email])
+  notiBy    User     @relation("notificationMaker", fields: [userEmail], references: [email], onDelete: Cascade)
   userEmail String
 }
 
 model Comment {
   id              String    @id @unique @default(uuid())
   text            String
-  repliedTo       User?     @relation("replied", fields: [repliedToUserId], references: [id]) //user who got replied(not replier)
+  repliedTo       User?     @relation("replied", fields: [repliedToUserId], references: [id], onDelete: Cascade) //user who got replied(not replier)
   repliedToUserId String?
   userId          String
-  user            User      @relation(fields: [userId], references: [id]) //user who comment or reply
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade) //user who comment or reply
   userImage       String? //for using the in replied comment image...
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   clipId          Int?
-  clip            Clips?    @relation(fields: [clipId], references: [id])
+  clip            Clips?    @relation(fields: [clipId], references: [id], onDelete: Cascade)
   parentId        String?
   //many-to-one relationship between Comment and its parent Comment 
   parent          Comment?  @relation("childComments", fields: [parentId], references: [id])
@@ -232,7 +232,7 @@ model Reports {
   id        String   @id @default(uuid())
   post      Clips    @relation("report", fields: [postId], references: [id])
   postId    Int
-  postOwner User     @relation("report", fields: [userId], references: [id])
+  postOwner User     @relation("report", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   title     String
   createdAt DateTime @default(now())
