@@ -2,7 +2,6 @@ import HomeImage from "./image";
 import neko from "public/kke.png";
 import levi from "public/levi.png";
 import luffyKid from "public/luffyKid.png";
-import naruto from "public/naruto.png";
 
 export default function HomeArticles() {
   return (
