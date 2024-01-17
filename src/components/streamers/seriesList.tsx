@@ -54,7 +54,7 @@ export default function SeriesList({ pageId }: { pageId: string }) {
   const series = data?.series; //destruturing clips from data
   console.log("this is episodes from series list: ", data?.episodes);
 
-  if (error || status === "error")
+  if (error)
     return (
       <div className=" w-full h-3hundred flex justify-center items-center">
         <h3 className=" text-4xl text-red-400 m-2 uppercase">
@@ -69,7 +69,7 @@ export default function SeriesList({ pageId }: { pageId: string }) {
   return (
     <>
       <div className=" pageWarper w-full grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 ">
-        {status === "loading" &&
+        {status === "pending" &&
           [1, 2, 3, 4].map((number) => <SeriesImgSkeleton key={number} />)}
         {series?.map((serie: seriesProps) => (
           <Suspense fallback={<SeriesImgSkeleton />} key={serie.id}>

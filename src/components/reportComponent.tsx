@@ -4,7 +4,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Loading from "../loading";
+import Loading from "./loading";
 type reportProps = {
   handleVisibillity: () => void;
   userId: string;

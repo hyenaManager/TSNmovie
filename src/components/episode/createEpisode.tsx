@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Uploading, { ProgressingUpload } from "../uploading";
 import { storage } from "@/app/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 } from "uuid";

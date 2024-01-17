@@ -1,11 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { authOptions } from "../api/auth/[...nextauth]/authOption";
-import { useSession } from "next-auth/react";
 import { useContext } from "react";
-import { userProvider } from "../context/userContext";
-import { LognInButton } from "./profile/userProfileComponents";
+import { userProvider } from "../app/context/userContext";
 import { CustomLink } from "./customLinks";
 type sessionType = {
   user: user;

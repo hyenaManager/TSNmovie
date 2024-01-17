@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import React from "react";
-import { userProvider } from "../context/userContext";
+import { userProvider } from "../app/context/userContext";
 import DeleteComment from "./deleteComment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";

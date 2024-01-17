@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useRef, useState } from "react";
-import { storage } from "../../firebase";
+import { storage } from "../../app/firebase";
 import {
   getDownloadURL,
   ref,

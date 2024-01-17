@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useCurrentUploadings } from "../store";
+import { useCurrentUploadings } from "../app/store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faUpload } from "@fortawesome/free-solid-svg-icons";
 
@@ -9,7 +9,7 @@ export default function CurrentUploading() {
   const currentUploading = useCurrentUploadings(
     (state) => state.currentUploading
   );
-  console.log("this is currentLoading :", currentUploading);
+  // console.log("this is currentLoading :", currentUploading);
   return (
     <div className=" xsm:w-[98vw] sm:max-w-[400px] fixed top-11 left-0  flex z-50 ">
       {currentUploading.length !== 0 && (

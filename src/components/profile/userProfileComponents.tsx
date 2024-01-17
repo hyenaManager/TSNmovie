@@ -7,7 +7,7 @@ type userType = {
 };
 import { userProvider } from "@/app/context/userContext";
 import { useContext, useEffect, useState } from "react";
-import { myUserProfiles } from "../../../../public/mySvg";
+import { myUserProfiles } from "../../../public/mySvg";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";

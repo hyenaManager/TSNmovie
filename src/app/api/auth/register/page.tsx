@@ -1,5 +1,5 @@
 "use client";
-import Loading from "@/app/components/loading";
+import Loading from "../../../../components/loading";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { signIn } from "next-auth/react";

@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 
 import Image from "next/image";
-const ReportSomething = lazy(() => import("@/app/components/reportComponent"));
+const ReportSomething = lazy(() => import("../reportComponent"));
 import { motion } from "framer-motion";
 import MoreOption from "./moreOption";
 

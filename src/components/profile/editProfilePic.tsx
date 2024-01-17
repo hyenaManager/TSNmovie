@@ -2,8 +2,7 @@ import { userProvider } from "@/app/context/userContext";
 import { storage } from "@/app/firebase";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   deleteObject,
   getDownloadURL,

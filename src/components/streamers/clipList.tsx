@@ -52,7 +52,7 @@ export default function ClipList({ pageId }: { pageId: string }) {
   return (
     <>
       <section className=" pageWarper grid gap-3 xsm:grid-cols-3 p-2 sm:grid-cols-5 z-10 ">
-        {status === "loading" &&
+        {status === "pending" &&
           [1, 2, 3, 4].map((number) => <SkeletonSmClip key={number} />)}
         {clips?.map((clip: videoProps) => (
           <Suspense fallback={<SkeletonSmClip />} key={clip?.id}>

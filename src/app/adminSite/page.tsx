@@ -1,8 +1,3 @@
-import Image from "next/image";
-import { getAllUsers } from "../../../prisma/users";
-import DeleteUser from "./deleteUser";
-import SuspendUser from "./suspendUser";
-import AllUsers from "./userList";
 import AdminNav from "./adminNav";
 import MainData from "./mainData";
 

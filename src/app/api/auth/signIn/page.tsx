@@ -3,7 +3,7 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/components/loading";
+import Loading from "../../../../components/loading";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";

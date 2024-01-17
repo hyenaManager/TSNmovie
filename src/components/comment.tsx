@@ -9,12 +9,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import { useContext, useRef, useState } from "react";
-import { userProvider } from "../context/userContext";
+import { userProvider } from "../app/context/userContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { CommentSkeleton } from "../skeletons/commentSkeleton";
-import Image from "next/image";
+import { CommentSkeleton } from "@/app/skeletons/commentSkeleton";
 import ChildrenComment from "./childComment";
 import DeleteComment from "./deleteComment";
 import PendingComment from "./pendingComment";

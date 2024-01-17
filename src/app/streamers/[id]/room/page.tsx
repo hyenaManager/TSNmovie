@@ -98,7 +98,7 @@ export default function Pages() {
       ) : (
         <aside
           className={
-            " xsm:w-[95vw] sm:w-[25vw] relative xsm:max-h-fit sm:max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col " +
+            " xsm:w-[95vw] sm:w-[25vw] xsm:mb-32 md:mb-0 relative xsm:max-h-fit sm:max-h-[100vh] bg-black  text-black pt-16 rounded-md flex-col " +
             (sectionIsHidden ? " hidden " : " flex ")
           }
         >

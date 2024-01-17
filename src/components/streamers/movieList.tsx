@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Eye, Like, Star } from "@/app/components/reactions";
+import { Eye, Like, Star } from "../reactions";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

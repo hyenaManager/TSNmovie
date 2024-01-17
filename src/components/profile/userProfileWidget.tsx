@@ -5,12 +5,6 @@ import UserImage, {
   UserEditButton,
   UserName,
 } from "./userProfileComponents";
-type userType = {
-  image: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-};
 
 export default function UserProfileWidget() {
   return (

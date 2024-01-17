@@ -24,7 +24,7 @@ export default function AllUsers() {
           return response.data;
         }
       } catch (error: any) {
-        toast.error(error.message);
+        toast.error(error?.message);
       }
     },
   });
@@ -35,7 +35,7 @@ export default function AllUsers() {
   if (status === "error" || !data) {
     return (
       <div>
-        <h4>Error: {error.message}</h4>
+        <h4>Error: {error?.message}</h4>
         <button onClick={() => refetch()}>refetch</button>
       </div>
     );
