@@ -64,8 +64,8 @@ export function EditUserData({ setIsEditing }: editUserType) {
         }
       );
       if (response.status === 200) {
-        await revalidateNavUser();
-        return toast.success(response.data);
+        toast.success(response.data);
+        return await revalidateNavUser();
       } else {
         return toast.error(" there is some error!!");
       }

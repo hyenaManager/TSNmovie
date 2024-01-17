@@ -1,12 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
+}
 
 module.exports = {
     images: {
         remotePatterns: [
           {
             protocol: 'https',
-            hostname: 'firebasestorage.googleapis.com',
+            hostname: "firebasestorage.googleapis.com",
             // port: '3000',
             // pathname: '/account123/**',
           },
@@ -16,5 +20,6 @@ module.exports = {
       },
     experimental: {
         scrollRestoration: true,
+        serverActions:true
     },
 }

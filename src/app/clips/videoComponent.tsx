@@ -10,7 +10,7 @@ import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
 import { AnimatePresence } from "framer-motion";
-import Loading from "../loading";
+import Loading from "../loadingNotWorking";
 import CreateClips from "../../components/clips/createClips";
 import ClipComment from "../../components/comment";
 
