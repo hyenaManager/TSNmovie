@@ -1,24 +1,24 @@
 import Link from "next/link";
-import UserImage, { UserName } from "./userProfileComponents";
-import {
-  AdminSiteButton,
-  LogoutButton,
-  UserEditButton,
-} from "./profileButtons";
+import { AdminSiteButton, LogoutButton } from "./profileButtons";
+import UserImage, { UserName } from "./profileUserImg";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOption";
+import { CustomLink, NProgressLink } from "../customLinks";
 
-export default function UserProfileWidget() {
+export default async function UserProfileWidget() {
+  const session = await getServerSession(authOptions);
   return (
     <div className="pageWarper xsm:pb-32 sm:pb-0 relative shadow-lg overflow-hidden xsm:w-[100vw] sm:w-[30vw] bg-white dark:bg-zinc-800">
       <header className="pageWarper bg-[#f8fafc] dark:bg-zinc-900 px-6 py-4 border-b border-zinc-200 dark:border-zinc-700">
         <div className="flex justify-center items-center">
-          <UserName />
+          <UserName session={session} />
         </div>
       </header>
       <div className="pageWarper px-6 py-4 space-y-4">
-        <UserImage />
+        <UserImage session={session} />
       </div>
-      <footer className="pageWarper border-t border-zinc-200 dark:border-zinc-700 bg-[#f8fafc] dark:bg-zinc-900 px-6 py-4">
-        <nav className="flex gap-4 justify-center">
+      <footer className="pageWarper min-h-[20vh] flex flex-col items-center justify-center border border-t border-zinc-200 dark:border-zinc-700 bg-[#f8fafc] dark:bg-zinc-900 p-2 w-full">
+        <nav className="flex gap-4 justify-center w-full">
           <Link href="#">
             <svg
               className=" h-5 w-5 text-zinc-500 dark:text-zinc-400"
@@ -73,9 +73,25 @@ export default function UserProfileWidget() {
             <span className="sr-only">GitHub</span>
           </Link>
         </nav>
-        <UserEditButton />
+        {/* <CustomLink>
+          <Link
+            href={"/profile/editUser"}
+            className="pageWarper text-center bg-fuchsia-500 hover:bg-fuchsia-700 text-white mt-4 w-full rounded-md px-4 py-2"
+          >
+            Edit Profile
+          </Link>
+        </CustomLink> */}
+        <NProgressLink
+          href="/profile/editUser"
+          text="Edit profile"
+          className={
+            "pageWarper text-center bg-fuchsia-500 hover:bg-fuchsia-700 text-white mt-4 w-full rounded-md px-4 py-2"
+          }
+        />
       </footer>
+
       <LogoutButton />
+
       <AdminSiteButton />
     </div>
   );

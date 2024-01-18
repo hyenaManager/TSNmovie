@@ -16,7 +16,7 @@ export default function SuspendUser({
   const notifyUser = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        `http://localhost:3000/api/notifications`,
+        `https://yokeplay.vercel.app/api/notifications`,
         {
           message: "you are suspended by code number 1",
           type: "suspend",
@@ -37,7 +37,7 @@ export default function SuspendUser({
   const suspendUser = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        `http://localhost:3000/api/users/suspendUser`,
+        `https://yokeplay.vercel.app/api/users/suspendUser`,
         {
           userEmail: userEmail,
         }

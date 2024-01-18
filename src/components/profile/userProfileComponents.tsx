@@ -6,40 +6,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import UserImageSelection from "./userImageSelection";
 import { revalidateNavUser } from "@/serverActions/revalidateUserInfo";
+import { useRouter } from "next/navigation";
 
-export default function UserImage() {
-  const { user }: any = useContext(userProvider);
-  return (
-    <>
-      <div className="flex items-center z-20 justify-center relative">
-        <img
-          alt="User avatar"
-          className="h-[70px] w-[70px] rounded-full object-cover"
-          src={user ? user.image : "/defaultProfile.jpeg"}
-        />
-      </div>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">{user?.bio}</p>
-      <p className="text-sm font-bold text-zinc-500 dark:text-zinc-400">
-        {user ? user.email : "....."}
-      </p>
-    </>
-  );
-}
-
-export function UserName() {
-  const { user }: any = useContext(userProvider);
-  return (
-    <h3 className=" xsm:text-lg sm:text-4xl font-semibold uppercase text-fuchsia-800">
-      {user?.firstName} {user?.lastName}
-    </h3>
-  );
-}
-
-type editUserType = {
-  setIsEditing: () => void;
-};
-
-export function EditUserData({ setIsEditing }: editUserType) {
+export default function EditUserData() {
   const { user }: any = useContext(userProvider);
   const [firstName, setFirstName] = useState<string | undefined>(
     user?.firstName
@@ -47,6 +16,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
   const [lastName, setLastName] = useState<string | undefined>(user?.lastName);
   const [userImage, setUserImage] = useState<string | undefined>(user?.image);
   const [somethingChange, setSomethingChange] = useState(false);
+  const router = useRouter();
   const handleChangeImage = (image: string) => {
     setUserImage(image);
     setSomethingChange(true);
@@ -55,7 +25,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
   const changeUserDatas = useMutation({
     mutationFn: async () => {
       const response = await axios.put(
-        `http://localhost:3000/api/users/updateUser`,
+        `https://yokeplay.vercel.app/api/users/updateUser`,
         {
           firstName: firstName,
           lastName: lastName,
@@ -65,6 +35,7 @@ export function EditUserData({ setIsEditing }: editUserType) {
       );
       if (response.status === 200) {
         toast.success(response.data);
+        router.push("/profile");
         return await revalidateNavUser();
       } else {
         return toast.error(" there is some error!!");
@@ -98,7 +69,6 @@ export function EditUserData({ setIsEditing }: editUserType) {
             onSubmit={(e) => {
               e.preventDefault();
               changeUserDatas.mutate();
-              setIsEditing();
             }}
           >
             <div className="mb-4">
@@ -164,8 +134,9 @@ export function EditUserData({ setIsEditing }: editUserType) {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  setIsEditing();
+                  router.back();
                 }}
+                type="button"
                 className="border border-gray-300 px-4 py-2 rounded hover:bg-yellow-500 hover:text-white"
               >
                 Cancel

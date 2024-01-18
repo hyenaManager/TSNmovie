@@ -12,14 +12,13 @@ export default function UserProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const { data: session } = useSession();
   const { data, status } = useQuery({
     queryKey: ["user", session?.user.email],
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/users/${session?.user.email}`
+          `https://yokeplay.vercel.app/api/users/${session?.user.email}`
         );
         return response.data;
       } catch (error) {

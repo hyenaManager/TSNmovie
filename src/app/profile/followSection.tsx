@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -6,18 +5,21 @@ import {
   NormalSkeleton,
   ProfileNavSkeleton,
 } from "../skeletons/skeletonStreamer";
-import { useContext } from "react";
-import { userProvider } from "../context/userContext";
 import UserPageProfile from "../streamers/pageLinkImage";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOption";
+import { NProgressLink } from "@/components/customLinks";
 
-export default function FollowAndVistPageSection() {
-  const { user, userPage }: any = useContext(userProvider);
-  console.log(user);
-
+export default async function FollowAndVistPageSection() {
+  const session = await getServerSession(authOptions);
+  const user: any = await fetch(
+    `https://yokeplay.vercel.app/api/users/${session?.user.email}`,
+    { next: { tags: ["userPage"] } }
+  ).then((res) => res.json());
   return (
     <section className=" sm:w-[70vw] bg-black xsm:w-[100vw] xsm:min-h-[70vh] sm:min-h-[92vh] flex flex-col ">
-      {!userPage ? (
-        userPage === null ? (
+      {!user?.Page ? (
+        user?.Page === null ? (
           <Link
             href={"/gettingStart"}
             className=" p-1 rounded-md bg-green-400 hover:bg-green-600 text-white text-lg m-1 max-w-fit"
@@ -29,12 +31,12 @@ export default function FollowAndVistPageSection() {
         )
       ) : (
         <nav className=" flex p-2 justify-between items-center border-b-2 bg-slate-800 border-fuchsia-500">
-          <Link
+          <NProgressLink
             href={`profile/page`}
             className=" flex justify-center items-center"
           >
             <Image
-              src={userPage?.image}
+              src={user?.Page?.image}
               width={100}
               height={100}
               className=" w-[50px] h-[50px] object-cover rounded-full"
@@ -42,9 +44,9 @@ export default function FollowAndVistPageSection() {
             />
             <h3 className=" text-center text-white text-lg p-2 uppercase">
               Visit your page
-              <b className=" text-red-500">{userPage?.name}</b>
+              <b className=" text-red-500">{user?.Page?.name}</b>
             </h3>
-          </Link>
+          </NProgressLink>
         </nav>
       )}
       {/* Following */}

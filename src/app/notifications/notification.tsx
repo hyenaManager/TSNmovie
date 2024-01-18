@@ -19,7 +19,7 @@ export default function NotiFications() {
     queryFn: async ({ pageParam = 0 }) => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
+          `https://yokeplay.vercel.app/api/notifications/cursor?cursor=${pageParam}&userId=${user.id}`
         );
         const data = response.data;
         return data;
