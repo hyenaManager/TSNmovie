@@ -4,6 +4,7 @@ import "nprogress/nprogress.css";
 import nProgress from "nprogress";
 import Link from "next/link";
 import clsx from "clsx";
+import { Url } from "next/dist/shared/lib/router/router";
 export function CustomLink({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -27,7 +28,7 @@ export function NProgressLink({
   className = "",
   children,
 }: {
-  href: string;
+  href: Url;
   text?: string;
   className?: string | null;
   children?: React.ReactNode | null;

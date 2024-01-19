@@ -17,14 +17,9 @@ export default function CreateButton({
   );
 }
 
-export function CreateSomethingButton({
-  isCreating,
-}: {
-  isCreating: () => void;
-}) {
+export function CreateSomethingButton() {
   return (
     <button
-      onClick={isCreating}
       title="create "
       className="p-2 flex justify-center absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10 xsm:w-[50px] xsm:h-[30px] sm:w-[70px] sm:h-[40px] bg-green-500 rounded-br-lg text-white items-center"
     >

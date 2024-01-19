@@ -21,11 +21,7 @@ import toast from "react-hot-toast";
 import { userProvider } from "@/app/context/userContext";
 import { isSuspended } from "@/app/utility/suspendedCheck";
 
-export default function CreateClips({
-  isCreating,
-}: {
-  isCreating: () => void;
-}) {
+export default function CreateClips() {
   // const { data: session } = useSession(); //get user data from session avaiable - {name,image,email,id...}
   const [clipName, setclipName] = useState(""); //name of the clip that a user give
   const [isSubmiting, setIsSubmiting] = useState(false); //is user is start creating a clip or not
@@ -33,6 +29,7 @@ export default function CreateClips({
   const queryClient = useQueryClient();
   const uploadRef = useRef<HTMLInputElement | null>(null); //to upload video file
   const { userPage, user }: any = useContext(userProvider); //current userPage
+  const router = useRouter();
   //make a click to the hidden input(video file uploader)
   const handleUpload = () => {
     uploadRef.current?.click();
@@ -61,7 +58,6 @@ export default function CreateClips({
       videoElement.src = objectURL;
     }
   };
-  console.log(user, "is currrent id>.........................");
 
   async function postMovie(url: string) {
     const response = await axios.post("https://yokeplay.vercel.app/api/clips", {
@@ -72,7 +68,8 @@ export default function CreateClips({
     if (response.status === 200) {
       setIsSubmiting(false); //when creating clips in database is over remove loading mode
       toast.success("video uploaded successfully 💯");
-      isCreating(); // and disabled creating mode, this function come from prop
+      // isCreating(); // and disabled creating mode, this function come from prop
+      router.back();
     } else {
       setIsSubmiting(false); //when error remove loading mode
       alert(`error - ${response.data}`); // alert error dev mode
@@ -126,7 +123,7 @@ export default function CreateClips({
 
   return (
     <>
-      <div className="top-0 z-30 left-0 h-full w-full flex justify-center items-center fixed bg-white ">
+      <div className="top-0 z-[88] left-0 h-full w-full flex justify-center items-center fixed bg-white ">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -201,13 +198,14 @@ export default function CreateClips({
             create
           </button>
           <button
-            className=" cancelButton absolute top-2 right-2"
-            onClick={() => isCreating()}
+            className=" cancelButton absolute top-2 right-2 flex justify-center items-center"
+            onClick={() => router.back()}
           >
             <FontAwesomeIcon
               icon={faXmark}
               className=" h-[40px] w-[40px] text-yellow-400"
             />
+            back
           </button>
         </form>
       </div>

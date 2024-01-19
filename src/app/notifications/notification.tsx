@@ -10,6 +10,7 @@ import { getTimeAgo } from "../utility/timeAgo";
 import { ClipLoading } from "../../components/loading";
 import { useInView } from "react-hook-inview";
 import { DeleteAllUserNoti, DeleteOneNotiById } from "./deleteNoti";
+import nProgress from "nprogress";
 
 export default function NotiFications() {
   const { user }: any = useContext(userProvider);
@@ -73,6 +74,7 @@ export default function NotiFications() {
                 <div className="actions flex justify-end w-full items-center">
                   {noti.type != "suspend" && (
                     <Link
+                      onClick={() => nProgress.start()}
                       href={{
                         pathname: `/notifications/${noti?.holder}`,
                         query: {

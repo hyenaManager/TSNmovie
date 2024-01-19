@@ -13,6 +13,9 @@ const CreateSeries = lazy(
   () => import("../../../components/series/createSeries")
 );
 import { useCatagory } from "@/app/store";
+import { NProgressLink } from "@/components/customLinks";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const ClipList = lazy(() => import("../../../components/streamers/clipList"));
 const SeriesList = lazy(
@@ -34,14 +37,7 @@ export default function MainList() {
       return (
         <div className=" relative">
           <ClipList pageId={userPage?.id} />
-          <CreateSomethingButton
-            isCreating={() => setCreatingSomething(true)}
-          />
-          {creatingSomething && (
-            <Suspense>
-              <CreateClips isCreating={() => setCreatingSomething(false)} />
-            </Suspense>
-          )}
+          <CreateSomethingButton />
         </div>
       );
     }
@@ -49,9 +45,20 @@ export default function MainList() {
       return (
         <div className=" relative">
           <SeriesList pageId={userPage?.id} />
-          <CreateSomethingButton
-            isCreating={() => setCreatingSomething(true)}
-          />
+          <NProgressLink
+            className={
+              "absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10"
+            }
+            href={"/profile/page/createClip"}
+          >
+            <button
+              title="create "
+              className="p-2 flex justify-center  xsm:w-[50px] xsm:h-[30px] sm:w-[70px] sm:h-[40px] bg-green-500 rounded-br-lg text-white items-center"
+            >
+              new
+              <FontAwesomeIcon icon={faPlus} className="w-[15px] h-[15px]" />
+            </button>
+          </NProgressLink>
           {creatingSomething && (
             <CreateSeries
               pageOwnerId={userPage?.id}

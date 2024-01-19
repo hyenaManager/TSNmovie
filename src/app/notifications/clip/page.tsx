@@ -7,7 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -23,6 +23,7 @@ export default function ClipNoti() {
   const clipId = searchParams.get("holderId") as string;
   const notiId = searchParams.get("notificationId") as string;
   const notiWatched = searchParams.get("notiWatched") as string;
+  const router = useRouter();
   const handleComment = (clip: {
     clipTitle: string;
     clipId: number;
@@ -72,12 +73,12 @@ export default function ClipNoti() {
   return (
     <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-black flex flex-col justify-center items-center">
       <ClipVideoPlayer {...data} handleComment={handleComment} />
-      <Link href="/notifications">
+      <button onClick={() => router.back()}>
         <FontAwesomeIcon
           icon={faArrowLeft}
           className=" p-2 fixed top-1 left-1 w-[20px] h-[20px] text-yellow-400 rounded-full border-2 border-yellow-500"
         />
-      </Link>
+      </button>
       <AnimatePresence>
         {onComment && (
           <ClipComment

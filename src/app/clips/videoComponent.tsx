@@ -1,18 +1,18 @@
 "use client";
-import React, { Suspense, lazy, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import SkeletonClip from "../skeletons/skeletonClip";
 
 import axios from "axios";
-import CreateButton from "../../components/floatingCreateBtn";
 import { ClipLoading } from "../../components/loading";
 import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
 import { AnimatePresence } from "framer-motion";
-import Loading from "../loadingNotWorking";
-import CreateClips from "../../components/clips/createClips";
 import ClipComment from "../../components/comment";
+import { NProgressLink } from "@/components/customLinks";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 type videoPageProp = {
   id: string;
@@ -28,7 +28,6 @@ type videoPageProp = {
 
 export default function VideoComponent() {
   const [ref, inView] = useInView();
-  const [isCreating, setIsCreating] = useState(false);
   const [onComment, setOnComment] = useState(false); //on click comment button
   const [selectedClip, setSelectedClip] = useState<{
     clipTitle: string;
@@ -68,27 +67,34 @@ export default function VideoComponent() {
       fetchNextPage();
     }
   }, [inView]);
-  console.log(data, " is data for all clips...........");
 
   return (
     <>
       <main className="pageWarper flex flex-col justify-center items-center pt-14  min-h-[100vh] ">
-        {status === "pending" && <Loading />}
+        {status === "pending" &&
+          [1, 2, 3, 4].map((num) => <SkeletonClip key={num} />)}
         {data?.pages?.map((page) => (
           <React.Fragment key={page.nextCursor}>
             {page?.clips?.map((video: videoPageProp, index: number) => (
-              <Suspense fallback={<SkeletonClip key={index} />} key={video.id}>
-                <ClipVideoPlayer {...video} handleComment={handleComment} />
-              </Suspense>
+              <ClipVideoPlayer
+                {...video}
+                handleComment={handleComment}
+                key={index}
+              />
             ))}
           </React.Fragment>
         ))}
-        {/* button for creating clips */}
-        <CreateButton isCreating={() => setIsCreating(!isCreating)} />
-        {/* creating widget for clips */}
-        {isCreating && (
-          <CreateClips isCreating={() => setIsCreating(!isCreating)} />
-        )}
+        <NProgressLink
+          href="/clips/createClip"
+          className={
+            "fixed xsm:bottom-0 xsm:right-50 z-20 sm:bottom-9 sm:right-10"
+          }
+        >
+          <FontAwesomeIcon
+            icon={faPlus}
+            className="p-3 cursor-pointer flex justify-center xsm:w-[40px] xsm:h-[20px] sm:w-[30px] sm:h-[30px] bg-green-400 xsm:rounded-lg sm:rounded-full text-white items-center"
+          />
+        </NProgressLink>
         {hasNextPage && (
           <div ref={ref}>
             <ClipLoading />
