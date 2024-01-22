@@ -1,29 +1,21 @@
 "use client";
 import { storage } from "@/app/firebase";
-import {
-  faArrowCircleLeft,
-  faEdit,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleLeft, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
 import Uploading from "../uploading";
+import { userProvider } from "@/app/context/userContext";
+import { useRouter } from "next/navigation";
 
-type seriesOverview = {
-  pageOwnerId: string;
-  handleVisibility: () => void;
-};
-export default function CreateSeries({
-  handleVisibility,
-  pageOwnerId,
-}: seriesOverview) {
+export default function CreateSeries() {
+  const { userPage }: any = useContext(userProvider);
   const [genre, setGenre] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [movieDate, setMovieDate] = useState("");
@@ -31,18 +23,19 @@ export default function CreateSeries({
   const [content, setContent] = useState("");
   const [uploadedImg, setUploadedImg] = useState<File | undefined>(undefined);
   const imageRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
   const hanldeUpload = () => {
     imageRef?.current?.click();
   };
   const queryClient = useQueryClient();
   const createSeries = async (imageUrl: string) => {
-    await axios.post(`https://yokeplay.vercel.app/api/series`, {
+    await axios.post(`http://localhost:3000/api/series`, {
       name: title,
       releasedDate: movieDate,
       content: content,
       image: imageUrl,
       genre: genre,
-      pageOwnerId: pageOwnerId,
+      pageOwnerId: userPage.id,
     });
   };
   async function handleUploadImageToFirebase() {
@@ -75,7 +68,7 @@ export default function CreateSeries({
     onSuccess: () => {
       setIsSubmiting(false);
       toast.success("series created successfully ");
-      handleVisibility();
+      router.back();
       queryClient.invalidateQueries({ queryKey: ["page"] });
     },
     onError: (error: any) => {
@@ -119,7 +112,7 @@ export default function CreateSeries({
         <FontAwesomeIcon
           icon={faArrowCircleLeft}
           className=" cursor-pointer w-[20px] h-[20px] p-2 rounded-full bg-black text-white absolute bottom-1 left-1"
-          onClick={handleVisibility}
+          onClick={() => router.back()}
         />
         <input
           hidden

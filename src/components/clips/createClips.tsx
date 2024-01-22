@@ -19,7 +19,6 @@ import { faCircleCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { userProvider } from "@/app/context/userContext";
-import { isSuspended } from "@/app/utility/suspendedCheck";
 
 export default function CreateClips() {
   // const { data: session } = useSession(); //get user data from session avaiable - {name,image,email,id...}
@@ -60,7 +59,7 @@ export default function CreateClips() {
   };
 
   async function postMovie(url: string) {
-    const response = await axios.post("https://yokeplay.vercel.app/api/clips", {
+    const response = await axios.post("http://localhost:3000/api/clips", {
       title: clipName, //title of clip name
       pageOwnerId: userPage?.id, //current user's page id , value from user context provider
       video: url, //url is link from firebase video that has been uploaded
@@ -119,7 +118,17 @@ export default function CreateClips() {
     mutation.mutate();
   };
   //if the clips is start uploading or creating, show the uploading progressing bar
-  if (isSubmiting) return <Uploading />;
+  if (isSubmiting)
+    return (
+      <>
+        <div className="top-0 z-[88] left-0 h-full w-full flex justify-center items-center fixed bg-white ">
+          <p className=" xsm:text-sm sm:text-xl lg:text-4xl font-bold bg-fuchsia-500 text-white">
+            Please do not exit the browser before the uploading end
+          </p>
+          <Uploading />
+        </div>
+      </>
+    );
 
   return (
     <>

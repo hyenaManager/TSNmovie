@@ -8,10 +8,6 @@ import {
 import AdminPage from "../../../components/streamers/adminPage";
 import AdminSkeleton from "@/app/skeletons/adminPageSkeleton";
 import { userProvider } from "@/app/context/userContext";
-const CreateClips = lazy(() => import("../../../components/clips/createClips"));
-const CreateSeries = lazy(
-  () => import("../../../components/series/createSeries")
-);
 import { useCatagory } from "@/app/store";
 import { NProgressLink } from "@/components/customLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +20,6 @@ const SeriesList = lazy(
 
 export default function MainList() {
   const { userPage }: any = useContext(userProvider);
-  const [creatingSomething, setCreatingSomething] = useState(false);
   const currentCatagory = useCatagory((state: any) => state.currentCatagory);
   const setCurrentCatagory: any = useCatagory(
     (state: any) => state.changeCurrentCatagory
@@ -37,14 +32,6 @@ export default function MainList() {
       return (
         <div className=" relative">
           <ClipList pageId={userPage?.id} />
-          <CreateSomethingButton />
-        </div>
-      );
-    }
-    if (currentCatagory === "series") {
-      return (
-        <div className=" relative">
-          <SeriesList pageId={userPage?.id} />
           <NProgressLink
             className={
               "absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10"
@@ -59,12 +46,27 @@ export default function MainList() {
               <FontAwesomeIcon icon={faPlus} className="w-[15px] h-[15px]" />
             </button>
           </NProgressLink>
-          {creatingSomething && (
-            <CreateSeries
-              pageOwnerId={userPage?.id}
-              handleVisibility={() => setCreatingSomething(false)}
-            />
-          )}
+        </div>
+      );
+    }
+    if (currentCatagory === "series") {
+      return (
+        <div className=" relative">
+          <SeriesList pageId={userPage?.id} />
+          <NProgressLink
+            className={
+              "absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10"
+            }
+            href={"/profile/page/createSeries"}
+          >
+            <button
+              title="create "
+              className="p-2 flex justify-center  xsm:w-[50px] xsm:h-[30px] sm:w-[70px] sm:h-[40px] bg-green-500 rounded-br-lg text-white items-center"
+            >
+              new
+              <FontAwesomeIcon icon={faPlus} className="w-[15px] h-[15px]" />
+            </button>
+          </NProgressLink>
         </div>
       );
     } else {
