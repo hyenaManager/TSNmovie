@@ -13,7 +13,7 @@ import { NProgressLink } from "@/components/customLinks";
 export default async function FollowAndVistPageSection() {
   const session = await getServerSession(authOptions);
   const user: any = await fetch(
-    `http://localhost:3000/api/users/${session?.user.email}`,
+    `https://yokeplay.vercel.app/api/users/${session?.user.email}`,
     { next: { tags: ["userPage"] } }
   ).then((res) => res.json());
   return (
