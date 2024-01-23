@@ -29,7 +29,7 @@ export default function CreateSeries() {
   };
   const queryClient = useQueryClient();
   const createSeries = async (imageUrl: string) => {
-    await axios.post(`https://yokeplay.vercel.app/api/series`, {
+    await axios.post(`http://localhost:3000/api/series`, {
       name: title,
       releasedDate: movieDate,
       content: content,
@@ -65,7 +65,7 @@ export default function CreateSeries() {
   }
   const mutation = useMutation({
     mutationFn: handleUploadImageToFirebase,
-    onSuccess: () => {
+    onSettled: () => {
       setIsSubmiting(false);
       toast.success("series created successfully ");
       router.back();

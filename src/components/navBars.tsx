@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { CustomLink } from "./customLinks";
+import { CustomLink, NProgressLink } from "./customLinks";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOption";
 import { User } from "@prisma/client";
@@ -8,24 +8,24 @@ import { User } from "@prisma/client";
 export default async function NavBar() {
   const session = await getServerSession(authOptions);
   const userInfo: User = await fetch(
-    `https://yokeplay.vercel.app/api/users/${session?.user.email}`,
+    `http://localhost:3000/api/users/${session?.user.email}`,
     { next: { tags: ["navUser"] }, cache: "no-store" }
   ).then((res) => res.json());
+  console.log("user info: ", userInfo);
 
   return (
     <>
       <nav className="pageWarper h-[8vh] text-white bg-black z-40 flex justify-between bg-none items-center mainNav sticky right-0 left-0 top-0">
-        <CustomLink href={"/"}>
-          <Link href={"/"} className=" font-mono text-fuchsia-600 ml-3">
-            <Image
-              src={"/mycon.png"}
-              alt="icon"
-              width={100}
-              height={100}
-              className="w-[70px] h-[70px] "
-            />
-          </Link>
-        </CustomLink>
+        <NProgressLink href={"/"} className=" font-mono text-fuchsia-600 ml-3">
+          <Image
+            src={"/mycon.png"}
+            alt="icon"
+            width={100}
+            height={100}
+            className="xsm:w-[40px] xsm:h-[40px] sm:w-[50px] sm:h-[50px] "
+          />
+        </NProgressLink>
+
         <CustomLink href={"/clips"}>
           <Link
             href={"/clips"}
@@ -98,17 +98,7 @@ export default async function NavBar() {
                   />
                 )}
               </>
-            ) : (
-              <>
-                {/* <Image
-                width={400}
-                height={400}
-                alt="haih"
-                src={"/defaultProfile.jpeg"}
-                className=" rounded-full bg-cover xsm:w-[27px] object-cover xsm:h-[27px] sm:w-[40px] sm:h-[40px] "
-              /> */}
-              </>
-            )}
+            ) : null}
           </Link>
         </CustomLink>
       </nav>

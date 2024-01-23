@@ -9,6 +9,7 @@ import { useContext, useEffect } from "react";
 import { userProvider } from "@/app/context/userContext";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { NProgressLink } from "../customLinks";
 type seriesImage = {
   id: string;
   name: string;
@@ -47,8 +48,6 @@ export default function SeriesImage({
   viewedBy,
   episodes,
 }: seriesImage) {
-  const { user, userPage }: any = useContext(userProvider);
-
   return (
     <article
       // onMouseEnter={() => setIsHover(true)}
@@ -61,7 +60,7 @@ export default function SeriesImage({
           fill
           src={image}
           alt={image}
-          className=" rounded-tr-xl  bg-gray-400 bg-cover object-cover "
+          className=" rounded-tr-xl bg-cover object-cover "
         />
       )}
 
@@ -79,7 +78,7 @@ export default function SeriesImage({
         className=" flex z-10 flex-col justify-center items-center w-full bg-black border-br-2xl "
       >
         <h3 className=" text-center xsm:text-sm sm:text-lg w-full border-br-2xl">
-          {name}{" "}
+          {name ? name : "no title"}
         </h3>
       </button>
     </article>
@@ -99,7 +98,7 @@ export function SeriesOverview({
   //add view
   const addViewSeries = async () => {
     const response = await axios.put(
-      `https://yokeplay.vercel.app/api/series/viewed`,
+      `http://localhost:3000/api/series/viewed`,
       {
         seriesId: id,
         viewList: [...viewedBy, user.email],
@@ -145,7 +144,8 @@ export function SeriesOverview({
               onClick={handleVisibility}
               className=" p-2 m-1 text-red-400 w-[30px] border-2 rounded-full h-[30px] border-white cursor-pointer"
             />
-            <Link
+            <NProgressLink
+              text="watch now"
               href={{
                 pathname:
                   userPage.id === pageOwnerId
@@ -157,9 +157,7 @@ export function SeriesOverview({
                 },
               }}
               className=" outline-fuchsia-500 text-fuchsia-600 max-w-fit p-3 m-1"
-            >
-              Watch now
-            </Link>
+            />
           </div>
         </section>
       </motion.article>
