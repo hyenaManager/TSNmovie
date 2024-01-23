@@ -1,5 +1,25 @@
 import { create } from "zustand";
 
+type RouteType = {
+  previousPath: string;
+  newPath: string;
+  setPreviousPath: (newPath: string) => void;
+  setNewPath: (newPath: string) => void;
+};
+
+export const useRoutePath = create<RouteType>((set) => ({
+  previousPath: "",
+  newPath: "/",
+  setPreviousPath: (newPath: string) =>
+    set(() => ({
+      previousPath: newPath,
+    })),
+  setNewPath: (newPath: string) =>
+    set(() => ({
+      newPath: newPath,
+    })),
+}));
+
 type CatagoryState = {
   currentCatagory: string;
   changeCurrentCatagory: (newCatagory: string) => void;
