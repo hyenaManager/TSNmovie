@@ -18,6 +18,7 @@ export function CustomLink({
   const setNewPath = useRoutePath((state) => state.setNewPath);
   const handleStartLoading = () => {
     nProgress.start();
+    nProgress.settings.showSpinner = false;
     console.log("load start");
   };
   const handleSetPaths = () => {

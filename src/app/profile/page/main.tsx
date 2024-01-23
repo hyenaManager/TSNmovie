@@ -34,7 +34,7 @@ export default function MainList() {
           <ClipList pageId={userPage?.id} />
           <NProgressLink
             className={
-              "absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10"
+              "absolute xsm:top-0 xsm:left-0 sm:bottom-9 sm:right-10 max-w-fit max-h-fit"
             }
             href={"/profile/page/createClip"}
           >
@@ -55,7 +55,7 @@ export default function MainList() {
           <SeriesList pageId={userPage?.id} />
           <NProgressLink
             className={
-              "absolute xsm:top-0 xsm:left-0 z-20 sm:bottom-9 sm:right-10"
+              "absolute xsm:top-0 xsm:left-0 sm:bottom-9 sm:right-10 max-w-fit max-h-fit"
             }
             href={"/profile/page/createSeries"}
           >

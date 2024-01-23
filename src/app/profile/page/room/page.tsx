@@ -16,6 +16,7 @@ import RoomVideoSkeleton, {
   RoomEpisodeSkeleton,
 } from "@/app/skeletons/roomSkeletons";
 import CreateEpisode from "../../../../components/episode/createEpisode";
+import { NProgressLink } from "@/components/customLinks";
 
 export default function Pages() {
   const [episode, setEpisode] = useState({
@@ -194,12 +195,12 @@ export default function Pages() {
           className="cursor-pointer text-white w-[35px] h-[35px] bg-fuchsia-600 p-2 flex justify-center items-center rounded-full bottom-2 right-2 fixed"
         />
       )}
-      <Link
+      <NProgressLink
         href={`/profile/page`}
         className=" fixed bottom-0 left-0 bg-fuchsia-600 text-xl text-black flex items-center p-2 rounded-tr-md"
       >
         <h3 className="text-center">Back to Page</h3>
-      </Link>
+      </NProgressLink>
       {creatingEpisode && (
         <CreateEpisode
           seriesId={seriesId}

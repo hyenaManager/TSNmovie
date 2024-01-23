@@ -65,7 +65,7 @@ export default function CreateSeries() {
   }
   const mutation = useMutation({
     mutationFn: handleUploadImageToFirebase,
-    onSuccess: () => {
+    onSettled: () => {
       setIsSubmiting(false);
       toast.success("series created successfully ");
       router.back();
