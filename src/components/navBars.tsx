@@ -15,7 +15,7 @@ export default async function NavBar() {
   return (
     <>
       <nav className="pageWarper h-[8vh] text-white bg-black z-40 flex justify-between bg-none items-center mainNav sticky right-0 left-0 top-0">
-        <CustomLink>
+        <CustomLink href={"/"}>
           <Link href={"/"} className=" font-mono text-fuchsia-600 ml-3">
             <Image
               src={"/mycon.png"}
@@ -26,7 +26,7 @@ export default async function NavBar() {
             />
           </Link>
         </CustomLink>
-        <CustomLink>
+        <CustomLink href={"/clips"}>
           <Link
             href={"/clips"}
             className={
@@ -43,7 +43,7 @@ export default async function NavBar() {
             <h4 className=" xsm:hidden sm:flex">clips</h4>
           </Link>
         </CustomLink>
-        <CustomLink>
+        <CustomLink href={"/notifications"}>
           <Link
             href={"/notifications"}
             className={
@@ -61,7 +61,7 @@ export default async function NavBar() {
           </Link>
         </CustomLink>
 
-        <CustomLink>
+        <CustomLink href={"/streamers"}>
           <Link
             href={"/streamers"}
             className={
@@ -78,7 +78,7 @@ export default async function NavBar() {
             <h4 className=" xsm:hidden sm:flex">streamers</h4>
           </Link>
         </CustomLink>
-        <CustomLink>
+        <CustomLink href={"/profile"}>
           <Link
             href={"/profile"}
             className=" flex justify-center p-1 mainNavLink item sm:flex-row xsm:flex-cols-center"
