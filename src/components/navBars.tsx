@@ -8,7 +8,7 @@ import { User } from "@prisma/client";
 export default async function NavBar() {
   const session = await getServerSession(authOptions);
   const userInfo: User = await fetch(
-    `https://yokeplay.vercel.app/api/users/${session?.user.email}`,
+    `http://localhost:3000/api/users/${session?.user.email}`,
     { next: { tags: ["navUser"] }, cache: "no-store" }
   ).then((res) => res.json());
   console.log("user info: ", userInfo);

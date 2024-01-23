@@ -16,13 +16,10 @@ export default function AllUsers() {
     queryKey: ["allUsers"],
     queryFn: async () => {
       try {
-        const response = await axios.get(
-          "https://yokeplay.vercel.app/api/users",
-          {
-            timeout: 10000,
-            timeoutErrorMessage: "fetching timeout check connection",
-          }
-        );
+        const response = await axios.get("http://localhost:3000/api/users", {
+          timeout: 10000,
+          timeoutErrorMessage: "fetching timeout check connection",
+        });
         if (response.status === 200) {
           return response.data;
         }
