@@ -28,7 +28,7 @@ export default function ClipNoti() {
     setSelectedClip(clip);
     setOnComment(true);
   };
-  console.log(clipId, "is clip id");
+  // console.log(clipId, "is clip id");
 
   const { data, status } = useQuery({
     queryKey: ["clip", parseInt(clipId)],
