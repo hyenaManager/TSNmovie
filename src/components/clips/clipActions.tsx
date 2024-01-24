@@ -7,17 +7,20 @@ export const createNoti = async (
   clip: any
 ) => {
   const notiMakerUser = `${user.firstName} ${user.lastName}`;
-  const response = await axios.post("http://localhost:3000/api/notifications", {
-    message:
-      notiType === "comment"
-        ? `${notiMakerUser} comment on your clip`
-        : `${notiMakerUser} replied you on a clip`,
-    type: notiType,
-    holder: "clip",
-    userEmail: user.email, //user who replied(current user)
-    userId: notiTo, //user who got replied
-    holderId: clip?.clipId,
-  });
+  const response = await axios.post(
+    "https://yokeplay.vercel.app/api/notifications",
+    {
+      message:
+        notiType === "comment"
+          ? `${notiMakerUser} comment on your clip`
+          : `${notiMakerUser} replied you on a clip`,
+      type: notiType,
+      holder: "clip",
+      userEmail: user.email, //user who replied(current user)
+      userId: notiTo, //user who got replied
+      holderId: clip?.clipId,
+    }
+  );
   if (response.status === 200) {
     return "success";
   }
