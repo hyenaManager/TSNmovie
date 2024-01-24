@@ -9,7 +9,7 @@ import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
 import { AnimatePresence } from "framer-motion";
-import ClipComment from "../../components/comment";
+import ClipComment from "../../components/clips/comment";
 import { NProgressLink } from "@/components/customLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

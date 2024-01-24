@@ -9,14 +9,15 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import { useContext, useRef, useState } from "react";
-import { userProvider } from "../app/context/userContext";
+import { userProvider } from "../../app/context/userContext";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { CommentSkeleton } from "@/app/skeletons/commentSkeleton";
 import ChildrenComment from "./childComment";
-import DeleteComment from "./deleteComment";
-import PendingComment from "./pendingComment";
+import DeleteComment from "../deleteComment";
+import PendingComment from "../pendingComment";
+import CommentTextBox from "./commentTextBox";
 interface CommentParent {
   parentId: string;
   replyingToUser: {
@@ -197,49 +198,7 @@ export default function ClipComment({
             </h3>
           )}
           {data?.map((comment: any) => (
-            <li
-              className=" w-full max-h-fit flex justify-start mb-2"
-              key={comment.id}
-            >
-              <img
-                src={comment?.user.image}
-                alt="image"
-                className=" w-[40px] h-[40px] bg-fuchsia-500 rounded-full"
-              />
-              <div
-                className="w-full relative  max-h-fit flex flex-col justify-start ml-2"
-                style={{ height: "fit-content" }}
-              >
-                <small className=" text-sm text-fuchsia-700 ">
-                  {comment?.user?.firstName + " " + comment?.user?.lastName}
-                </small>
-                <p className="w-full max-h-fit bg-fuchsia-500 text-white text-sm rounded-xl p-2">
-                  {comment.text}
-                </p>
-                {/* option... */}
-                <div className="flex relative justify-start items-center">
-                  <button
-                    onClick={() =>
-                      handleReplying(comment.id, user, comment?.user)
-                    }
-                    className="flex justify-start m-1 "
-                  >
-                    <FontAwesomeIcon
-                      icon={faReply}
-                      className=" w-[20px] h-[20px] text-fuchsia-500"
-                    />
-                    <i className="text-fuchsia-500 text-sm ">Reply</i>
-                  </button>
-                  {comment.user.id === user.id && (
-                    <DeleteComment commentId={comment.id} />
-                  )}
-                </div>
-                <ChildrenComment
-                  parentId={comment.id}
-                  handleReplying={handleReplying}
-                />
-              </div>
-            </li>
+            <CommentTextBox handleReplying={handleReplying} comment={comment} />
           ))}
           {isPending && (
             <PendingComment

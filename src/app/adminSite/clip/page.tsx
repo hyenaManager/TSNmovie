@@ -1,6 +1,6 @@
 "use client";
 import ClipVideoPlayer from "@/app/clips/clipsVideoPlayer";
-import ClipComment from "../../../components/comment";
+import ClipComment from "../../../components/clips/comment";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
