@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import React from "react";
-import { userProvider } from "../app/context/userContext";
-import DeleteComment from "./deleteComment";
+import { userProvider } from "../../app/context/userContext";
+import DeleteComment from "../deleteComment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 
@@ -51,7 +51,7 @@ export default function ChildrenComment({
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
 
-  console.log("comment page  is ", data?.pages);
+  // console.log("comment page  is ", data?.pages);
 
   return (
     <>

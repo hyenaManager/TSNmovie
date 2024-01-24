@@ -32,7 +32,9 @@ export default function MainList({ pageId }: { pageId: string }) {
         </Suspense>
       );
     } else {
-      return <h3 className=" text-4xl"> Bruh</h3>;
+      return (
+        <h3 className=" text-4xl"> Movie mode is unavailable at the moment</h3>
+      );
     }
   };
   return (

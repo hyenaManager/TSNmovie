@@ -33,7 +33,7 @@ export default function MoreOption({
       return error;
     }
   };
-  console.log("clip id :", clipId);
+  // console.log("clip id :", clipId);
 
   const mutation = useMutation({
     mutationFn: async () => {
