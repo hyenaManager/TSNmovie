@@ -14,7 +14,7 @@ export default function CommentTextBox({
 }) {
   const { user }: any = useContext(userProvider);
   return (
-    <li className=" w-full max-h-fit flex justify-start mb-2" key={comment.id}>
+    <li className=" w-full max-h-fit flex justify-start mb-2">
       <img
         src={comment?.user.image}
         alt="image"
@@ -46,10 +46,12 @@ export default function CommentTextBox({
             <DeleteComment commentId={comment.id} />
           )}
         </div>
-        <ChildrenComment
-          parentId={comment.id}
-          handleReplying={handleReplying}
-        />
+        {comment.childComments.length === 0 ? null : (
+          <ChildrenComment
+            parentId={comment.id}
+            handleReplying={handleReplying}
+          />
+        )}
       </div>
     </li>
   );

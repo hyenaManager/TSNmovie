@@ -18,6 +18,8 @@ import ChildrenComment from "./childComment";
 import DeleteComment from "../deleteComment";
 import PendingComment from "../pendingComment";
 import CommentTextBox from "./commentTextBox";
+import { createNoti } from "./clipActions";
+import { v4 } from "uuid";
 interface CommentParent {
   parentId: string;
   replyingToUser: {
@@ -49,16 +51,14 @@ export default function ClipComment({
   const [commentText, setCommentText] = useState("");
   const [commentParent, setCommentParent] = useState<CommentParent | null>(
     null
-  ); //get a comment parentData for replying
-  /// is creating comment pending
-  const [isCommentPending, setIsCommentPending] = useState(false);
+  ); //get a comment parentData for re
   const commentTextRef = useRef<HTMLTextAreaElement | null>(null);
   const queryClient = useQueryClient();
-  const { data, status } = useQuery({
+  const { data } = useQuery({
     queryKey: ["comments", clip?.clipId],
     queryFn: async () => {
       const response = await axios.get(
-        `https://yokeplay.vercel.app/api/comments/${clip?.clipId}`
+        `http://localhost:3000/api/comments/${clip?.clipId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -80,64 +80,63 @@ export default function ClipComment({
   ) => {
     setCommentParent({ parentId, commentUser, replyingToUser });
   };
-  //create noti for bot reply and comment mode
-  const createNoti = async (notiTo: string, notiType: string) => {
-    const notiMakerUser = `${user.firstName} ${user.lastName}`;
-    const response = await axios.post(
-      "https://yokeplay.vercel.app/api/notifications",
-      {
-        message:
-          notiType === "comment"
-            ? `${notiMakerUser} comment on your clip`
-            : `${notiMakerUser} replied you on a clip`,
-        type: notiType,
-        holder: "clip",
-        userEmail: user.email, //user who replied(current user)
-        userId: notiTo, //user who got replied
-        holderId: clip?.clipId,
-      }
-    );
-    if (response.status === 200) {
-      return "success";
-    }
-  };
 
-  //comment mode
-  const createComment = async () => {
-    createNoti(clip?.adminId as string, "comment");
-    const response = await axios.post(
-      `https://yokeplay.vercel.app/api/comments`,
-      {
+  //optimistic comment mode
+  const commentMutation = useMutation({
+    mutationFn: async () => {
+      createNoti(clip?.adminId as string, "comment", user, clip);
+      await axios.post(`http://localhost:3000/api/comments`, {
         text: commentText,
         userId: user?.id,
         clipId: clip?.clipId,
         mode: "comment",
-      }
-    );
-    if (response.status === 200) {
+      });
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["comments", clip?.clipId] });
+      const previousComment: any = queryClient.getQueryData<any>([
+        "comments",
+        clip?.clipId,
+      ]);
+      console.log(previousComment, "is previous comments");
+
+      queryClient.setQueryData(
+        ["comments", clip?.clipId],
+        [
+          ...previousComment,
+          {
+            image: user.image,
+            text: commentText + "(pending...)",
+            id: v4(),
+            user: user,
+            childComments: [],
+          },
+        ]
+      );
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       setCommentParent(null);
       commentTextRef.current = null;
+      setCommentText("");
       queryClient.invalidateQueries({ queryKey: ["childComment"] });
-      return toast.success("commented");
-    } else {
-      toast.error(response.statusText);
-    }
-  };
+      toast.success("commented");
+    },
+    onError: (error: any) => toast.error(error.message),
+  });
+  // console.log("all comments :", data);
+
   //reply mode
   const createReplyComment = async () => {
-    createNoti(commentParent?.replyingToUser.id as string, "reply");
-    const response = await axios.post(
-      `https://yokeplay.vercel.app/api/comments`,
-      {
-        text: commentText,
-        userId: user.id, //user(current user) who replied parent comment
-        parentId: commentParent?.parentId, //id to connect with parent comment
-        userImage: user.image,
-        mode: "reply",
-        replyingTo: commentParent?.replyingToUser.id,
-      }
-    );
+    createNoti(commentParent?.replyingToUser.id as string, "reply", user, clip);
+    const response = await axios.post(`http://localhost:3000/api/comments`, {
+      text: commentText,
+      userId: user.id, //user(current user) who replied parent comment
+      parentId: commentParent?.parentId, //id to connect with parent comment
+      userImage: user.image,
+      mode: "reply",
+      replyingTo: commentParent?.replyingToUser.id,
+    });
     if (response.status === 200) {
       queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       commentTextRef.current = null;
@@ -149,20 +148,22 @@ export default function ClipComment({
     }
   };
 
-  const { mutate, isPending, variables } = useMutation({
+  const { mutate, variables, status } = useMutation({
     mutationFn: async () => {
       if (commentParent) {
         createReplyComment(); //for replying
       } else {
-        createComment(); //for creating new comment
+        commentMutation.mutate(); //for creating new comment
       }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", clip?.clipId] });
       queryClient.invalidateQueries({ queryKey: ["childComment"] });
     },
-    onSettled: () => setIsCommentPending(false),
+    // onSettled: () => setIsCommentPending(false),
   });
+  // console.log("this is variables from mutation: ", variables);
+
   const totalCommentCalculator = () => {
     let totalComments = 0;
     data?.forEach((comment: any) => {
@@ -174,7 +175,7 @@ export default function ClipComment({
     });
     return totalComments;
   };
-  console.log("is mutation pending: ", isPending);
+  // console.log("is mutation pending: ", status === "pending");
 
   return (
     <motion.div
@@ -198,18 +199,22 @@ export default function ClipComment({
             </h3>
           )}
           {data?.map((comment: any) => (
-            <CommentTextBox handleReplying={handleReplying} comment={comment} />
+            <CommentTextBox
+              handleReplying={handleReplying}
+              comment={comment}
+              key={comment.id}
+            />
           ))}
-          {isPending && (
+          {status === "pending" && (
             <PendingComment
               image={user?.image}
-              variables={variables}
+              variables={"variables pending"}
               comment={commentText}
             />
           )}
         </ul>
         {/* comment submit section */}
-        <div className=" flex justify-start p-2 xsm:w-[100%] sm:w-[50%] bg-fuchsia-400 rounded-xl items-center border absolute bottom-2 right-50 ">
+        <footer className=" flex justify-start p-2 xsm:w-[100%] sm:w-[80%] md:w-[70%] lg:w-[50%] bg-fuchsia-400 rounded-xl items-center border absolute bottom-2 right-50 ">
           {commentParent !== null && (
             <div className=" flex justify-center items-center text-blue text-sm">
               <i className=" text-center">{`replying to @${
@@ -248,13 +253,13 @@ export default function ClipComment({
             <FontAwesomeIcon
               onClick={() => {
                 mutate();
-                setIsCommentPending(true);
+                // setIsCommentPending(true);
               }}
               icon={faArrowUp}
               className=" w-[30px] h-[30px] text-white rounded-full p-1 bg-fuchsia-600"
             />
           </button>
-        </div>
+        </footer>
         <button>
           <FontAwesomeIcon
             icon={faXmark}

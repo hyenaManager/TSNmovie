@@ -39,7 +39,7 @@ export default function ChildrenComment({
     queryKey: ["childComment", parentId],
     queryFn: async ({ pageParam = 0 }) => {
       const response = await axios.get(
-        `https://yokeplay.vercel.app/api/comments/cursor?parentId=${parentId}&cursor=${pageParam}`
+        `http://localhost:3000/api/comments/cursor?parentId=${parentId}&cursor=${pageParam}`
       );
       if (response.status === 200) {
         return response.data;
@@ -51,7 +51,7 @@ export default function ChildrenComment({
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
   });
 
-  console.log("comment page  is ", data?.pages);
+  // console.log("comment page  is ", data?.pages);
 
   return (
     <>
