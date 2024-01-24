@@ -18,7 +18,7 @@ export default function UserProvider({
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/users/${session?.user.email}`
+          `https://yokeplay.vercel.app/api/users/${session?.user.email}`
         );
         return response.data;
       } catch (error) {
