@@ -60,14 +60,16 @@ export async function getNotificationByCursor(cursor:number,userId:string) {
 }
 
 export async function createNotification(data:{type:string,message:string,holder:string,userId:string,userEmail:string,holderId:number}){
-   const notiExistCount = await prisma.notifications.findUnique({
+   //this condtion is checked for giving like , that if the user already liked the post ,if true just update the time
+   //but for comment this condition check is not necessary
+    const notiExistCount = await prisma.notifications.findUnique({
     where:{
         id:data.holderId+data.userEmail
     }
    })
     try {
-        //preventing duplicate notification for each noti
-        if(notiExistCount){
+        //preventing duplicate notification for each noti ( note# only for giving likes not commenting)
+        if(notiExistCount && data.type === "like"){
             const currentTime = new Date();
             await prisma.notifications.update({
                 where:{

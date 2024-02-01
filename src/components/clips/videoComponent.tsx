@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import SkeletonClip from "../skeletons/skeletonClip";
+import SkeletonClip from "../../app/skeletons/skeletonClip";
 
 import axios from "axios";
-import { ClipLoading } from "../../components/loading";
+import { ClipLoading } from "../loading";
 import { useInView } from "react-hook-inview";
 import { Toaster } from "react-hot-toast";
 import ClipVideoPlayer from "./clipsVideoPlayer";
 import { AnimatePresence } from "framer-motion";
-import ClipComment from "../../components/clips/comment";
+import ClipComment from "./comment";
 import { NProgressLink } from "@/components/customLinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

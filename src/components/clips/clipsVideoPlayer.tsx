@@ -12,16 +12,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 
 import Image from "next/image";
-const ReportSomething = lazy(() => import("../../components/reportComponent"));
+const ReportSomething = lazy(() => import("../reportComponent"));
 import { useInView } from "react-hook-inview";
 
 import axios from "axios";
 import toast from "react-hot-toast";
 
-import MoreOption from "../../components/clips/moreOption";
-import SkeletonClip from "../skeletons/skeletonClip";
-import { catchingError } from "../utility/catchingError";
-import { userProvider } from "../context/userContext";
+import MoreOption from "./moreOption";
+import SkeletonClip from "../../app/skeletons/skeletonClip";
+import { catchingError } from "../../app/utility/catchingError";
+import { userProvider } from "../../app/context/userContext";
 type videoProps = {
   id: string;
   title: string | null;
@@ -96,8 +96,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
     }
   };
 
-  //adding like or remove like
-  // console.log(` isLiked value for ${data?.title} is :`, isLiked);
+  //adding (like or remove like)
 
   const handleLike = async () => {
     const type = isLiked ? "removeLike" : "addLike"; //if user already liked, remove the the like or add  the like
@@ -142,7 +141,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
   if (status === "pending") return <SkeletonClip />;
 
   return (
-    <article
+    <section
       key={id}
       ref={ref}
       className=" video-player flex flex-col justify-center items-center xsm:w-[100vw] sm:w-[600px] relative rounded-lg mt-2"
@@ -161,7 +160,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
       {!isPlaying && (
         <div className=" absolute top-0 left-0 xsm:w-[100vw] sm:w-full h-full z-10 xsm:rounded-none sm:rounded-xl flex flex-col justify-between items-center ">
           {/* user profile and more option button and  blah blah */}
-          <section
+          <article
             className={
               " w-full bg-fuchsia-600 rounded-t-lg flex flex-col " +
               (readMore ? " min-w-fit" : "h-1hundred")
@@ -210,7 +209,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
                 </button>
               )}
             </pre>
-          </section>
+          </article>
           {!error ? (
             <FontAwesomeIcon
               icon={faPlay}
@@ -261,7 +260,7 @@ function ClipVideoPlayer({ id, handleComment, createdBy }: videoProps) {
           postId={parseInt(id)}
         />
       )}
-    </article>
+    </section>
   );
 }
 

@@ -1,5 +1,5 @@
 "use client";
-import ClipVideoPlayer from "@/app/clips/clipsVideoPlayer";
+import ClipVideoPlayer from "@/components/clips/clipsVideoPlayer";
 import ClipComment from "../../../components/clips/comment";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,5 +1,5 @@
 import React from "react";
-import VideoComponent from "./videoComponent";
+import VideoComponent from "../../components/clips/videoComponent";
 
 export default function ClipPage() {
   return (
