@@ -1,4 +1,5 @@
 import axios from "axios";
+import { v4 } from "uuid";
 
 export const createNoti = async (
   notiTo: string,
@@ -9,7 +10,7 @@ export const createNoti = async (
   const notiMakerUser = `${user.firstName} ${user.lastName}`;
   const response = await axios.post(
     "https://yokeplay.vercel.app/api/notifications",
-    {
+    {id:v4(),
       message:
         notiType === "comment"
           ? `${notiMakerUser} comment on your clip`

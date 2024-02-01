@@ -14,8 +14,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { CommentSkeleton } from "@/app/skeletons/commentSkeleton";
-import ChildrenComment from "./childComment";
-import DeleteComment from "../deleteComment";
 import PendingComment from "../pendingComment";
 import CommentTextBox from "./commentTextBox";
 import { createNoti } from "./clipActions";
@@ -84,7 +82,7 @@ export default function ClipComment({
   //optimistic comment mode
   const commentMutation = useMutation({
     mutationFn: async () => {
-      createNoti(clip?.adminId as string, "comment", user, clip);
+      await createNoti(clip?.adminId as string, "comment", user, clip);
       await axios.post(`https://yokeplay.vercel.app/api/comments`, {
         text: commentText,
         userId: user?.id,

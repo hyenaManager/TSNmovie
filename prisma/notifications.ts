@@ -59,31 +59,37 @@ export async function getNotificationByCursor(cursor:number,userId:string) {
     }
 }
 
-export async function createNotification(data:{type:string,message:string,holder:string,userId:string,userEmail:string,holderId:number}){
+//create like noti
+export async function createLikeNoti(data:{id:string,type:string,message:string,holder:string,userId:string,userEmail:string,holderId:number}){
    //this condtion is checked for giving like , that if the user already liked the post ,if true just update the time
    //but for comment this condition check is not necessary
-    const notiExistCount = await prisma.notifications.findUnique({
-    where:{
-        id:data.holderId+data.userEmail
-    }
-   })
-    try {
-        //preventing duplicate notification for each noti ( note# only for giving likes not commenting)
-        if(notiExistCount && data.type === "like"){
-            const currentTime = new Date();
-            await prisma.notifications.update({
-                where:{
-                    id:data.holderId+data.userEmail 
-                },
-                data:{
-                    createdAt:currentTime
-                }
-            })
-            return "success"
+
+   try {
+    const newNoti = await prisma.notifications.create({
+        data:{
+            id:data.holderId+data.userEmail,
+            type:data.type,
+            message:data.message,
+            holder:data.holder,
+            userId:data.userId,
+            userEmail:data.userEmail,
+            holderId:data.holderId
         }
-        await prisma.notifications.create({
-            data:{
-                id:data.holderId+data.userEmail,
+    })
+    return "success"
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+}
+
+//create comment noti
+export async function createCommentNoti(data:{id:string,type:string,message:string,holder:string,userId:string,userEmail:string,holderId:number}){
+ 
+     try {      
+        const newNoti = await prisma.notifications.create({
+             data:{
+                id:data.id,
                 type:data.type,
                 message:data.message,
                 holder:data.holder,
@@ -92,10 +98,30 @@ export async function createNotification(data:{type:string,message:string,holder
                 holderId:data.holderId
             }
         })
-        return "success"
+            return "success"
+     } catch (error) {
+         console.log(error);
+         throw error
+     }
+ }
+
+ //update noti
+export async function updateNoti(notiId:string){
+    console.log("it reach here noti update and id is :",notiId);
+    
+    const currentTime = new Date();
+    try {
+        await prisma.notifications.update({
+            where:{
+                id:notiId
+            },
+            data:{
+                createdAt:currentTime,
+                watched:false,
+            }
+        })
     } catch (error) {
-        console.log(error);
-        throw error
+        
     }
 }
 
