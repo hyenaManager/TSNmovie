@@ -80,7 +80,7 @@ export default function GettingStart() {
   }, [profileImgUrl, coverImgUrl]);
   if (createSuccess)
     return (
-      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
+      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh]  bg-gradient-to-r from-fuchsia-500 to-red-600 flex flex-col justify-center items-center">
         <FontAwesomeIcon
           icon={faCircleCheck}
           className="w-[50px] h-[50px] m-2 text-green-400"
@@ -101,7 +101,7 @@ export default function GettingStart() {
 
   return (
     <>
-      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
+      <div className="pageWarper z-50 fixed gap-3 top-0 left-0 w-[100vw] h-[100vh]  bg-gradient-to-r from-fuchsia-500 to-red-600 flex flex-col justify-center items-center">
         {!profileImage && (
           <h2 className="text-red-400 text-xl">
             * please choose profile picture and page name

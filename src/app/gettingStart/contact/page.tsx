@@ -48,7 +48,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <div className="fixed pageWarper z-50 top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center ">
+    <div className="fixed pageWarper z-50 top-0 left-0 w-[100vw] h-[100vh]  bg-gradient-to-r from-fuchsia-500 to-red-600 flex flex-col justify-center items-center ">
       {mutation.isPending && (
         <h1 className=" text-4xl text-black text-center">
           Creating contact....

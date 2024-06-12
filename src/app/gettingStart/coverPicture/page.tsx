@@ -58,8 +58,8 @@ export default function GettingStart() {
   console.log(profileCoverImageUrl, "is url");
   return (
     <>
-      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh] bg-white flex flex-col justify-center items-center">
-        <h2 className="text-black text-2xl">Upload your cover photo</h2>
+      <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh]  bg-gradient-to-r from-fuchsia-500 to-red-600 flex flex-col justify-center items-center">
+        <h2 className="text-white text-2xl">Upload your cover photo</h2>
         <div className=" flex flex-col border bg-center rounded-t-xl justify-center h-[60vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
           {profileCoverImageUrl && (
             <Image
