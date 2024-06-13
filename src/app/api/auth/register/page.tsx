@@ -69,7 +69,7 @@ function RegisterForm() {
           redirect: true,
           callbackUrl: "/clips",
         });
-        setIsSubmiting(false);
+        //setIsSubmiting(false);
         if (response?.ok) {
           toast("user creation success ", {
             style: {
