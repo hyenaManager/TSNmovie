@@ -16,6 +16,24 @@ export default async function FollowAndVistPageSection() {
     `https://yokeplay.vercel.app/api/users/${session?.user.email}`,
     { next: { tags: ["userPage"] } }
   ).then((res) => res.json());
+
+  if (!user?.Page) {
+    return (
+      <section className=" sm:w-[70vw] bg-black xsm:w-[100vw] xsm:min-h-[70vh] sm:min-h-[92vh] flex flex-col justify-center items-center ">
+        <div className=" flex flex-col justify-center items-center gap-3">
+          <h2 className=" text-white text-xl sm:text-2xl">
+            You still haven't your own page yet.
+          </h2>
+          <Link
+            href={"/gettingStart"}
+            className=" p-2 rounded-md uppercase bg-green-400 hover:bg-green-600 text-white text-lg sm:text-2xl px-3 max-w-fit"
+          >
+            create page
+          </Link>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className=" sm:w-[70vw] bg-black xsm:w-[100vw] xsm:min-h-[70vh] sm:min-h-[92vh] flex flex-col ">
       {!user?.Page ? (
