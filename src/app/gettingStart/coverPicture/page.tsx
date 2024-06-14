@@ -15,6 +15,7 @@ export default function GettingStart() {
   ); //link of profile cover image to firebase
   const uploadCoverPic = useRef<HTMLInputElement | null>(null);
   const setNewCoverImage = useCreatingPage((state) => state.setCoverImage);
+  const coverImage = useCreatingPage((state) => state.coverImage);
 
   const handleUploadCoverPic = () => {
     uploadCoverPic.current?.click();
@@ -59,7 +60,7 @@ export default function GettingStart() {
   return (
     <>
       <div className="pageWarper z-50 fixed top-0 left-0 w-[100vw] h-[100vh]  bg-gradient-to-r from-fuchsia-500 to-red-600 flex flex-col justify-center items-center">
-        <h2 className="text-white text-2xl">Upload your cover photo</h2>
+        <h2 className="text-white text-2xl">* Upload your cover photo</h2>
         <div className=" flex flex-col border bg-center rounded-t-xl justify-center h-[60vh] xsm:w-[95vw] sm:w-[40vw] items-center relative">
           {profileCoverImageUrl && (
             <Image
@@ -97,18 +98,20 @@ export default function GettingStart() {
         >
           go back
         </button>
-        <Link
-          href={{
-            pathname: `/gettingStart/profilePicture`,
-            query: {
-              coverImage: "profileCoverImageUrl",
-            },
-          }}
-          // onClick={() => mutation.mutate()}
-          className=" p-2 rounded-lg fixed bottom-4 right-2 bg-green-500 text-white"
-        >
-          Next
-        </Link>
+        {coverImage ? (
+          <Link
+            href={{
+              pathname: `/gettingStart/profilePicture`,
+              query: {
+                coverImage: "profileCoverImageUrl",
+              },
+            }}
+            // onClick={() => mutation.mutate()}
+            className=" p-2 rounded-lg fixed bottom-4 right-2 bg-green-500 text-white"
+          >
+            Next
+          </Link>
+        ) : null}
       </div>
     </>
   );
